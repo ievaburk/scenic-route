@@ -96,6 +96,35 @@ Every one of these cost real debugging time and none is guessable from the code.
 - Lines draw ~2px at street zoom, so a transparent `line-width: 14` hit layer over the
   top is what makes edges clickable.
 
+## Router
+
+- **Bidirectional A* needs balanced potentials**, `p_f = (h_f − h_b)/2` and
+  `p_b = −p_f`, not each side using its own heuristic. Because the two sum to
+  zero, the stopping rule `topF + topB ≥ μ` is *exact*. With raw per-side
+  heuristics the potentials don't cancel, the rule stops bounding what's
+  unexplored, and the search returns paths that are wrong but entirely
+  plausible-looking on a map. `npm run check:router` compares against plain
+  Dijkstra over the same cost function — run it after touching `lib/router.ts`,
+  because nothing else will catch this.
+- The price of balanced potentials is a weaker heuristic: A* is only ~1.2×
+  faster than Dijkstra on long cross-city pairs. Real walks (1–3 km) are
+  0.3–0.4 ms, so it doesn't matter. Don't "fix" it by reverting to raw
+  heuristics.
+- **Cache the potential per node.** It's read on every edge relaxation but is
+  constant per node; recomputing made A* no faster than Dijkstra.
+- **Never penalise the fastest route.** It's the baseline every "+N minutes"
+  figure is measured against (PLAN.md §8), so the diversity pass must skip it —
+  otherwise the headline number is a lie.
+- **Two different aggregators, deliberately.** Routing uses `compositeScore`
+  (linear, PLAN.md §8) because at route time the weights are the user's own and
+  already zero the axes they don't care about. The debug map uses
+  `overallScore` (quadratic) to answer "interesting for any reason at all".
+  Don't unify them.
+- **α saturates and the slack budget rarely binds** in Manhattan's grid: the
+  parallel street one block over is much nicer at almost no time cost, so the
+  search takes it and stops well short of the offered detour. Expect the slack
+  slider to feel unresponsive here; that's the data, not a bug.
+
 ## Pilot area
 
 Manhattan below 125th St + brownstone Brooklyn — see `lib/pilot.ts`. Small

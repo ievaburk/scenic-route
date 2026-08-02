@@ -31,7 +31,9 @@ the two fetches are slow; the build and score steps are meant to be re-run
 constantly while the scoring is being tuned.
 
 ```bash
-npm run check:landmarks   # the Phase 1 regression net — run on every scoring change
+npm run check:landmarks   # Phase 1 regression net — run on every scoring change
+npm run check:router      # proves the A* is optimal, against plain Dijkstra
+npm run check:routes      # Phase 2 fixtures — 20 O/D pairs, budget/α/diversity
 ```
 
 ## Where this is up to
@@ -99,8 +101,39 @@ Two findings from this phase worth knowing before touching the scoring:
   form from PLAN.md §8, where the weights are the user's own. See
   `lib/scoring.ts`.
 
-**Next up: Phase 2 (engine)** — bidirectional A* over `time(e) · (1 − α · scenic(e))`,
-binary search on α for the detour budget, penalty-method alternates.
+**Phase 2 (engine) — done.**
+
+- `lib/router.ts` — bidirectional A* over `time(e) · (1 − α · scenic(e))`, with
+  balanced potentials so the bidirectional stopping rule is exact
+- `lib/plan-route.ts` — α binary search against the detour budget, penalty-method
+  alternates, overlap rejection
+- `POST /api/route` — origin + destination → three scored routes as GeoJSON with
+  per-axis exposure
+- `/debug/route` — two clicks on the map, three lines, with axis toggles and a
+  slack slider
+
+| | |
+|---|---|
+| optimality | 240/240 vs Dijkstra, zero cost gap |
+| fixtures | 20/20 pairs pass; 19/20 gain scenic value from α |
+| per plan | ~7 ms, ~11 A* searches |
+| single route | 0.3–0.4 ms typical, 7 ms worst-case cross-city |
+
+Turning on green+quiet for a Midtown walk lifts quiet exposure from 0.19 to
+0.62 for 24 extra seconds — the "canal path, not the avenue" move from §2,
+which is the cheapest real gain over a conventional router.
+
+Two findings worth knowing before Phase 3:
+
+- **α saturates and the slack budget rarely binds.** In the grid, a much nicer
+  parallel street costs almost nothing, so the search takes it and stops far
+  short of the offered detour. The slider will feel unresponsive in Manhattan.
+- **Bidirectional A* is only ~1.2× faster than Dijkstra** on long pairs, because
+  balanced potentials halve the heuristic's strength. That's the price of exact
+  termination and it's the right trade — real walks are sub-millisecond.
+
+**Next up: Phase 3 (custom interests)** — dictionary resolver, sparse per-interest
+edge layers, match counts, then the LLM fallback.
 
 ## Data
 

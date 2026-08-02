@@ -1,0 +1,25 @@
+{
+  "note": "Phase 2 fixture set (PLAN.md §13). Twenty origin/destination pairs across the pilot area, chosen to span grid Manhattan, the waterfronts, the bridges and brownstone Brooklyn — the cases where a scenic detour should and shouldn't be available. Coordinates snap to the nearest graph node at run time.",
+  "pairs": [
+    { "name": "Union Sq → Central Park S", "from": [-73.9903, 40.7340], "to": [-73.9772, 40.7614] },
+    { "name": "Chelsea → West Village", "from": [-74.0000, 40.7460], "to": [-74.0030, 40.7350] },
+    { "name": "Penn Station → Bryant Park", "from": [-73.9935, 40.7505], "to": [-73.9832, 40.7536] },
+    { "name": "Battery Park → City Hall", "from": [-74.0170, 40.7033], "to": [-74.0060, 40.7127] },
+    { "name": "East Village → Lower East Side", "from": [-73.9840, 40.7270], "to": [-73.9870, 40.7180] },
+    { "name": "Grand Central → UN", "from": [-73.9772, 40.7527], "to": [-73.9680, 40.7489] },
+    { "name": "Times Sq → Hudson Yards", "from": [-73.9855, 40.7580], "to": [-74.0020, 40.7540] },
+    { "name": "UES → Museum Mile", "from": [-73.9590, 40.7740], "to": [-73.9630, 40.7810] },
+    { "name": "UWS → Riverside Park", "from": [-73.9740, 40.7870], "to": [-73.9800, 40.7960] },
+    { "name": "Harlem → Morningside", "from": [-73.9480, 40.8090], "to": [-73.9600, 40.8060] },
+    { "name": "Soho → Washington Sq", "from": [-74.0010, 40.7240], "to": [-73.9975, 40.7308] },
+    { "name": "Tribeca → Battery", "from": [-74.0090, 40.7180], "to": [-74.0150, 40.7050] },
+    { "name": "Murray Hill → Gramercy", "from": [-73.9780, 40.7480], "to": [-73.9840, 40.7370] },
+    { "name": "Hell's Kitchen → Columbus Circle", "from": [-73.9930, 40.7620], "to": [-73.9819, 40.7681] },
+    { "name": "Brooklyn Heights → Dumbo", "from": [-73.9950, 40.6960], "to": [-73.9890, 40.7030] },
+    { "name": "Cobble Hill → Carroll Gardens", "from": [-73.9950, 40.6870], "to": [-73.9990, 40.6800] },
+    { "name": "Park Slope → Prospect Park", "from": [-73.9800, 40.6720], "to": [-73.9690, 40.6620] },
+    { "name": "Fort Greene → Clinton Hill", "from": [-73.9740, 40.6900], "to": [-73.9640, 40.6890] },
+    { "name": "Williamsburg → Greenpoint", "from": [-73.9570, 40.7150], "to": [-73.9500, 40.7280] },
+    { "name": "Boerum Hill → Gowanus", "from": [-73.9860, 40.6860], "to": [-73.9910, 40.6740] }
+  ]
+}

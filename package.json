@@ -13,7 +13,9 @@
     "fetch:features": "tsx scripts/fetch-features.ts",
     "build:graph": "tsx scripts/build-graph.ts",
     "score:graph": "tsx scripts/score-graph.ts",
-    "check:landmarks": "tsx scripts/check-landmarks.ts"
+    "check:landmarks": "tsx scripts/check-landmarks.ts",
+    "check:router": "tsx scripts/check-router.ts",
+    "check:routes": "tsx scripts/check-routes.ts"
   },
   "dependencies": {
     "maplibre-gl": "^6.1.0",
