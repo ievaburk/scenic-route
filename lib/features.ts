@@ -194,10 +194,19 @@ export function classify(tags: Record<string, string>): Contribution[] {
  */
 export const DISTRICT_WEIGHTS: Record<string, { axis: ScenicAxis; weight: number }> = {
   // LPC-designated. The strongest "this street is beautiful" signal available
-  // for NYC, and it covers exactly what OSM misses.
-  nyc_historic_districts: { axis: "architecture", weight: 0.9 },
-  nys_historic_districts: { axis: "architecture", weight: 0.6 },
-  us_historic_places: { axis: "architecture", weight: 0.6 },
+  // for NYC, and it covers exactly what OSM misses. Held at the ceiling
+  // deliberately: an LPC district is a judgement about a whole streetscape,
+  // which is precisely the claim this axis wants to make.
+  nyc_historic_districts: { axis: "architecture", weight: 1 },
+  nys_historic_districts: { axis: "architecture", weight: 0.5 },
+  // Well below the other two on purpose. The National Register lists individual
+  // *buildings* far more often than coherent streetscapes, and in Midtown it
+  // fires on office towers around the Garment District — which lit 8th Avenue
+  // up at 0.48 architecture, nearly matching brownstone Park Slope. A listed
+  // tower on a loud avenue is not the same claim as a designated district, and
+  // because the axis is percentile-ranked, over-weighting the common case
+  // compresses the whole distribution against the signal that matters.
+  us_historic_places: { axis: "architecture", weight: 0.3 },
   // Designated for the view, which is the hills/views axis almost by definition.
   scenic_landmarks: { axis: "hills", weight: 0.9 },
 };

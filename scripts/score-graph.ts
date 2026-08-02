@@ -55,8 +55,22 @@ const OUT_FILE = path.join(DATA_DIR, "scores.json");
 /** Distance between sample points along an edge. The mean edge is ~29 m. */
 const SAMPLE_M = 25;
 
-/** Street trees, from the census. Weak individually, decisive in aggregate. */
-const TREE = { weight: 0.15, reach: 25 };
+/**
+ * Street trees, from the census. Weak individually, decisive in aggregate.
+ *
+ * Calibrated against the distribution rather than guessed. At 0.15/25 m a fully
+ * canopied Park Slope block (47 trees/km — the densest street sampled) topped
+ * out around 0.17 raw while a park path reached 0.63, so *every* tree-lined
+ * street in the city compressed into the bottom third of the green percentile.
+ * That defeats the reason the census is loaded at all: PLAN.md §5 brought it in
+ * to rescue the ordinary beautiful street, which is OSM's worst blind spot.
+ *
+ * Because the axis is percentile-ranked, raising this doesn't inflate scores
+ * across the board — it moves leafy streets up *relative to parks*, and leaves
+ * treeless ones (8th Avenue, at 1 tree/km) exactly where they are. The reach
+ * also better matches what a mature street tree actually shades.
+ */
+const TREE = { weight: 0.25, reach: 30 };
 
 /** Historic districts are whole-block signals — they apply to what's inside them. */
 const DISTRICT_REACH = 25;
@@ -194,10 +208,33 @@ async function main() {
   const geoms: Geom[] = [];
   /** One R-tree per axis. `quiet` never gets one — it isn't proximity-based. */
   const items: Record<string, Item[]> = {};
+  /**
+   * Designations are indexed separately because they combine by **max, not
+   * sum**. The LPC, State and National Register district layers overlap almost
+   * completely — Park Slope is listed on all three, the Garment Center on two —
+   * so adding them counts one architectural judgement about one streetscape up
+   * to three times. Worse, it compresses the distinction that matters: an
+   * LPC-designated brownstone district ends up barely ahead of a National
+   * Register office block on 8th Avenue, because the avenue collects two
+   * middling designations and the brownstones can't pull far enough clear.
+   *
+   * Taking the strongest designation is also just what `classify()` already
+   * does for OSM tags, so the two paths now agree.
+   */
+  const districtItems: Record<string, Item[]> = {};
   const sources: Record<string, number> = {};
 
-  /** Register geometry `g`'s contribution to an axis, bbox expanded by reach. */
-  function add(g: number, axis: ScenicAxis, weight: number, reach: number) {
+  /**
+   * Register geometry `g`'s contribution to an axis, bbox expanded by reach.
+   * `exclusive` routes it to the max-combining designation index above.
+   */
+  function add(
+    g: number,
+    axis: ScenicAxis,
+    weight: number,
+    reach: number,
+    exclusive = false,
+  ) {
     const geom = geoms[g];
     let minX: number, minY: number, maxX: number, maxY: number;
 
@@ -215,7 +252,8 @@ async function main() {
       }
     }
 
-    (items[axis] ??= []).push({
+    const bucket = exclusive ? districtItems : items;
+    (bucket[axis] ??= []).push({
       minX: minX - reach,
       minY: minY - reach,
       maxX: maxX + reach,
@@ -348,7 +386,7 @@ async function main() {
           ys[i] = proj.y(ring[i][1]);
         }
         geoms.push({ kind: "area", xs, ys });
-        add(geoms.length - 1, rule.axis, rule.weight, DISTRICT_REACH);
+        add(geoms.length - 1, rule.axis, rule.weight, DISTRICT_REACH, true);
         count++;
       }
     }
@@ -375,13 +413,26 @@ async function main() {
 
   // ---- 4. Index ----------------------------------------------------------
   const trees: Partial<Record<ScenicAxis, RBush<Item>>> = {};
+  const districtTrees: Partial<Record<ScenicAxis, RBush<Item>>> = {};
   for (const axis of AXIS_KEYS) {
-    const list = items[axis];
-    if (!list?.length) continue;
-    const tree = new RBush<Item>();
-    tree.load(list);
-    trees[axis] = tree;
-    console.log(`  ${axis}: ${list.length} indexed contributions`);
+    for (const [source, target] of [
+      [items, trees],
+      [districtItems, districtTrees],
+    ] as const) {
+      const list = source[axis];
+      if (!list?.length) continue;
+      const tree = new RBush<Item>();
+      tree.load(list);
+      target[axis] = tree;
+    }
+    const proximity = items[axis]?.length ?? 0;
+    const designations = districtItems[axis]?.length ?? 0;
+    if (proximity || designations) {
+      console.log(
+        `  ${axis.padEnd(13)} ${proximity} proximity` +
+          (designations ? ` + ${designations} designations` : ""),
+      );
+    }
   }
 
   // ---- 5. Score every edge ----------------------------------------------
@@ -389,7 +440,7 @@ async function main() {
   const rawByAxis: Record<string, Float64Array> = {};
   for (const axis of AXIS_KEYS) rawByAxis[axis] = new Float64Array(n);
 
-  const proximityAxes = AXIS_KEYS.filter((a) => trees[a]);
+  const proximityAxes = AXIS_KEYS.filter((a) => trees[a] || districtTrees[a]);
 
   console.log(`scoring ${n} edges…`);
   const started = Date.now();
@@ -432,24 +483,37 @@ async function main() {
 
     // --- accumulate per axis over the samples ---
     for (const axis of proximityAxes) {
-      const tree = trees[axis]!;
+      const tree = trees[axis];
+      const districtTree = districtTrees[axis];
       let total = 0;
 
       for (let s = 0; s < sx.length; s++) {
-        const hits = tree.search({
-          minX: sx[s],
-          minY: sy[s],
-          maxX: sx[s],
-          maxY: sy[s],
-        });
-        if (hits.length === 0) continue;
+        const box = { minX: sx[s], minY: sy[s], maxX: sx[s], maxY: sy[s] };
 
+        // Proximity features accumulate: a park *and* a row of trees *and* a
+        // fountain each genuinely add something.
         let sum = 0;
-        for (const hit of hits) {
-          const d = distanceTo(geoms[hit.g], sx[s], sy[s]);
-          if (d < hit.reach) sum += hit.weight * decay(d, hit.reach);
+        if (tree) {
+          for (const hit of tree.search(box)) {
+            const d = distanceTo(geoms[hit.g], sx[s], sy[s]);
+            if (d < hit.reach) sum += hit.weight * decay(d, hit.reach);
+          }
         }
-        total += saturate(sum);
+
+        // Designations take the strongest instead — see districtItems above.
+        if (districtTree) {
+          let best = 0;
+          for (const hit of districtTree.search(box)) {
+            const d = distanceTo(geoms[hit.g], sx[s], sy[s]);
+            if (d < hit.reach) {
+              const v = hit.weight * decay(d, hit.reach);
+              if (v > best) best = v;
+            }
+          }
+          sum += best;
+        }
+
+        if (sum > 0) total += saturate(sum);
       }
 
       rawByAxis[axis][ei] = total / sx.length;
