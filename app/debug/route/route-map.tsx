@@ -43,10 +43,23 @@ type ApiRoute = {
   len: number;
   scenic: number;
   axes: Record<ScenicAxis, number>;
+  /** Metres of this route touching each resolved interest. */
+  interests: { id: string; label: string; metres: number }[];
   geometry: { type: "LineString"; coordinates: [number, number][] };
 };
 
+/** What the API says about each phrase that was typed. */
+type InterestReport = {
+  phrase: string;
+  status: "resolved" | "unresolved" | "invalid";
+  id?: string;
+  label?: string;
+  matchCount?: number;
+  coverage?: "ok" | "thin" | "not-extracted";
+};
+
 type ApiResponse = {
+  query: { interests: InterestReport[] };
   meta: {
     fastestTime: number;
     /** Seconds the via-points add, when there are any. */
@@ -82,6 +95,9 @@ export default function RouteMap({ edges }: { edges: number }) {
   const [destination, setDestination] = useState<Pt | null>(null);
   /** Places the walk must pass through — shift-click to add. */
   const [via, setVia] = useState<Pt[]>([]);
+  /** Free-text interests (PLAN.md §6). */
+  const [interests, setInterests] = useState<string[]>([]);
+  const [draft, setDraft] = useState("");
   const [slackMin, setSlackMin] = useState(10);
   const [weights, setWeights] = useState<Record<ScenicAxis, number>>({
     green: 1, water: 1, architecture: 1, art: 1, quiet: 1, hills: 1,
@@ -110,6 +126,7 @@ export default function RouteMap({ edges }: { edges: number }) {
     slack: number,
     w: Record<ScenicAxis, number>,
     v: Pt[] = [],
+    ints: string[] = [],
   ) {
     const id = ++requestId.current;
     setPending(true);
@@ -122,6 +139,7 @@ export default function RouteMap({ edges }: { edges: number }) {
           origin: o,
           destination: d,
           via: v,
+          interests: ints,
           slackMin: slack,
           weights: w,
         }),
@@ -226,7 +244,7 @@ export default function RouteMap({ edges }: { edges: number }) {
         if (!origin || !destination) return;
         const next = [...via, pt];
         setVia(next);
-        void runRoute(origin, destination, slackMin, weights, next);
+        void runRoute(origin, destination, slackMin, weights, next, interests);
         return;
       }
 
@@ -237,7 +255,7 @@ export default function RouteMap({ edges }: { edges: number }) {
         setResult(null);
       } else {
         setDestination(pt);
-        void runRoute(origin, pt, slackMin, weights, via);
+        void runRoute(origin, pt, slackMin, weights, via, interests);
       }
     };
 
@@ -245,7 +263,7 @@ export default function RouteMap({ edges }: { edges: number }) {
     return () => {
       map.off("click", onClick);
     };
-  }, [ready, origin, destination, via, slackMin, weights, runRoute]);
+  }, [ready, origin, destination, via, interests, slackMin, weights, runRoute]);
 
   // Markers follow the two points.
   useEffect(() => {
@@ -300,12 +318,29 @@ export default function RouteMap({ edges }: { edges: number }) {
   function toggleAxis(axis: ScenicAxis) {
     const next = { ...weights, [axis]: weights[axis] > 0 ? 0 : 1 };
     setWeights(next);
-    if (origin && destination) void runRoute(origin, destination, slackMin, next, via);
+    if (origin && destination) void runRoute(origin, destination, slackMin, next, via, interests);
+  }
+
+  function addInterest() {
+    const phrase = draft.trim();
+    if (!phrase || interests.length >= 5) return;
+    const next = [...interests, phrase];
+    setInterests(next);
+    setDraft("");
+    if (origin && destination)
+      void runRoute(origin, destination, slackMin, weights, via, next);
+  }
+
+  function removeInterest(phrase: string) {
+    const next = interests.filter((p) => p !== phrase);
+    setInterests(next);
+    if (origin && destination)
+      void runRoute(origin, destination, slackMin, weights, via, next);
   }
 
   function changeSlack(value: number) {
     setSlackMin(value);
-    if (origin && destination) void runRoute(origin, destination, value, weights, via);
+    if (origin && destination) void runRoute(origin, destination, value, weights, via, interests);
   }
 
   const anyWeight = Object.values(weights).some((w) => w > 0);
@@ -379,6 +414,83 @@ export default function RouteMap({ edges }: { edges: number }) {
           </p>
         )}
 
+        {/*
+          Free text, per PLAN.md §6 — six chips are a starting vocabulary, not
+          the ceiling. The count coming back is the point: it turns "we accepted
+          your text" into "we found 1,046 of these", which is what proves the
+          feature listened before any route is drawn.
+        */}
+        <div className="mt-3 border-t border-slate-200 pt-2">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            Anything else you&apos;re into?
+          </h2>
+          <div className="mt-1.5 flex gap-1">
+            <input
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") addInterest();
+              }}
+              placeholder="bridges · cobblestones · statues"
+              disabled={interests.length >= 5}
+              className="min-w-0 flex-1 rounded border border-slate-300 px-2 py-1 text-xs placeholder:text-slate-400 disabled:bg-slate-50"
+            />
+            <button
+              type="button"
+              onClick={addInterest}
+              disabled={!draft.trim() || interests.length >= 5}
+              className="rounded border border-slate-300 px-2 text-xs text-slate-700 hover:bg-slate-100 disabled:text-slate-300"
+            >
+              add
+            </button>
+          </div>
+
+          {interests.length >= 5 && (
+            <p className="mt-1 text-[10px] text-slate-500">
+              Five is the cap — more and each one stops being noticeable.
+            </p>
+          )}
+
+          <ul className="mt-1.5 space-y-1">
+            {interests.map((phrase) => {
+              const report = result?.query.interests.find((r) => r.phrase === phrase);
+              const bad =
+                report?.status !== "resolved" || report.coverage === "not-extracted";
+              return (
+                <li
+                  key={phrase}
+                  className={`flex items-start gap-1.5 rounded border px-1.5 py-1 text-[11px] ${
+                    bad
+                      ? "border-amber-200 bg-amber-50 text-amber-900"
+                      : "border-emerald-200 bg-emerald-50 text-emerald-900"
+                  }`}
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="font-semibold">{report?.label ?? phrase}</span>{" "}
+                    {/* Three distinct honest answers, never collapsed into one. */}
+                    {report?.status === "unresolved" && "— not in the map's vocabulary"}
+                    {report?.coverage === "not-extracted" && "— not extracted yet, so we don't know"}
+                    {report?.status === "resolved" && report.coverage !== "not-extracted" && (
+                      <>
+                        ✓ {fmt.format(report.matchCount ?? 0)} nearby
+                        {report.coverage === "thin" && " (thin)"}
+                      </>
+                    )}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => removeInterest(phrase)}
+                    className="shrink-0 px-0.5 opacity-60 hover:opacity-100"
+                    aria-label={`Remove ${phrase}`}
+                  >
+                    ×
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
         {via.length > 0 && (
           <div className="mt-3 border-t border-slate-200 pt-2">
             <div className="flex items-baseline justify-between">
@@ -390,7 +502,7 @@ export default function RouteMap({ edges }: { edges: number }) {
                 onClick={() => {
                   setVia([]);
                   if (origin && destination)
-                    void runRoute(origin, destination, slackMin, weights, []);
+                    void runRoute(origin, destination, slackMin, weights, [], interests);
                 }}
                 className="text-[11px] text-slate-500 underline underline-offset-2 hover:text-slate-900"
               >
@@ -468,6 +580,19 @@ export default function RouteMap({ edges }: { edges: number }) {
                       {(r.len / 1000).toFixed(2)} km · scenic{" "}
                       {r.scenic.toFixed(2)}
                     </p>
+                    {/* §4's payoff line: "crosses 3 bridges" — the moment the
+                        user learns the app actually listened. */}
+                    {r.interests.filter((x) => x.metres > 0).length > 0 && (
+                      <p className="mt-0.5 text-[11px] font-medium text-emerald-700">
+                        {r.interests
+                          .filter((x) => x.metres > 0)
+                          .map((x) =>
+                            `${x.metres >= 1000
+                              ? `${(x.metres / 1000).toFixed(1)} km`
+                              : `${x.metres} m`} of ${x.label.toLowerCase()}`)
+                          .join(" · ")}
+                      </p>
+                    )}
                     <ul className="mt-1 space-y-0.5">
                       {SCENIC_AXES.filter((a) => weights[a.key] > 0).map((a) => (
                         <li

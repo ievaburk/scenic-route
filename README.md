@@ -140,8 +140,39 @@ Three findings worth knowing before Phase 3:
   balanced potentials halve the heuristic's strength. That's the price of exact
   termination and it's the right trade — real walks are sub-millisecond.
 
-**Next up: Phase 3 (custom interests)** — dictionary resolver, sparse per-interest
-edge layers, match counts, then the LLM fallback.
+**Phase 3 (custom interests) — done**, except the LLM fallback.
+
+Type a phrase, get a verified count, watch it change the walk. Every dictionary
+entry is grounded in a measured count from the extract rather than imagination —
+§6 is blunt that verifying against the real graph is what stops the feature
+being a lie.
+
+| | |
+|---|---|
+| dictionary entries | 18, each with a measured count |
+| fixtures | 26/26 (23 phrases + 3 route effects) |
+| bridges / cobblestones / statues | 1,046 / 950 / 719 matches |
+
+Asking for bridges puts 2.0 km of bridge on a Dumbo → Lower East Side walk;
+statues add 584 m to Chelsea → East Village.
+
+**Coverage reports three different failures, deliberately.** "ok", "thin" (real
+but too few to shape a walk), and "not extracted" (valid filter, but we never
+queried that key — so we genuinely don't know). Art deco forced the distinction:
+asking finds 4 matches, not because NYC has four art deco buildings but because
+four buildings that matched *other* selectors carry the tag incidentally.
+Reporting "4" would tell you your city has none. Phrases OSM will never know —
+"smells like bakeries", "not too many tourists" — fail plainly rather than
+becoming a dead weight.
+
+**Interests amplify what's locally abundant; they can't summon a distant
+cluster.** Same structural limit as the piers: asking for museums on a Midtown
+walk changes nothing, because Museum Mile is a kilometre off-corridor and a
+per-edge discount can't fund that. Via-points remain the mechanism for "go
+there".
+
+**Next up: Phase 4 (loop mode)** — the first real user-facing surface, with
+anchor selection biased by the interests built above.
 
 ## Data
 
