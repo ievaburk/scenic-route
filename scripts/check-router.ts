@@ -21,7 +21,7 @@ import {
   makeScratch,
   routeCost,
 } from "../lib/router";
-import { compositeScore, type ScoreArtifact } from "../lib/scoring";
+import { scenicArray, type ScoreArtifact } from "../lib/scoring";
 import { DEFAULT_WEIGHTS } from "../lib/features";
 import type { GraphArtifact } from "../lib/graph";
 
@@ -65,10 +65,8 @@ function main() {
   const g = buildRoutingGraph(artifact);
   const scratch = makeScratch(g);
 
-  const scenic = new Float32Array(g.edgeCount);
-  for (let i = 0; i < g.edgeCount; i++) {
-    scenic[i] = compositeScore(scores.axes, i, DEFAULT_WEIGHTS);
-  }
+  // Same function the API uses, so these checks can't drift from production.
+  const scenic = scenicArray(scores.axes, g.edgeCount, DEFAULT_WEIGHTS);
 
   console.log(
     `${g.nodeCount} nodes, ${g.edgeCount} edges · ` +

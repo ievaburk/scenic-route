@@ -28,7 +28,7 @@ import {
   type RoutingGraph,
 } from "../lib/router";
 import { overlapFraction, planRoutes } from "../lib/plan-route";
-import { compositeScore, type ScoreArtifact } from "../lib/scoring";
+import { scenicArray, type ScoreArtifact } from "../lib/scoring";
 import { DEFAULT_WEIGHTS } from "../lib/features";
 import type { GraphArtifact } from "../lib/graph";
 
@@ -89,10 +89,8 @@ function main() {
 
   const g: RoutingGraph = buildRoutingGraph(artifact);
   const scratch = makeScratch(g);
-  const scenic = new Float32Array(g.edgeCount);
-  for (let i = 0; i < g.edgeCount; i++) {
-    scenic[i] = compositeScore(scores.axes, i, DEFAULT_WEIGHTS);
-  }
+  // Same function the API uses, so these checks can't drift from production.
+  const scenic = scenicArray(scores.axes, g.edgeCount, DEFAULT_WEIGHTS);
 
   console.log(`${pairs.length} pairs · slack +${SLACK_MIN} min\n`);
 

@@ -175,9 +175,50 @@ export function percentileNormalise(raw: Float64Array): Float64Array {
 }
 
 /**
- * Weighted mean of the axes for one edge — the `scenic(e) ∈ [0,1]` that the
- * router's `time(e) · (1 − α · scenic(e))` cost consumes in Phase 2, exactly as
- * PLAN.md §8 specifies.
+ * The per-edge `scenic(e)` the router consumes: weighted composite, then
+ * **percentile-normalised across the city a second time**.
+ *
+ * That second pass is not a tuning knob, it repairs a real gap. §7
+ * percentile-normalises each axis so scores spread uniformly over [0,1] — and
+ * then averaging six of them concentrates the result back around the middle,
+ * because that is what averaging does. The uniformity is thrown away at the
+ * last step: the median edge scored 0.233 and the 90th percentile 0.463.
+ *
+ * The consequence was that α could not do its job. At maximum greed a
+ * 90th-percentile edge cost 0.58× its time against a median edge's 0.79× —
+ * only 1.35× cheaper, nowhere near enough to repay a detour. The α search
+ * saturated at its ceiling while spending 0.1 of the 10 minutes offered, so
+ * §8's detour budget — the central mechanic of A-to-B — was inert.
+ *
+ * Re-ranking restores p50 = 0.5, p90 = 0.9 and a 2.90× discount ratio, and the
+ * budget starts binding.
+ *
+ * One honest caveat, and it is the same one §11 raises about percentile
+ * normalisation generally: this *guarantees* contrast rather than measuring it.
+ * Exactly 10% of edges score ≥0.9 however uniformly dull the city is, so the
+ * router always believes there is something worth detouring toward. Defensible
+ * for a pilot — "nice relative to what this city offers" is the question a
+ * walker is asking — but it is a stronger claim at the composite level than
+ * per-axis, and it will need revisiting well before city #5.
+ */
+export function scenicArray(
+  axes: Record<ScenicAxis, number[]>,
+  count: number,
+  weights: Record<ScenicAxis, number>,
+): Float32Array {
+  const raw = new Float64Array(count);
+  for (let i = 0; i < count; i++) raw[i] = compositeScore(axes, i, weights);
+
+  const ranked = percentileNormalise(raw);
+
+  const out = new Float32Array(count);
+  for (let i = 0; i < count; i++) out[i] = ranked[i];
+  return out;
+}
+
+/**
+ * Weighted mean of the axes for one edge — the raw ingredient of
+ * `scenicArray` above, and exactly the blend PLAN.md §8 specifies.
  *
  * Linear is right *here* because at route time the weights are the user's own.
  * Someone who asked for water and green has zeros on the other four axes, so

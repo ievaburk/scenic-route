@@ -8,7 +8,7 @@
  */
 import type { GraphArtifact } from "./graph";
 import { AXIS_KEYS, DEFAULT_WEIGHTS, type ScenicAxis } from "./features";
-import { compositeScore, type ScoreArtifact } from "./scoring";
+import { scenicArray, type ScoreArtifact } from "./scoring";
 import { buildRoutingGraph, makeScratch, type RoutingGraph, type SearchScratch } from "./router";
 import { tryLoadGraph } from "./graph-server";
 import { scoresFor } from "./scores-server";
@@ -57,8 +57,10 @@ export function tryLoadRouting(): RoutingContext | null {
  * can't dilute the ones they do; the quadratic form exists only to answer
  * "interesting for any reason at all", which is a display question.
  *
- * Cached on the weight vector, since the α sweep re-reads this array ~24 times
- * per request.
+ * The work itself is `scenicArray`, shared with the check scripts so they can't
+ * end up testing a different function from the one that serves requests. This
+ * wrapper only adds caching: re-ranking 170k edges takes ~60 ms, and the α
+ * sweep re-reads the array a dozen times per request.
  */
 export function scenicFor(
   scores: ScoreArtifact,
@@ -68,12 +70,7 @@ export function scenicFor(
     scores.meta.builtAt + "|" + AXIS_KEYS.map((a) => weights[a] ?? 0).join(",");
   if (store.__scenicScenic?.key === key) return store.__scenicScenic.scenic;
 
-  const n = scores.meta.edges;
-  const scenic = new Float32Array(n);
-  for (let i = 0; i < n; i++) {
-    scenic[i] = compositeScore(scores.axes, i, weights);
-  }
-
+  const scenic = scenicArray(scores.axes, scores.meta.edges, weights);
   store.__scenicScenic = { key, scenic };
   return scenic;
 }

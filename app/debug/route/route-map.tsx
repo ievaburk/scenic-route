@@ -153,6 +153,12 @@ export default function RouteMap({ edges }: { edges: number }) {
     });
     mapRef.current = map;
 
+    // Same escape hatch as the graph page — lets you drive the map from the
+    // console when checking a specific route.
+    if (process.env.NODE_ENV !== "production") {
+      (window as unknown as { __map?: MapLibreMap }).__map = map;
+    }
+
     map.on("error", (e) => {
       const message = e.error?.message ?? String(e);
       console.error("[maplibre]", message);
