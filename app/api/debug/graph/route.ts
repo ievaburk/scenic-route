@@ -1,12 +1,14 @@
 /**
  * The whole walkable network as GeoJSON, for the debug map.
  *
- * ~25 MB, served straight to a MapLibre source URL so the parse happens in the
- * map's worker rather than on the main thread. The ETag is derived from the
- * artifact's build timestamp: rebuild the graph and the browser refetches,
- * otherwise reloads while panning around cost a 304.
+ * ~25 MB (~31 MB once scenic scores are attached), served straight to a
+ * MapLibre source URL so the parse happens in the map's worker rather than on
+ * the main thread. The ETag covers both artifacts: rebuild the graph *or*
+ * re-score it and the browser refetches, otherwise reloads while panning
+ * around cost a 304.
  */
 import { graphGeoJSON, tryLoadGraph } from "@/lib/graph-server";
+import { scoresFor } from "@/lib/scores-server";
 
 export async function GET(request: Request) {
   const loaded = tryLoadGraph();
@@ -17,16 +19,21 @@ export async function GET(request: Request) {
     );
   }
 
+  const status = scoresFor(loaded);
+  const scores = status.state === "ok" ? status.scores : null;
+
+  const etag = `W/"${loaded.etag.slice(3, -1)}-${scores?.meta.builtAt ?? "unscored"}"`;
+
   const headers = {
     "Content-Type": "application/geo+json",
-    ETag: loaded.etag,
-    // Revalidate every time, but let an unchanged graph come back as a 304.
+    ETag: etag,
+    // Revalidate every time, but let unchanged artifacts come back as a 304.
     "Cache-Control": "no-cache",
   };
 
-  if (request.headers.get("if-none-match") === loaded.etag) {
+  if (request.headers.get("if-none-match") === etag) {
     return new Response(null, { status: 304, headers });
   }
 
-  return new Response(graphGeoJSON(loaded), { headers });
+  return new Response(graphGeoJSON(loaded, scores), { headers });
 }

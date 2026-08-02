@@ -18,6 +18,8 @@ import {
   type EdgeClass,
   type GraphArtifact,
 } from "./graph";
+import { AXIS_KEYS, DEFAULT_WEIGHTS, type ScenicAxis } from "./features";
+import { overallScore, type ScoreArtifact } from "./scoring";
 
 export const GRAPH_FILE = path.join(process.cwd(), "data", "graph.json");
 
@@ -36,7 +38,8 @@ export type LoadedGraph = {
  */
 const store = globalThis as typeof globalThis & {
   __scenicGraph?: LoadedGraph;
-  __scenicGraphGeoJSON?: string;
+  /** Keyed, because the payload differs depending on whether scores exist yet. */
+  __scenicGraphGeoJSON?: { key: string; json: string };
 };
 
 export function tryLoadGraph(): LoadedGraph | null {
@@ -76,12 +79,34 @@ export function tryLoadGraph(): LoadedGraph | null {
  * string rather than an object: MapLibre takes a URL and parses it in a worker,
  * so nothing is gained by materialising 170k feature objects on the server.
  *
- * Properties are single letters on purpose — at 170k features, a longer name
- * costs megabytes. `i` edge index, `c` class, `l` metres, `s` seconds on foot,
- * `t` tag-set index (fetched on click via /api/debug/tags/[i]).
+ * Properties are abbreviated on purpose — at 170k features, a longer name costs
+ * megabytes. `i` edge index, `c` class, `l` metres, `s` seconds on foot, `t`
+ * tag-set index (fetched on click via /api/debug/tags/[i]).
+ *
+ * When scores are available each edge also carries `sc` (composite) and one key
+ * per axis — `gr wa ar la qu hi`. Two compressions matter at this scale:
+ * scores go over the wire as **integers 0–100** rather than floats, and **zeros
+ * are omitted entirely**. Most edges have no water, art or hills anywhere near
+ * them, so omission alone removes several megabytes. The client reads them back
+ * with a `coalesce` to 0.
  */
-export function graphGeoJSON(loaded: LoadedGraph): string {
-  if (store.__scenicGraphGeoJSON) return store.__scenicGraphGeoJSON;
+const AXIS_PROPERTY: Record<ScenicAxis, string> = {
+  green: "gr",
+  water: "wa",
+  architecture: "ar",
+  art: "la",
+  quiet: "qu",
+  hills: "hi",
+};
+
+export function graphGeoJSON(
+  loaded: LoadedGraph,
+  scores: ScoreArtifact | null,
+): string {
+  const key = scores ? scores.meta.builtAt : "none";
+  if (store.__scenicGraphGeoJSON?.key === key) {
+    return store.__scenicGraphGeoJSON.json;
+  }
 
   const { graph, classOfTagSet } = loaded;
   const features = new Array<string>(graph.edges.length);
@@ -92,13 +117,26 @@ export function graphGeoJSON(loaded: LoadedGraph): string {
     for (let j = 0, c = 0; j < e.geom.length; j += 2, c++) {
       coords[c] = `[${e.geom[j]},${e.geom[j + 1]}]`;
     }
+
+    let scoreProps = "";
+    if (scores) {
+      for (const axis of AXIS_KEYS) {
+        const v = Math.round((scores.axes[axis][i] ?? 0) * 100);
+        if (v > 0) scoreProps += `,"${AXIS_PROPERTY[axis]}":${v}`;
+      }
+      const overall = Math.round(
+        overallScore(scores.axes, i, DEFAULT_WEIGHTS) * 100,
+      );
+      if (overall > 0) scoreProps += `,"sc":${overall}`;
+    }
+
     features[i] =
       `{"type":"Feature","properties":{"i":${i},"c":"${classOfTagSet[e.t]}",` +
-      `"l":${e.len},"s":${e.time},"t":${e.t}},` +
+      `"l":${e.len},"s":${e.time},"t":${e.t}${scoreProps}},` +
       `"geometry":{"type":"LineString","coordinates":[${coords.join(",")}]}}`;
   }
 
   const json = `{"type":"FeatureCollection","features":[${features.join(",")}]}`;
-  store.__scenicGraphGeoJSON = json;
+  store.__scenicGraphGeoJSON = { key, json };
   return json;
 }

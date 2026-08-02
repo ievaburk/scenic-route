@@ -1,13 +1,19 @@
 "use client";
 
 /**
- * Phase 0's verification surface (PLAN.md §13): the whole walkable graph on a
- * map, coloured by road class, with every edge's raw OSM tags one click away.
+ * The Phase 0–1 verification surface (PLAN.md §13).
  *
- * The question it exists to answer is "is this the right network?" — are the
- * avenues avenues, do the park paths exist, did the Brooklyn Heights Promenade
- * survive the build. Phase 1 keeps this page and swaps the colouring to the
- * scenic score.
+ * Phase 0 asked "is this the right network?" — colour by road class, click for
+ * raw OSM tags. Phase 1 asks the question the whole product rests on: **does
+ * the scenic score agree with what I know about this city?** Riverside Park,
+ * the Brooklyn Heights Promenade and the Hudson River Greenway should glow.
+ * 8th Avenue should not. If that doesn't hold, no amount of routing
+ * sophistication in Phase 2 rescues it.
+ *
+ * The threshold slider is what makes that a sharp check rather than a squint:
+ * pushed to the top decile, only the streets the scorer is genuinely confident
+ * about stay on the map, and you can see immediately whether they're the ones
+ * you'd actually walk.
  *
  * Note maplibre-gl v6 has no default export; everything is a named import.
  */
@@ -26,6 +32,8 @@ import {
   type EdgeClass,
   type GraphMeta,
 } from "@/lib/graph";
+import { SCENIC_AXES, type ScenicAxis } from "@/lib/features";
+import type { ScoreMeta } from "@/lib/scoring";
 import { PILOT } from "@/lib/pilot";
 
 const SOURCE = "graph";
@@ -40,11 +48,32 @@ const STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
 const OSM_ATTRIBUTION =
   '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors (ODbL)';
 
-/** Properties carried on every feature — single letters to keep 170k of them small. */
-type EdgeProps = { i: number; c: EdgeClass; l: number; s: number; t: number };
+/** Score properties, matching AXIS_PROPERTY in lib/graph-server.ts. */
+const AXIS_PROPERTY: Record<ScenicAxis, string> = {
+  green: "gr",
+  water: "wa",
+  architecture: "ar",
+  art: "la",
+  quiet: "qu",
+  hills: "hi",
+};
+
+const COMPOSITE = "composite" as const;
+type View = typeof COMPOSITE | ScenicAxis;
+
+type EdgeProps = {
+  i: number;
+  c: EdgeClass;
+  l: number;
+  s: number;
+  t: number;
+  scores: Record<string, number>;
+};
 
 type LineLayer = Extract<AddLayerObject, { type: "line" }>;
-type LineColor = NonNullable<NonNullable<LineLayer["paint"]>["line-color"]>;
+type LinePaint = NonNullable<LineLayer["paint"]>;
+type LineColor = NonNullable<LinePaint["line-color"]>;
+type LineWidth = NonNullable<LinePaint["line-width"]>;
 /** maplibre-gl v6 doesn't re-export FilterSpecification, so derive it. */
 type MapFilter = NonNullable<Parameters<MapLibreMap["setFilter"]>[1]>;
 
@@ -60,6 +89,69 @@ const COLOR_BY_CLASS = [
   "#000000",
 ] as unknown as LineColor;
 
+/**
+ * Scores arrive as integers 0–100 with zeros omitted, so every read needs the
+ * coalesce — a missing property means "scored zero", not "no data".
+ */
+function scoreExpression(view: View) {
+  const prop = view === COMPOSITE ? "sc" : AXIS_PROPERTY[view];
+  return ["coalesce", ["get", prop], 0];
+}
+
+/**
+ * Sequential yellow→red. Deliberately a heat ramp rather than one tinted per
+ * axis: you're comparing axes against each other by eye, and that only works
+ * if the same colour means the same number in every view. Low scores land in
+ * pale grey so they recede into the basemap and the high ones actually glow.
+ */
+const RAMP: [number, string][] = [
+  [0, "#e2e8f0"],
+  [30, "#fed976"],
+  [55, "#fd8d3c"],
+  [75, "#f03b20"],
+  [100, "#bd0026"],
+];
+
+function colorByScore(view: View): LineColor {
+  return [
+    "interpolate",
+    ["linear"],
+    scoreExpression(view),
+    ...RAMP.flatMap(([stop, color]) => [stop, color]),
+  ] as unknown as LineColor;
+}
+
+/** High scorers draw thicker as well as hotter, so they read at low zoom. */
+function widthByScore(view: View): LineWidth {
+  return [
+    "interpolate",
+    ["linear"],
+    ["zoom"],
+    10,
+    ["interpolate", ["linear"], scoreExpression(view), 0, 0.3, 100, 1.6],
+    13,
+    ["interpolate", ["linear"], scoreExpression(view), 0, 0.6, 100, 2.4],
+    16,
+    ["interpolate", ["linear"], scoreExpression(view), 0, 1.4, 100, 4.5],
+    19,
+    ["interpolate", ["linear"], scoreExpression(view), 0, 3.5, 100, 9],
+  ] as unknown as LineWidth;
+}
+
+const WIDTH_BY_ZOOM = [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  10,
+  0.4,
+  13,
+  0.9,
+  16,
+  2,
+  19,
+  5,
+] as unknown as LineWidth;
+
 const fmt = new Intl.NumberFormat("en-US");
 
 function walkTime(seconds: number): string {
@@ -71,9 +163,13 @@ function walkTime(seconds: number): string {
 export default function GraphMap({
   meta,
   summary,
+  scoreMeta,
+  scoreProblem,
 }: {
   meta: GraphMeta;
   summary: ClassSummary[];
+  scoreMeta: ScoreMeta | null;
+  scoreProblem: string | null;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -83,10 +179,11 @@ export default function GraphMap({
   const [hidden, setHidden] = useState<ReadonlySet<EdgeClass>>(new Set());
   const [selected, setSelected] = useState<EdgeProps | null>(null);
   const [mapError, setMapError] = useState<string | null>(null);
-  /**
-   * Keyed by tag-set index, so a slow response landing after you've clicked
-   * elsewhere is ignored rather than shown under the wrong edge.
-   */
+
+  /** Scenic colouring is only meaningful once there are scores to colour by. */
+  const [view, setView] = useState<View | null>(scoreMeta ? COMPOSITE : null);
+  const [threshold, setThreshold] = useState(0);
+
   const [tagState, setTagState] = useState<{
     t: number;
     tags?: Record<string, string>;
@@ -150,7 +247,7 @@ export default function GraphMap({
 
       map.addSource(SOURCE, {
         type: "geojson",
-        // A URL, not inline data: MapLibre fetches and parses ~25 MB in its
+        // A URL, not inline data: MapLibre fetches and parses ~30 MB in its
         // worker, off the main thread.
         data: "/api/debug/graph",
         attribution: OSM_ATTRIBUTION,
@@ -163,19 +260,7 @@ export default function GraphMap({
         layout: { "line-cap": "round", "line-join": "round" },
         paint: {
           "line-color": COLOR_BY_CLASS,
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            10,
-            0.4,
-            13,
-            0.9,
-            16,
-            2,
-            19,
-            5,
-          ],
+          "line-width": WIDTH_BY_ZOOM,
           "line-opacity": [
             "interpolate",
             ["linear"],
@@ -207,7 +292,7 @@ export default function GraphMap({
         filter: ["==", ["get", "i"], -1],
         layout: { "line-cap": "round", "line-join": "round" },
         paint: {
-          "line-color": "#ec4899",
+          "line-color": "#0f172a",
           "line-width": [
             "interpolate",
             ["linear"],
@@ -235,12 +320,17 @@ export default function GraphMap({
     map.on("click", HIT_LAYER, (e) => {
       const props = e.features?.[0]?.properties;
       if (!props) return;
+      const scores: Record<string, number> = {};
+      for (const key of ["sc", ...Object.values(AXIS_PROPERTY)]) {
+        scores[key] = Number(props[key] ?? 0);
+      }
       setSelected({
         i: Number(props.i),
         c: String(props.c) as EdgeClass,
         l: Number(props.l),
         s: Number(props.s),
         t: Number(props.t),
+        scores,
       });
     });
 
@@ -264,19 +354,42 @@ export default function GraphMap({
     };
   }, []);
 
+  // Colour and width follow the selected view.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !layersReady) return;
-    const filter: MapFilter = [
+    if (view === null) {
+      map.setPaintProperty(EDGE_LAYER, "line-color", COLOR_BY_CLASS);
+      map.setPaintProperty(EDGE_LAYER, "line-width", WIDTH_BY_ZOOM);
+    } else {
+      map.setPaintProperty(EDGE_LAYER, "line-color", colorByScore(view));
+      map.setPaintProperty(EDGE_LAYER, "line-width", widthByScore(view));
+    }
+  }, [layersReady, view]);
+
+  // Class visibility and the score threshold are one combined filter — the hit
+  // layer gets it too, so anything hidden isn't silently still clickable.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !layersReady) return;
+
+    const clauses: unknown[] = [
       "in",
       ["get", "c"],
       ["literal", visibleKey.split(",").filter(Boolean)],
     ];
-    // The hit layer gets the same filter, so a class you've hidden isn't
-    // silently still clickable.
+    const filter: MapFilter =
+      view !== null && threshold > 0
+        ? ([
+            "all",
+            clauses,
+            [">=", scoreExpression(view), threshold],
+          ] as unknown as MapFilter)
+        : (clauses as unknown as MapFilter);
+
     map.setFilter(EDGE_LAYER, filter);
     map.setFilter(HIT_LAYER, filter);
-  }, [layersReady, visibleKey]);
+  }, [layersReady, visibleKey, view, threshold]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -319,19 +432,31 @@ export default function GraphMap({
 
       <header className="pointer-events-none absolute inset-x-0 top-0 flex flex-wrap items-start gap-3 p-3">
         <div className="pointer-events-auto rounded-lg border border-slate-200 bg-white/90 px-3 py-2 shadow-sm backdrop-blur">
-          <h1 className="text-sm font-semibold">Walkable graph · {PILOT.name}</h1>
+          <h1 className="text-sm font-semibold">
+            {view === null ? "Walkable graph" : "Scenic score"} · {PILOT.name}
+          </h1>
           <p className="mt-0.5 font-mono text-xs text-slate-600">
             {fmt.format(meta.edges)} edges · {fmt.format(meta.nodes)} nodes ·{" "}
             {fmt.format(meta.totalKm)} km
           </p>
-          <p className="mt-0.5 text-[11px] text-slate-500">
-            built {new Date(meta.builtAt).toLocaleString()}
-          </p>
+          {scoreMeta && (
+            <p className="mt-0.5 font-mono text-[11px] text-slate-500">
+              {fmt.format(scoreMeta.sources.osm ?? 0)} OSM features ·{" "}
+              {fmt.format(scoreMeta.sources.streetTrees ?? 0)} trees ·{" "}
+              {fmt.format(scoreMeta.sources.historicDistricts ?? 0)} districts
+            </p>
+          )}
         </div>
 
         {!edgesDrawn && !mapError && (
           <div className="pointer-events-auto rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-xs shadow-sm backdrop-blur">
             Loading {fmt.format(meta.edges)} edges…
+          </div>
+        )}
+
+        {scoreProblem && (
+          <div className="pointer-events-auto max-w-sm rounded-lg border border-amber-200 bg-amber-50/95 px-3 py-2 text-xs text-amber-900 shadow-sm">
+            {scoreProblem}
           </div>
         )}
 
@@ -342,49 +467,118 @@ export default function GraphMap({
         )}
       </header>
 
-      <div className="absolute bottom-3 left-3 max-h-[60vh] w-64 overflow-y-auto rounded-lg border border-slate-200 bg-white/90 p-3 shadow-sm backdrop-blur">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-            Road class
-          </h2>
-          <button
-            type="button"
-            onClick={() => setHidden(new Set())}
-            className="text-[11px] text-slate-500 underline underline-offset-2 hover:text-slate-900"
-          >
-            show all
-          </button>
+      <div className="absolute bottom-3 left-3 max-h-[75vh] w-64 overflow-y-auto rounded-lg border border-slate-200 bg-white/90 p-3 shadow-sm backdrop-blur">
+        {scoreMeta && (
+          <>
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Colour by
+            </h2>
+            <ul className="mt-2 space-y-1">
+              <ViewOption
+                label="Scenic score"
+                bold
+                active={view === COMPOSITE}
+                onSelect={() => setView(COMPOSITE)}
+              />
+              {SCENIC_AXES.map((axis) => (
+                <ViewOption
+                  key={axis.key}
+                  label={axis.label}
+                  swatch={axis.color}
+                  active={view === axis.key}
+                  onSelect={() => setView(axis.key)}
+                />
+              ))}
+              <ViewOption
+                label="Road class"
+                active={view === null}
+                onSelect={() => setView(null)}
+              />
+            </ul>
+
+            {view !== null && (
+              <div className="mt-3 border-t border-slate-200 pt-2">
+                <div
+                  className="h-2 w-full rounded-full"
+                  style={{
+                    backgroundImage: `linear-gradient(to right, ${RAMP.map(
+                      ([stop, color]) => `${color} ${stop}%`,
+                    ).join(", ")})`,
+                  }}
+                />
+                <div className="mt-1 flex justify-between font-mono text-[10px] text-slate-500">
+                  <span>0</span>
+                  <span>percentile</span>
+                  <span>100</span>
+                </div>
+
+                <label className="mt-2 block text-[11px] text-slate-600">
+                  Hide below{" "}
+                  <span className="font-mono font-semibold">{threshold}</span>
+                  <input
+                    type="range"
+                    min={0}
+                    max={95}
+                    step={5}
+                    value={threshold}
+                    onChange={(e) => setThreshold(Number(e.target.value))}
+                    className="mt-1 w-full accent-slate-700"
+                  />
+                </label>
+              </div>
+            )}
+          </>
+        )}
+
+        <div className={scoreMeta ? "mt-3 border-t border-slate-200 pt-2" : ""}>
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Road class
+            </h2>
+            <button
+              type="button"
+              onClick={() => setHidden(new Set())}
+              className="text-[11px] text-slate-500 underline underline-offset-2 hover:text-slate-900"
+            >
+              show all
+            </button>
+          </div>
+
+          <ul className="mt-2 space-y-1">
+            {summary.map((row) => {
+              const cls = EDGE_CLASSES.find((c) => c.key === row.key)!;
+              const on = !hidden.has(row.key);
+              return (
+                <li key={row.key}>
+                  <label className="flex cursor-pointer items-center gap-2 text-xs">
+                    <input
+                      type="checkbox"
+                      checked={on}
+                      onChange={() => toggle(row.key)}
+                      className="size-3.5 accent-slate-700"
+                    />
+                    <span
+                      className="h-1 w-4 shrink-0 rounded-full"
+                      style={{
+                        backgroundColor: cls.color,
+                        opacity: on ? 1 : 0.3,
+                      }}
+                    />
+                    <span className={on ? "" : "text-slate-400"}>
+                      {cls.label}
+                    </span>
+                    <span className="ml-auto font-mono text-[11px] text-slate-500">
+                      {fmt.format(row.km)} km
+                    </span>
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
-        <ul className="mt-2 space-y-1">
-          {summary.map((row) => {
-            const cls = EDGE_CLASSES.find((c) => c.key === row.key)!;
-            const on = !hidden.has(row.key);
-            return (
-              <li key={row.key}>
-                <label className="flex cursor-pointer items-center gap-2 text-xs">
-                  <input
-                    type="checkbox"
-                    checked={on}
-                    onChange={() => toggle(row.key)}
-                    className="size-3.5 accent-slate-700"
-                  />
-                  <span
-                    className="h-1 w-4 shrink-0 rounded-full"
-                    style={{ backgroundColor: cls.color, opacity: on ? 1 : 0.3 }}
-                  />
-                  <span className={on ? "" : "text-slate-400"}>{cls.label}</span>
-                  <span className="ml-auto font-mono text-[11px] text-slate-500">
-                    {fmt.format(row.km)} km
-                  </span>
-                </label>
-              </li>
-            );
-          })}
-        </ul>
-
         <p className="mt-3 border-t border-slate-200 pt-2 text-[11px] text-slate-500">
-          Click an edge for its raw OSM tags.
+          Click an edge for its scores and raw OSM tags.
         </p>
       </div>
 
@@ -407,6 +601,44 @@ export default function GraphMap({
               ×
             </button>
           </div>
+
+          {scoreMeta && (
+            <>
+              <h3 className="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Scenic score{" "}
+                <span className="font-mono text-slate-900">
+                  {selected.scores.sc}
+                </span>
+              </h3>
+              <ul className="mt-2 space-y-1">
+                {SCENIC_AXES.map((axis) => {
+                  const v = selected.scores[AXIS_PROPERTY[axis.key]] ?? 0;
+                  return (
+                    <li
+                      key={axis.key}
+                      className="flex items-center gap-2 text-xs"
+                    >
+                      <span className="w-28 shrink-0 text-slate-600">
+                        {axis.label}
+                      </span>
+                      <span className="h-1.5 flex-1 rounded-full bg-slate-100">
+                        <span
+                          className="block h-1.5 rounded-full"
+                          style={{
+                            width: `${v}%`,
+                            backgroundColor: axis.color,
+                          }}
+                        />
+                      </span>
+                      <span className="w-6 text-right font-mono text-[11px] text-slate-500">
+                        {v}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          )}
 
           <h3 className="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
             OSM tags · way set {selected.t}
@@ -433,5 +665,42 @@ export default function GraphMap({
         </aside>
       )}
     </div>
+  );
+}
+
+function ViewOption({
+  label,
+  swatch,
+  bold,
+  active,
+  onSelect,
+}: {
+  label: string;
+  swatch?: string;
+  bold?: boolean;
+  active: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <li>
+      <label className="flex cursor-pointer items-center gap-2 text-xs">
+        <input
+          type="radio"
+          name="view"
+          checked={active}
+          onChange={onSelect}
+          className="size-3.5 accent-slate-700"
+        />
+        {swatch ? (
+          <span
+            className="h-1 w-4 shrink-0 rounded-full"
+            style={{ backgroundColor: swatch }}
+          />
+        ) : (
+          <span className="w-4 shrink-0" />
+        )}
+        <span className={bold ? "font-semibold" : ""}>{label}</span>
+      </label>
+    </li>
   );
 }

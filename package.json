@@ -10,7 +10,10 @@
     "start": "next start",
     "lint": "eslint",
     "fetch:osm": "tsx scripts/fetch-osm.ts",
-    "build:graph": "tsx scripts/build-graph.ts"
+    "fetch:features": "tsx scripts/fetch-features.ts",
+    "build:graph": "tsx scripts/build-graph.ts",
+    "score:graph": "tsx scripts/score-graph.ts",
+    "check:landmarks": "tsx scripts/check-landmarks.ts"
   },
   "dependencies": {
     "maplibre-gl": "^6.1.0",
@@ -23,6 +26,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/rbush": "^4.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

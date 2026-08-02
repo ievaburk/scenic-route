@@ -27,8 +27,10 @@ Do not relitigate these; they were settled deliberately.
 ## Data pipeline
 
 ```bash
-npm run fetch:osm     # Overpass → data/raw/*.json  (slow, cached, resumable)
-npm run build:graph   # data/raw → data/graph.json  (fast, re-run freely)
+npm run fetch:osm       # Overpass → data/raw/walk_*.json  (slow, cached, resumable)
+npm run build:graph     # data/raw → data/graph.json       (fast, re-run freely)
+npm run fetch:features  # Overpass + NYC Open Data → data/raw/  (slow, cached)
+npm run score:graph     # graph + features → data/scores.json   (~5s, re-run freely)
 ```
 
 - `data/` is gitignored and fully rebuildable. Never commit it.
@@ -36,8 +38,33 @@ npm run build:graph   # data/raw → data/graph.json  (fast, re-run freely)
   load-bearing: free-text interests need to ask "is this edge a bridge / cobbled
   / art deco", and you cannot answer that against six precomputed numbers.
 - Overpass **406s on undici's default user-agent** — requests must send a real
-  `User-Agent`. It also rate-limits hard; backoff is in seconds, not ms.
-- `fetch-osm.ts` caches per tile so an interrupted run resumes. Keep it that way.
+  `User-Agent`. It also rate-limits hard; backoff is in seconds, not ms. The
+  feature query is broad and **504s far more than the network query does** —
+  the backoff ladder has to reach 90s+ or a run dies halfway.
+- Both fetch scripts cache per tile so an interrupted run resumes. Keep it that
+  way. Shared client is `lib/overpass.ts`.
+- The network query needs `out body; >; out skel qt;` because it wants node IDs
+  to build topology from. **Features use `out geom`** instead — they only need
+  shapes, and it skips the whole node-resolution pass.
+- **One broad feature query per tile, not one per axis.** Categorisation happens
+  at score time in `lib/features.ts`, so retuning what "architecture" means
+  costs a 5-second re-score instead of another 20 minutes against Overpass.
+
+### Two data traps, both of which produced plausible-looking wrong maps
+
+- **NYC Open Data's own Historic Districts dataset (`xbvj-gfnw`) is dead.** Its
+  GeoJSON *and* CSV exports both return HTTP 200 with an empty body — no error,
+  just no features. The live copy is DCP's ArcGIS layer
+  (`v_GFT_Historic_Districts`), which is also strictly better: it carries LPC
+  districts, State/National Register districts and scenic landmarks, tagged by
+  `variable_type`.
+- **OSM multipolygon members are usually *open* chains.** A large park's
+  boundary is routinely split across several ways, so no single member is a
+  closed ring. Treat members individually and the park has no interior at all —
+  Prospect Park and Governors Island both come back that way in the pilot
+  extract, and "inside a park" is exactly where the paths worth routing down
+  are. `assembleRings` in `score-graph.ts` stitches them; deleting it silently
+  drops ~9% of green coverage.
 
 ## Map surface (MapLibre)
 
@@ -77,7 +104,21 @@ knowledge of the streets. Current graph: ~170k edges, ~116k nodes, ~4,980 km.
   computed once per city and cached globally.
 - **Normalise every axis by percentile across the city, not absolute value.**
   Absolute normalisation means a city with no river can never produce a water
-  route. The question is "watery relative to what this city offers".
+  route. The question is "watery relative to what this city offers". Two details
+  in `percentileNormalise` are not optional:
+  - **Zeros stay zero.** Rank the whole population and an edge with no water
+    within 200 m gets a middling water percentile purely because most other
+    edges have none either.
+  - **Ties share a rank.** `quiet` takes about a dozen distinct raw values, so
+    ranking by sorted position smears every residential street in the city
+    across a wide range in arbitrary order.
+- `quiet` is the one axis with no features behind it — nothing in OSM tags it,
+  so it's derived from the edge's own road class, lanes and maxspeed.
+- Scores are **index-aligned with `graph.edges` and nothing in the file format
+  enforces it.** Rebuild the graph without re-scoring and every lookup shifts to
+  a different street, producing a completely plausible wrong map.
+  `scoresFor()` refuses a mismatch by comparing `graph.meta.builtAt`; don't
+  route around it.
 - Route cost is `time(e) · (1 − α · scenic(e))`, α ∈ [0, 0.9). Keeps costs
   non-negative so plain A* stays valid. The detour budget is a binary search
   on α. See PLAN.md §8.
