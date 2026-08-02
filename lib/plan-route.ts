@@ -92,6 +92,22 @@ function searchAlpha(
   return { route: best, alpha: bestAlpha, searches };
 }
 
+/**
+ * Is this candidate worse than something already kept on *both* counts?
+ *
+ * Three options only help if each one wins at something. A route that is
+ * slower than one already on the list and no more scenic is strictly dominated
+ * — there is no walker for whom it's the right answer, and offering it makes
+ * the other two harder to compare. This mostly catches penalised alternates,
+ * which get pushed off the good edges by construction and can come back worse
+ * in every respect.
+ */
+function isDominated(candidate: Route, kept: PlannedRoute[]): boolean {
+  return kept.some(
+    (k) => k.time <= candidate.time && k.scenic >= candidate.scenic,
+  );
+}
+
 /** Fraction of `candidate`'s length that reuses edges from `existing`. */
 export function overlapFraction(
   g: RoutingGraph,
@@ -190,19 +206,26 @@ export function planRoutes(
       searches++;
       penalty.fill(1);
 
-      // Only accept the detoured version if it's both distinct and still
-      // within budget — an alternate that blows the time budget isn't an
-      // option the user asked for.
+      // Only accept the detoured version if it's distinct, still within
+      // budget, and not dominated — an alternate that blows the budget isn't
+      // an option the user asked for.
       if (
         retry &&
         retry.time <= budget &&
-        overlapFraction(g, retry, kept) <= MAX_OVERLAP
+        overlapFraction(g, retry, kept) <= MAX_OVERLAP &&
+        !isDominated(retry, kept)
       ) {
         route = retry;
       } else {
         continue;
       }
     }
+
+    // The un-penalised candidates need the same test. The α sweep can return a
+    // greedier route that is genuinely worse on both counts, because α trades
+    // *cost* for scenery and cost is not time — a high-α route can wander onto
+    // slow edges (steps, say) whose scenic score doesn't repay the minutes.
+    if (isDominated(route, kept)) continue;
 
     kept.push({
       ...route,
