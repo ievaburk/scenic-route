@@ -7,8 +7,10 @@
 import {
   findRoute,
   routeCost,
+  summarise,
   type Route,
   type RoutingGraph,
+  type SearchOptions,
   type SearchScratch,
 } from "./router";
 
@@ -35,6 +37,11 @@ export type PlanResult = {
   routes: PlannedRoute[];
   /** Seconds — the α=0 baseline every detour is measured against. */
   fastestTime: number;
+  /**
+   * Seconds for the fastest route ignoring via-points, when there are any.
+   * `fastestTime − directTime` is what visiting them actually costs.
+   */
+  directTime?: number;
   /** The time budget the α search was held to. */
   budget: number;
   /** Largest α whose route still fits the budget. */
@@ -58,8 +65,7 @@ export type PlanResult = {
 function searchAlpha(
   g: RoutingGraph,
   scratch: SearchScratch,
-  source: number,
-  target: number,
+  waypoints: number[],
   scenic: Float32Array,
   budget: number,
   penalty?: Float32Array,
@@ -72,7 +78,7 @@ function searchAlpha(
 
   for (let i = 0; i < ALPHA_STEPS; i++) {
     const mid = (lo + hi) / 2;
-    const route = findRoute(g, scratch, source, target, {
+    const route = findRouteThrough(g, scratch, waypoints, {
       scenic,
       alpha: mid,
       penalty,
@@ -90,6 +96,46 @@ function searchAlpha(
   }
 
   return { route: best, alpha: bestAlpha, searches };
+}
+
+/**
+ * One route through a sequence of waypoints, as consecutive A* legs.
+ *
+ * This is the answer to a request a per-edge discount structurally cannot
+ * express. Folding scenery into the cost makes the search *prefer* nicer
+ * streets among comparable options; it cannot make it walk a kilometre out of
+ * the way to a specific place, because no discount on the edges you'd traverse
+ * repays the ones you wouldn't. Asking for the Brooklyn Bridge Park piers is
+ * not "score the waterfront higher" — it is "go there", and that is a
+ * different instruction.
+ *
+ * Deliberately no penalty on edges already used by earlier legs. PLAN.md §9
+ * applies one for loop mode, but a via-point is often a dead end — a pier
+ * ends at the water — so forbidding the way back would either fail or return
+ * something contorted. Walking out and back along a pier is what visiting a
+ * pier *is*.
+ */
+export function findRouteThrough(
+  g: RoutingGraph,
+  scratch: SearchScratch,
+  waypoints: number[],
+  opts: SearchOptions,
+): Route | null {
+  if (waypoints.length < 2) return null;
+
+  const nodes: number[] = [];
+  const edges: number[] = [];
+
+  for (let i = 0; i < waypoints.length - 1; i++) {
+    const leg = findRoute(g, scratch, waypoints[i], waypoints[i + 1], opts);
+    if (!leg) return null;
+
+    // Drop the shared waypoint so it isn't counted twice.
+    nodes.push(...(i === 0 ? leg.nodes : leg.nodes.slice(1)));
+    edges.push(...leg.edges);
+  }
+
+  return summarise(g, opts.scenic, nodes, edges);
 }
 
 /**
@@ -126,6 +172,8 @@ export function overlapFraction(
 export type PlanOptions = {
   source: number;
   target: number;
+  /** Node indices the route must pass through, in order. */
+  via?: number[];
   scenic: Float32Array;
   /** Extra minutes the walker is willing to spend, over the fastest route. */
   slackMin: number;
@@ -151,19 +199,33 @@ export function planRoutes(
   scratch: SearchScratch,
   opts: PlanOptions,
 ): PlanResult | null {
-  const { source, target, scenic, slackMin } = opts;
+  const { source, target, via, scenic, slackMin } = opts;
+  const waypoints = [source, ...(via ?? []), target];
 
   // 1. Fastest route sets the baseline and the budget.
-  const fastest = findRoute(g, scratch, source, target, { scenic, alpha: 0 });
+  //
+  //    With via-points that baseline is the fastest route *through them*, not
+  //    the fastest way to the destination. The user has already decided they're
+  //    going to the piers; the slack they're offering is for scenery on top of
+  //    that, and measuring the detour against a route they've rejected would
+  //    make every "+N minutes" figure meaningless. `directTime` reports the
+  //    unconstrained cost separately so the true price of the via is still
+  //    visible.
+  const fastest = findRouteThrough(g, scratch, waypoints, { scenic, alpha: 0 });
   if (!fastest) return null;
   let searches = 1;
+
+  let directTime: number | undefined;
+  if (via?.length) {
+    const direct = findRoute(g, scratch, source, target, { scenic, alpha: 0 });
+    searches++;
+    directTime = direct?.time;
+  }
 
   const budget = fastest.time + slackMin * 60;
 
   // 2. Greediest α that still fits.
-  const atBudget = searchAlpha(
-    g, scratch, source, target, scenic, budget,
-  );
+  const atBudget = searchAlpha(g, scratch, waypoints, scenic, budget);
   searches += atBudget.searches;
 
   // 3. A middle option, so the trade-off reads as a spectrum rather than a
@@ -171,7 +233,7 @@ export function planRoutes(
   const midAlpha = atBudget.alpha / 2;
   const mid =
     midAlpha > 0
-      ? findRoute(g, scratch, source, target, { scenic, alpha: midAlpha })
+      ? findRouteThrough(g, scratch, waypoints, { scenic, alpha: midAlpha })
       : null;
   if (mid) searches++;
 
@@ -198,7 +260,7 @@ export function planRoutes(
       for (const r of kept) {
         for (const e of r.edges) penalty[e] = ALTERNATE_PENALTY;
       }
-      const retry = findRoute(g, scratch, source, target, {
+      const retry = findRouteThrough(g, scratch, waypoints, {
         scenic,
         alpha: candidate.alpha,
         penalty,
@@ -240,6 +302,7 @@ export function planRoutes(
   return {
     routes: kept,
     fastestTime: fastest.time,
+    directTime,
     budget,
     alphaAtBudget: atBudget.alpha,
     searches,

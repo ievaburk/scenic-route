@@ -109,8 +109,8 @@ Two findings from this phase worth knowing before touching the scoring:
   alternates, overlap rejection
 - `POST /api/route` — origin + destination → three scored routes as GeoJSON with
   per-axis exposure
-- `/debug/route` — two clicks on the map, three lines, with axis toggles and a
-  slack slider
+- `/debug/route` — two clicks on the map, three lines, with axis toggles, a
+  slack slider, and **shift-click to route via a place**
 
 | | |
 |---|---|
@@ -123,7 +123,15 @@ Turning on green+quiet for a Midtown walk lifts quiet exposure from 0.19 to
 0.62 for 24 extra seconds — the "canal path, not the avenue" move from §2,
 which is the cheapest real gain over a conventional router.
 
-Two findings worth knowing before Phase 3:
+Three findings worth knowing before Phase 3:
+
+- **A per-edge discount can't make the router visit a named place.** It prefers
+  nicer streets among comparable options, but won't walk a kilometre out of the
+  way — two different scoring aggregators were tried against "go past the Hudson
+  piers" and moved it zero metres. Via-points are the mechanism that works:
+  shift-click, and Brooklyn Bridge → Carroll Gardens picks up 1,347 m of
+  Brooklyn Bridge Park for +15 min.
+
 
 - **α saturates and the slack budget rarely binds.** In the grid, a much nicer
   parallel street costs almost nothing, so the search takes it and stops far

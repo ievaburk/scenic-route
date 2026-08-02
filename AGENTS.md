@@ -120,10 +120,26 @@ Every one of these cost real debugging time and none is guessable from the code.
   already zero the axes they don't care about. The debug map uses
   `overallScore` (quadratic) to answer "interesting for any reason at all".
   Don't unify them.
+- **A per-edge discount cannot make the search visit a specific place.** It can
+  prefer nicer streets among comparable options; it cannot walk a kilometre out
+  of the way, because no discount on the edges you'd traverse repays the ones
+  you wouldn't. Two aggregator changes were tried against "route past the Hudson
+  piers" and moved it zero metres. **Via-points are the mechanism** — see
+  `findRouteThrough`. Don't try to solve "go via X" by reweighting again.
+- With via-points, the baseline for "+N minutes" is the fastest route *through*
+  them, not the fastest route to the destination — the walker has already
+  decided they're going there. `directTime` reports the unconstrained cost so
+  the price of the detour stays visible.
 - **α saturates and the slack budget rarely binds** in Manhattan's grid: the
   parallel street one block over is much nicer at almost no time cost, so the
   search takes it and stops well short of the offered detour. Expect the slack
   slider to feel unresponsive here; that's the data, not a bug.
+- **Scoring feeds routing through `scenicArray`**, which re-percentiles the
+  composite and uses the *quadratic* mean. Both matter: averaging six
+  percentile-normalised axes destroys their uniformity (p50 fell to 0.233,
+  leaving α nothing to work with), and a flat mean prefers places that are good
+  at everything over places outstanding at one thing. The check scripts call the
+  same function so they can't drift from what the API does.
 
 ## Pilot area
 

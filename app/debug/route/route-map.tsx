@@ -49,6 +49,8 @@ type ApiRoute = {
 type ApiResponse = {
   meta: {
     fastestTime: number;
+    /** Seconds the via-points add, when there are any. */
+    viaCost?: number;
     budget: number;
     alphaAtBudget: number;
     searches: number;
@@ -78,6 +80,8 @@ export default function RouteMap({ edges }: { edges: number }) {
   const [mapError, setMapError] = useState<string | null>(null);
   const [origin, setOrigin] = useState<Pt | null>(null);
   const [destination, setDestination] = useState<Pt | null>(null);
+  /** Places the walk must pass through — shift-click to add. */
+  const [via, setVia] = useState<Pt[]>([]);
   const [slackMin, setSlackMin] = useState(10);
   const [weights, setWeights] = useState<Record<ScenicAxis, number>>({
     green: 1, water: 1, architecture: 1, art: 1, quiet: 1, hills: 1,
@@ -105,6 +109,7 @@ export default function RouteMap({ edges }: { edges: number }) {
     d: Pt,
     slack: number,
     w: Record<ScenicAxis, number>,
+    v: Pt[] = [],
   ) {
     const id = ++requestId.current;
     setPending(true);
@@ -116,6 +121,7 @@ export default function RouteMap({ edges }: { edges: number }) {
         body: JSON.stringify({
           origin: o,
           destination: d,
+          via: v,
           slackMin: slack,
           weights: w,
         }),
@@ -207,16 +213,31 @@ export default function RouteMap({ edges }: { edges: number }) {
     const map = mapRef.current;
     if (!map || !ready) return;
 
-    const onClick = (e: { lngLat: { lng: number; lat: number } }) => {
+    const onClick = (e: {
+      lngLat: { lng: number; lat: number };
+      originalEvent?: { shiftKey?: boolean };
+    }) => {
       const pt = { lon: e.lngLat.lng, lat: e.lngLat.lat };
       setError(null);
+
+      // Shift-click adds a place the walk has to pass through, rather than
+      // moving the endpoints.
+      if (e.originalEvent?.shiftKey) {
+        if (!origin || !destination) return;
+        const next = [...via, pt];
+        setVia(next);
+        void runRoute(origin, destination, slackMin, weights, next);
+        return;
+      }
+
       if (!origin || destination) {
         setOrigin(pt);
         setDestination(null);
+        setVia([]);
         setResult(null);
       } else {
         setDestination(pt);
-        void runRoute(origin, pt, slackMin, weights);
+        void runRoute(origin, pt, slackMin, weights, via);
       }
     };
 
@@ -224,7 +245,7 @@ export default function RouteMap({ edges }: { edges: number }) {
     return () => {
       map.off("click", onClick);
     };
-  }, [ready, origin, destination, slackMin, weights, runRoute]);
+  }, [ready, origin, destination, via, slackMin, weights, runRoute]);
 
   // Markers follow the two points.
   useEffect(() => {
@@ -234,16 +255,19 @@ export default function RouteMap({ edges }: { edges: number }) {
     for (const m of markersRef.current) m.remove();
     markersRef.current = [];
 
-    for (const [pt, color] of [
-      [origin, "#0f172a"],
-      [destination, "#dc2626"],
-    ] as const) {
+    const pins: [Pt | null, string, number][] = [
+      [origin, "#0f172a", 1],
+      [destination, "#dc2626", 1],
+      ...via.map((v) => [v, "#f59e0b", 0.75] as [Pt, string, number]),
+    ];
+
+    for (const [pt, color, scale] of pins) {
       if (!pt) continue;
       markersRef.current.push(
-        new Marker({ color }).setLngLat([pt.lon, pt.lat]).addTo(map),
+        new Marker({ color, scale }).setLngLat([pt.lon, pt.lat]).addTo(map),
       );
     }
-  }, [ready, origin, destination]);
+  }, [ready, origin, destination, via]);
 
   /**
    * Draw. Routes come back fastest-first, so the last one is the greediest —
@@ -276,12 +300,12 @@ export default function RouteMap({ edges }: { edges: number }) {
   function toggleAxis(axis: ScenicAxis) {
     const next = { ...weights, [axis]: weights[axis] > 0 ? 0 : 1 };
     setWeights(next);
-    if (origin && destination) void runRoute(origin, destination, slackMin, next);
+    if (origin && destination) void runRoute(origin, destination, slackMin, next, via);
   }
 
   function changeSlack(value: number) {
     setSlackMin(value);
-    if (origin && destination) void runRoute(origin, destination, value, weights);
+    if (origin && destination) void runRoute(origin, destination, value, weights, via);
   }
 
   const anyWeight = Object.values(weights).some((w) => w > 0);
@@ -298,7 +322,7 @@ export default function RouteMap({ edges }: { edges: number }) {
               ? "Click to set the start."
               : !destination
                 ? "Now click the destination."
-                : "Click again to start over."}
+                : "Shift-click to route via a place. Click to start over."}
           </p>
           <p className="mt-0.5 font-mono text-[11px] text-slate-500">
             {fmt.format(edges)} edges
@@ -353,6 +377,36 @@ export default function RouteMap({ edges }: { edges: number }) {
           <p className="mt-2 text-[11px] text-amber-700">
             Nothing selected — every route is just the fastest one.
           </p>
+        )}
+
+        {via.length > 0 && (
+          <div className="mt-3 border-t border-slate-200 pt-2">
+            <div className="flex items-baseline justify-between">
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Via {via.length}
+              </h2>
+              <button
+                type="button"
+                onClick={() => {
+                  setVia([]);
+                  if (origin && destination)
+                    void runRoute(origin, destination, slackMin, weights, []);
+                }}
+                className="text-[11px] text-slate-500 underline underline-offset-2 hover:text-slate-900"
+              >
+                clear
+              </button>
+            </div>
+            {result?.meta.viaCost !== undefined && (
+              <p className="mt-1 text-[11px] text-slate-600">
+                Going this way costs{" "}
+                <span className="font-mono font-semibold text-slate-900">
+                  +{Math.round(result.meta.viaCost / 60)} min
+                </span>{" "}
+                over the direct walk.
+              </p>
+            )}
+          </div>
         )}
 
         <label className="mt-3 block border-t border-slate-200 pt-2 text-[11px] text-slate-600">

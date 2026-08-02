@@ -19,6 +19,13 @@ const Point = z.object({
 const Body = z.object({
   origin: Point,
   destination: Point,
+  /**
+   * Places the walk must pass through, in order. This is how "take me past the
+   * piers" is expressed — the scenic discount can prefer nicer streets among
+   * comparable options but cannot make the search detour to a named place.
+   * Capped because each one adds a leg to every search in the α sweep.
+   */
+  via: z.array(Point).max(5).optional(),
   /** Extra minutes over the fastest route the walker will spend. */
   slackMin: z.number().min(0).max(120).default(10),
   /** Per-axis weights, 0–1. Omitted axes fall back to the default of 1. */
@@ -57,11 +64,15 @@ export async function POST(request: Request) {
   const target = nearestNode(
     ctx.graph, ctx.artifact, parsed.destination.lon, parsed.destination.lat,
   );
+  const via = (parsed.via ?? []).map((p) =>
+    nearestNode(ctx.graph, ctx.artifact, p.lon, p.lat),
+  );
 
   const started = performance.now();
   const plan = planRoutes(ctx.graph, ctx.scratch, {
     source,
     target,
+    via,
     scenic,
     slackMin: parsed.slackMin,
   });
@@ -95,6 +106,13 @@ export async function POST(request: Request) {
     },
     meta: {
       fastestTime: plan.fastestTime,
+      // Present only with via-points: what the walk would have cost without
+      // them, so the price of the detour stays visible.
+      directTime: plan.directTime,
+      viaCost:
+        plan.directTime !== undefined
+          ? Math.round(plan.fastestTime - plan.directTime)
+          : undefined,
       budget: plan.budget,
       alphaAtBudget: plan.alphaAtBudget,
       searches: plan.searches,
