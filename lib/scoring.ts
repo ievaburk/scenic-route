@@ -207,7 +207,7 @@ export function scenicArray(
   weights: Record<ScenicAxis, number>,
 ): Float32Array {
   const raw = new Float64Array(count);
-  for (let i = 0; i < count; i++) raw[i] = compositeScore(axes, i, weights);
+  for (let i = 0; i < count; i++) raw[i] = overallScore(axes, i, weights);
 
   const ranked = percentileNormalise(raw);
 
@@ -217,12 +217,13 @@ export function scenicArray(
 }
 
 /**
- * Weighted mean of the axes for one edge — the raw ingredient of
- * `scenicArray` above, and exactly the blend PLAN.md §8 specifies.
+ * Plain weighted mean of the axes — the literal `Σ w_axis · score(e, axis)`
+ * from PLAN.md §8.
  *
- * Linear is right *here* because at route time the weights are the user's own.
- * Someone who asked for water and green has zeros on the other four axes, so
- * the axes they don't care about can't dilute the ones they do.
+ * No longer what routing consumes; `scenicArray` uses `overallScore` instead,
+ * for the reason set out there. Kept because it is the honest expression of
+ * what §8 specifies, and because it's the right aggregator anywhere the axes
+ * really are components of one quantity rather than competing reasons.
  */
 export function compositeScore(
   axes: Record<ScenicAxis, number[]>,
@@ -256,8 +257,19 @@ export function compositeScore(
  * rewarding places that are good at several. On the pilot data it moves the
  * Greenway 0.42 → 0.58 and leaves 8th Avenue at 0.27.
  *
- * Deliberately *not* what routing uses — see `compositeScore` above for why the
- * distinction is real rather than two ways of saying the same thing.
+ * Now used for routing as well as display. The earlier reasoning — that a
+ * user's own weights already zero the axes they don't care about, so linear was
+ * safe — didn't survive contact with the map. The default *is* all six axes on,
+ * and under a flat mean that default systematically prefers places that are
+ * merely good at everything over places that are outstanding at one thing:
+ * Central Park South (strong on four axes) beat the Hudson River Greenway
+ * (0.90 green, 0.94 water, ~0 on the rest) and the router would not go near the
+ * water. Narrowing the weights didn't rescue it either.
+ *
+ * Note this reordering only bites because it is *not* a monotone transform of
+ * the linear mean — an edge scoring [1,0,0,0,0,0] ranks below [0.2×6] linearly
+ * and above it quadratically. Percentile-ranking afterwards preserves that
+ * reordering, where it would have flattened a mere rescaling to nothing.
  */
 export function overallScore(
   axes: Record<ScenicAxis, number[]>,
