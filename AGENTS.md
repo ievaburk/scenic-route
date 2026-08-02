@@ -20,11 +20,13 @@ Do not relitigate these; they were settled deliberately.
 
 - **Walking only.** No driving, no turn-by-turn voice in v1. A map with a
   highlighted route is the whole UI.
-- **Loop mode is the wedge**, not A-to-B. Google Maps cannot express "give me a
-  nice 40 minutes from here", which is where the unserved demand is.
-- **Own the router.** Bidirectional A* in TypeScript, in-process. Hosted
-  routing APIs can't take custom per-edge weights, which is the entire product.
-  No Docker on this machine, so Valhalla/OSRM are out anyway.
+- **Loop mode ships before A-to-B.** "A nice 40 minutes from here, back to
+  here" is the first user-facing surface; A-to-B follows. Build order is set in
+  PLAN.md §12 — don't reorder it.
+- **Own the router.** Bidirectional A* in TypeScript, in-process. Hosted routing
+  APIs can't accept custom per-edge weights, so they can't express the scoring
+  this app is built around. No Docker on this machine either, so Valhalla and
+  OSRM are out regardless.
 - **Explicit preference tags first**, learned weights layered on later.
 - **Free-text interests are MVP**, not a later nicety (see PLAN.md §6).
 
