@@ -17,14 +17,70 @@
  * tags it, so it's derived from the edge's own road class rather than from
  * nearby features — see `quietScore` in `lib/scoring.ts`.
  */
+/**
+ * `color` is the axis's identity — legend swatch, score bar in the edge panel.
+ * `ramp` is the five-stop sequential scale the map colours edges with when that
+ * axis is selected, running low → high.
+ *
+ * Every ramp starts on the same near-neutral slate so low scores recede into the
+ * pale basemap rather than competing with it; only the top end carries the
+ * axis's hue. That keeps "how bright is this street" readable the same way
+ * across axes while making it obvious at a glance which axis you're looking at.
+ */
 export const SCENIC_AXES = [
-  { key: "green", label: "Green", color: "#16a34a" },
-  { key: "water", label: "Water", color: "#0ea5e9" },
-  { key: "architecture", label: "Architecture / historic", color: "#b45309" },
-  { key: "art", label: "Art & landmarks", color: "#db2777" },
-  { key: "quiet", label: "Quiet", color: "#6366f1" },
-  { key: "hills", label: "Hills & views", color: "#7c3aed" },
+  {
+    key: "green",
+    label: "Green",
+    color: "#16a34a",
+    ramp: ["#e2e8f0", "#bbf7d0", "#4ade80", "#16a34a", "#14532d"],
+  },
+  {
+    key: "water",
+    label: "Water",
+    color: "#0ea5e9",
+    ramp: ["#e2e8f0", "#bae6fd", "#38bdf8", "#0284c7", "#0c4a6e"],
+  },
+  {
+    key: "architecture",
+    label: "Architecture / historic",
+    color: "#b45309",
+    ramp: ["#e2e8f0", "#fde68a", "#f59e0b", "#b45309", "#78350f"],
+  },
+  {
+    key: "art",
+    label: "Art & landmarks",
+    color: "#db2777",
+    ramp: ["#e2e8f0", "#fbcfe8", "#f472b6", "#db2777", "#831843"],
+  },
+  {
+    key: "quiet",
+    label: "Quiet",
+    color: "#6366f1",
+    ramp: ["#e2e8f0", "#c7d2fe", "#818cf8", "#4f46e5", "#312e81"],
+  },
+  {
+    key: "hills",
+    label: "Hills & views",
+    color: "#7c3aed",
+    ramp: ["#e2e8f0", "#ddd6fe", "#a78bfa", "#7c3aed", "#4c1d95"],
+  },
 ] as const;
+
+/**
+ * The composite view keeps a yellow→red heat ramp. It isn't any one axis, so
+ * borrowing a hue would imply it was; heat reads as "how interesting overall"
+ * without claiming a reason.
+ */
+export const OVERALL_RAMP = [
+  "#e2e8f0",
+  "#fed976",
+  "#fd8d3c",
+  "#f03b20",
+  "#bd0026",
+] as const;
+
+/** Percentile positions the five ramp stops sit at. */
+export const RAMP_STOPS = [0, 30, 55, 75, 100] as const;
 
 export type ScenicAxis = (typeof SCENIC_AXES)[number]["key"];
 

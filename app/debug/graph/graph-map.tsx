@@ -32,7 +32,12 @@ import {
   type EdgeClass,
   type GraphMeta,
 } from "@/lib/graph";
-import { SCENIC_AXES, type ScenicAxis } from "@/lib/features";
+import {
+  OVERALL_RAMP,
+  RAMP_STOPS,
+  SCENIC_AXES,
+  type ScenicAxis,
+} from "@/lib/features";
 import type { ScoreMeta } from "@/lib/scoring";
 import { PILOT } from "@/lib/pilot";
 
@@ -99,25 +104,27 @@ function scoreExpression(view: View) {
 }
 
 /**
- * Sequential yellow→red. Deliberately a heat ramp rather than one tinted per
- * axis: you're comparing axes against each other by eye, and that only works
- * if the same colour means the same number in every view. Low scores land in
- * pale grey so they recede into the basemap and the high ones actually glow.
+ * The ramp for a view: each axis is tinted with its own hue (green for green,
+ * blue for water) so the map matches the legend swatch and the score bars in
+ * the edge panel, while the composite stays a neutral heat ramp. Definitions
+ * live in lib/features.ts beside the axis colours.
+ *
+ * All ramps share the same pale slate at zero, so a low score recedes into the
+ * basemap in every view and only the high end carries the hue — the brightness
+ * still reads as "how strong is this", whichever axis you're on.
  */
-const RAMP: [number, string][] = [
-  [0, "#e2e8f0"],
-  [30, "#fed976"],
-  [55, "#fd8d3c"],
-  [75, "#f03b20"],
-  [100, "#bd0026"],
-];
+function rampFor(view: View): readonly string[] {
+  if (view === COMPOSITE) return OVERALL_RAMP;
+  return SCENIC_AXES.find((a) => a.key === view)!.ramp;
+}
 
 function colorByScore(view: View): LineColor {
+  const ramp = rampFor(view);
   return [
     "interpolate",
     ["linear"],
     scoreExpression(view),
-    ...RAMP.flatMap(([stop, color]) => [stop, color]),
+    ...RAMP_STOPS.flatMap((stop, i) => [stop, ramp[i]]),
   ] as unknown as LineColor;
 }
 
@@ -501,8 +508,8 @@ export default function GraphMap({
                 <div
                   className="h-2 w-full rounded-full"
                   style={{
-                    backgroundImage: `linear-gradient(to right, ${RAMP.map(
-                      ([stop, color]) => `${color} ${stop}%`,
+                    backgroundImage: `linear-gradient(to right, ${RAMP_STOPS.map(
+                      (stop, i) => `${rampFor(view)[i]} ${stop}%`,
                     ).join(", ")})`,
                   }}
                 />
