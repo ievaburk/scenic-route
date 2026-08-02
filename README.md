@@ -1,34 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scenic Route
 
-## Getting Started
+Walking navigation that optimises for *most interesting* instead of *fastest* —
+through parks rather than along arterials, past water, quiet streets, notable
+architecture, statues and viewpoints, and past whatever else you happen to be
+obsessed with.
 
-First, run the development server:
+See [PLAN.md](PLAN.md) for the product definition and full build plan, and
+[AGENTS.md](AGENTS.md) for working conventions.
+
+## Setup
 
 ```bash
+npm install
+npm run fetch:osm     # ~10-25 min, rate-limited by Overpass, resumable
+npm run build:graph   # ~1 min
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`data/` is gitignored and entirely rebuildable from those two scripts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Where this is up to
 
-## Learn More
+**Phase 0 (data spike) — done.**
 
-To learn more about Next.js, take a look at the following resources:
+Working:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next 16 / React 19 / Tailwind 4 scaffold
+- `scripts/fetch-osm.ts` — Overpass extraction over the pilot bbox, cached per
+  tile so an interrupted run resumes
+- `scripts/build-graph.ts` — ways split at junctions into a routable graph,
+  largest connected component only, full raw OSM tags retained per edge
+- `/debug/graph` — the whole network on MapLibre + OpenFreeMap, coloured by road
+  class, toggleable per class, click any edge for its raw OSM tags
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Current graph over Manhattan below 125th + brownstone Brooklyn:
 
-## Deploy on Vercel
+| | |
+|---|---|
+| edges | 170,358 |
+| nodes | 115,938 |
+| walkable network | 4,984 km |
+| artifact | 30.9 MB |
+| largest component | 92.4% of junctions |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The map was checked against the landmarks in PLAN.md §13 — the Brooklyn Heights
+Promenade, the Hudson River Greenway and Riverside Park all come through with
+their path networks intact and connected.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Next up: Phase 1 (scoring)**, which is the phase that decides whether the whole
+idea works: six-axis per-edge scoring, plus NYC LPC historic districts and the
+street tree census — those two datasets cover ordinary beautiful streets, which
+is OSM's worst blind spot.
+
+## Data
+
+OpenStreetMap via Overpass, ODbL. Attribution is required on any map surface.

@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# OSM extracts and the derived graph — rebuildable from scripts/, and far too
+# big for git. `npm run fetch:osm && npm run build:graph` regenerates them.
+/data/
+
+# MapLibre's worker, copied out of node_modules by predev/prebuild so the
+# browser can fetch it. See scripts/copy-map-worker.ts.
+/public/maplibre/
+
+# Per-machine Claude Code settings — holds this machine's absolute nvm path.
+# .claude/launch.json is committed; this one isn't.
+/.claude/settings.local.json

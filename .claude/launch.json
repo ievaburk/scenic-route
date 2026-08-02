@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "scenic-route",
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": [
+        "PATH=/Users/Ieva/.nvm/versions/node/v24.18.0/bin:/usr/bin:/bin",
+        "node",
+        "node_modules/next/dist/bin/next",
+        "dev"
+      ],
+      "port": 3000
+    }
+  ]
+}
