@@ -34,11 +34,12 @@ constantly while the scoring is being tuned.
 npm run check:landmarks   # Phase 1 regression net — run on every scoring change
 npm run check:router      # proves the A* is optimal, against plain Dijkstra
 npm run check:routes      # Phase 2 fixtures — 20 O/D pairs, budget/α/diversity
+npm run check:interests   # Phase 3 fixtures — resolution + does asking change the walk
 ```
 
 ## Where this is up to
 
-**Phase 0 (data spike) — done. Phase 1 (scoring) — done.**
+**Phases 0–3 done: data spike, scoring, routing engine, custom interests.**
 
 Working:
 
