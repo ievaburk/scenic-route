@@ -118,6 +118,32 @@ export const FEATURE_SELECTORS = [
 ];
 
 /**
+ * Tag keys `FEATURE_SELECTORS` above actually asks Overpass for.
+ *
+ * Used to tell "this city is thin" apart from "we never looked", which §6
+ * treats as different failures and which cannot be inferred from the data. Ask
+ * for art deco and the extract yields four matches — not because NYC has four
+ * art deco buildings, but because four buildings that matched some *other*
+ * selector happen to carry `building:architecture` too. Reporting that as a
+ * count would tell the user their city has no art deco, which is false.
+ *
+ * Keep in step with FEATURE_SELECTORS. Adding a key here without adding it
+ * there turns an honest "not extracted" into a confidently wrong number.
+ */
+export const EXTRACTED_FEATURE_KEYS = new Set([
+  "leisure",
+  "landuse",
+  "natural",
+  "waterway",
+  "man_made",
+  "historic",
+  "heritage",
+  "tourism",
+  "amenity",
+  "building",
+]);
+
+/**
  * One feature's contribution to one axis.
  *
  * `reach` is where influence has decayed to nothing, in metres, and it varies

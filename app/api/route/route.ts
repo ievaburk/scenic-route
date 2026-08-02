@@ -8,6 +8,8 @@
  */
 import { z } from "zod";
 import { AXIS_KEYS, DEFAULT_WEIGHTS, type ScenicAxis } from "@/lib/features";
+import { MAX_INTERESTS, resolveInterest, validateFilter } from "@/lib/interests";
+import { applyInterests, interestLayer, type InterestLayer } from "@/lib/interest-layers";
 import { planRoutes } from "@/lib/plan-route";
 import { nearestNode, scenicFor, tryLoadRouting } from "@/lib/router-server";
 
@@ -30,6 +32,13 @@ const Body = z.object({
   slackMin: z.number().min(0).max(120).default(10),
   /** Per-axis weights, 0–1. Omitted axes fall back to the default of 1. */
   weights: z.record(z.enum(AXIS_KEYS as [ScenicAxis, ...ScenicAxis[]]), z.number().min(0).max(1)).optional(),
+  /**
+   * Free-text interests (PLAN.md §6). Capped at MAX_INTERESTS: beyond that each
+   * one is diluted below the point of being noticeable.
+   */
+  interests: z.array(z.string().min(1).max(80)).max(MAX_INTERESTS).optional(),
+  /** How hard a resolved interest pulls, on top of the core axes. */
+  interestWeight: z.number().min(0).max(1).default(0.6),
 });
 
 export async function POST(request: Request) {
@@ -56,7 +65,24 @@ export async function POST(request: Request) {
   }
 
   const weights = { ...DEFAULT_WEIGHTS, ...(parsed.weights ?? {}) };
-  const scenic = scenicFor(ctx.scores, weights);
+  const core = scenicFor(ctx.scores, weights);
+
+  // scenic(e) = core axes + Σ sparse interest lookups (§6). Interests *add*
+  // to the core score rather than replacing it, so asking for bridges doesn't
+  // switch off everything else that makes a walk good.
+  const resolved: { layer: InterestLayer; weight: number }[] = [];
+  const interestReport = (parsed.interests ?? []).map((phrase) => {
+    const r = resolveInterest(phrase);
+    if (r.status === "unresolved") return { phrase, status: "unresolved" as const };
+    if (!validateFilter(r.entry.filter).ok) return { phrase, status: "invalid" as const };
+    const layer = interestLayer(r.entry, ctx.artifact);
+    if (layer.scores.size > 0) resolved.push({ layer, weight: parsed.interestWeight });
+    return {
+      phrase, status: "resolved" as const, id: layer.id, label: layer.label,
+      matchCount: layer.matchCount, coverage: layer.coverage,
+    };
+  });
+  const scenic = applyInterests(core, resolved);
 
   const source = nearestNode(
     ctx.graph, ctx.artifact, parsed.origin.lon, parsed.origin.lat,
@@ -103,6 +129,7 @@ export async function POST(request: Request) {
       destination: parsed.destination,
       slackMin: parsed.slackMin,
       weights,
+      interests: interestReport,
     },
     meta: {
       fastestTime: plan.fastestTime,
@@ -130,6 +157,16 @@ export async function POST(request: Request) {
       len: Math.round(r.len),
       scenic: Math.round(r.scenic * 1000) / 1000,
       axes: axisExposure(r.edges, r.len),
+      // Metres of this route that actually touch each interest — the raw
+      // material for §4's "crosses 3 bridges" breakdown line.
+      interests: resolved.map(({ layer }) => ({
+        id: layer.id,
+        label: layer.label,
+        metres: Math.round(
+          r.edges.reduce(
+            (m, e) => m + (layer.scores.has(e) ? ctx.graph.len[e] : 0), 0),
+        ),
+      })),
       geometry: {
         type: "LineString" as const,
         coordinates: routeCoordinates(ctx.artifact, r.edges, r.nodes),
