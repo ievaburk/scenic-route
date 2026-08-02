@@ -5,8 +5,15 @@ through parks rather than along arterials, past water, quiet streets, notable
 architecture, statues and viewpoints, and past whatever else you happen to be
 obsessed with.
 
-See [PLAN.md](PLAN.md) for the product definition and full build plan, and
-[AGENTS.md](AGENTS.md) for working conventions.
+See [AGENTS.md](AGENTS.md) for working conventions.
+
+> Code comments and AGENTS.md cite `PLAN.md` by section — §5 for data sources,
+> §8 for the detour-budget maths, §13 for verification. That document is the
+> product strategy rather than documentation and is deliberately not published,
+> so those citations won't resolve here. Everything needed to build, run and
+> understand the code is in this repo; the references are there to explain *why*
+> a decision was made, and the reasoning is generally restated inline where it
+> matters.
 
 ## Setup
 

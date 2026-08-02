@@ -51,3 +51,8 @@ next-env.d.ts
 # Per-machine Claude Code settings — holds this machine's absolute nvm path.
 # .claude/launch.json is committed; this one isn't.
 /.claude/settings.local.json
+
+# The product definition and build plan is kept private deliberately — it's the
+# strategy doc, not documentation. Code comments and AGENTS.md still cite it by
+# section (PLAN.md §8 and so on); those references are for whoever has the file.
+/PLAN.md

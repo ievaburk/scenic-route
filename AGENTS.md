@@ -7,8 +7,12 @@ This version has breaking changes — APIs, conventions, and file structure may 
 # Scenic Route
 
 A walking navigation app that optimises for *interesting* rather than *fast*.
-Read [PLAN.md](PLAN.md) first — it holds the product definition, the scoring
-design, and the build order. This file is only the conventions.
+Read `PLAN.md` first — it holds the product definition, the scoring design, and
+the build order. This file is only the conventions.
+
+`PLAN.md` is gitignored and stays local: it's the product strategy, not
+documentation. It is still the source of truth for anyone working in this repo,
+and the `PLAN.md §N` citations throughout the code refer to it.
 
 ## Locked decisions
 
