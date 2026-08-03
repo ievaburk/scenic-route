@@ -13,9 +13,14 @@
  * a thrown exception on read would take the whole page down.
  */
 import { AXIS_KEYS, DEFAULT_WEIGHTS, type ScenicAxis } from "./features";
+import { learnFromLog, type Choice } from "./learning";
 
 const PREFS_KEY = "scenic-route.prefs.v1";
 const SAVED_KEY = "scenic-route.saved.v1";
+const CHOICES_KEY = "scenic-route.choices.v1";
+
+/** Below this many choices the learned weights are noise, so they aren't applied. */
+export const MIN_CHOICES_TO_LEARN = 8;
 
 /** Bumping the key is how a breaking shape change gets handled — old data is simply ignored. */
 export type Prefs = {
@@ -197,4 +202,55 @@ ${pts}
   </trkseg></trk>
 </gpx>
 `;
+}
+
+
+// ---------------------------------------------------------------------------
+// Learning (PLAN.md §10)
+// ---------------------------------------------------------------------------
+
+let choicesCache: Choice[] | null = null;
+
+export function loadChoices(): Choice[] {
+  return read<Choice[]>(CHOICES_KEY, [], (v) =>
+    Array.isArray(v)
+      ? v.filter(
+          (c): c is Choice =>
+            !!c && Array.isArray(c.shown) && typeof c.chosenIndex === "number",
+        )
+      : null,
+  );
+}
+
+export function choicesSnapshot(): Choice[] {
+  return (choicesCache ??= loadChoices());
+}
+
+const NO_CHOICES: Choice[] = [];
+export function noChoicesSnapshot(): Choice[] {
+  return NO_CHOICES;
+}
+
+export function recordChoice(choice: Choice) {
+  // Capped: the learner replays the whole log, and a walker's taste from three
+  // years ago is not evidence about this weekend.
+  const next = [...loadChoices(), choice].slice(-200);
+  write(CHOICES_KEY, next);
+  choicesCache = next;
+  notify();
+}
+
+/**
+ * The weights routing should actually use: declared, refined by what was picked.
+ *
+ * §10 is explicit that learned adjustments stay invisible — this is never
+ * rendered as a settings screen, and the walker only ever edits the declared
+ * preferences. Below `MIN_CHOICES_TO_LEARN` the log is too short to mean
+ * anything, so the declared weights are used unchanged rather than fitting
+ * noise.
+ */
+export function effectiveWeights(prefs: Prefs): Record<ScenicAxis, number> {
+  const log = choicesSnapshot();
+  if (log.length < MIN_CHOICES_TO_LEARN) return prefs.weights;
+  return learnFromLog(prefs.weights, log);
 }

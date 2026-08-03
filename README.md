@@ -36,7 +36,8 @@ npm run check:router      # proves the A* is optimal, against plain Dijkstra
 npm run check:routes      # Phase 2 fixtures — 20 O/D pairs, budget/α/diversity
 npm run check:interests   # Phase 3 fixtures — resolution + does asking change the walk
 npm run check:loops       # Phase 4 fixtures — 10 origins × 3 durations
-npm run walk:test         # generate GPX + a field sheet for three real walks
+npm run check:learning    # Phase 6 — does the learner learn, and fail safely?
+npm run walk:test         # generate GPX + a field sheet for six real walks
 ```
 
 ## Where this is up to

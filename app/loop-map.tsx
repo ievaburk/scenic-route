@@ -27,8 +27,11 @@ import {
 import "maplibre-gl/dist/maplibre-gl.css";
 import { SCENIC_AXES, type ScenicAxis } from "@/lib/features";
 import {
+  choicesSnapshot,
   deleteWalk,
+  effectiveWeights,
   noWalksSnapshot,
+  recordChoice,
   savedSnapshot,
   saveWalk,
   subscribe,
@@ -36,6 +39,7 @@ import {
   type Prefs,
   type SavedWalk,
 } from "@/lib/prefs";
+import { featureVector, shuffled } from "@/lib/learning";
 
 const STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
 const OSM_ATTRIBUTION =
@@ -66,6 +70,8 @@ type Walk = {
   onTarget?: boolean;
   /** A-to-B: seconds over the fastest route. 0 is the baseline. */
   detour?: number;
+  /** Position in the engine's own ordering, before the display shuffle. */
+  rank?: number;
 };
 
 type ApiResponse = {
@@ -190,7 +196,7 @@ export default function LoopMap({
                 origin: opts.origin,
                 durationMin: opts.durationMin,
                 interests: opts.interests,
-                weights: prefs.weights,
+                weights: effectiveWeights(prefs),
                 seed: opts.seed,
               }
             : {
@@ -198,7 +204,7 @@ export default function LoopMap({
                 destination: opts.destination,
                 slackMin: opts.slackMin,
                 interests: opts.interests,
-                weights: prefs.weights,
+                weights: effectiveWeights(prefs),
               },
         ),
       });
@@ -206,7 +212,19 @@ export default function LoopMap({
       if (id !== requestId.current) return;
       if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
 
-      const walks: Walk[] = (isLoop ? body.loops : body.routes) as Walk[];
+      /**
+       * Shuffled before display, per §10 — and this has to be right *before*
+       * any choices are logged, not retrofitted. Present three walks in a
+       * fixed order and the model learns that people like the top of a list,
+       * which is true, useless, and afterwards indistinguishable from a real
+       * preference.
+       *
+       * The engine's own ordering is meaningful (fastest first for A-to-B,
+       * most scenic first for loops), so it's preserved in `rank` for the
+       * card labels — only the *screen position* is randomised.
+       */
+      const raw: Walk[] = (isLoop ? body.loops : body.routes) as Walk[];
+      const walks = shuffled(raw.map((w, rank) => ({ ...w, rank })));
       setResult({ query: body.query, walks });
       setSelected(0);
     } catch (err) {
@@ -397,6 +415,21 @@ export default function LoopMap({
     }
   }
 
+  /**
+   * A pick is a data point: which of the three shown was chosen, and where it
+   * sat on screen. §10 needs both — the features to learn from, and the
+   * position to detect the bias that would otherwise masquerade as taste.
+   */
+  function noteChoice(index: number) {
+    const walks = result?.walks;
+    if (!walks || walks.length < 2) return;
+    recordChoice({
+      at: new Date().toISOString(),
+      shown: walks.map((w) => featureVector(w.axes)),
+      chosenIndex: index,
+    });
+  }
+
   function keep(loop: Walk) {
     const walk: SavedWalk = {
       id: `${Date.now()}-${loop.id}`,
@@ -409,6 +442,7 @@ export default function LoopMap({
       geometry: loop.geometry,
     };
     saveWalk(walk);
+    noteChoice(selected);
   }
 
   /** A saved walk is no use trapped in a tab — hand it over as GPX. */
