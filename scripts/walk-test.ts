@@ -25,6 +25,7 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { buildRoutingGraph, makeScratch, type Route } from "../lib/router";
 import { planRoutes } from "../lib/plan-route";
+import { planLoops } from "../lib/loop";
 import { scenicArray, type ScoreArtifact } from "../lib/scoring";
 import { DEFAULT_WEIGHTS, SCENIC_AXES, type ScenicAxis } from "../lib/features";
 import { DICTIONARY } from "../lib/interests";
@@ -42,9 +43,15 @@ type Walk = {
   id: string;
   name: string;
   tests: string;
-  from: [number, number];
-  to: [number, number];
-  slackMin: number;
+  /** "ab" tests the scoring; "loop" tests the loop builder. Different questions. */
+  mode?: "ab" | "loop";
+  /** A-to-B only. */
+  from?: [number, number];
+  to?: [number, number];
+  slackMin?: number;
+  /** Loop only. */
+  at?: [number, number];
+  durationMin?: number;
   interests?: string[];
   weights?: Partial<Record<ScenicAxis, number>>;
   ratings?: { date: string; rating: number; notes?: string }[];
@@ -221,8 +228,12 @@ const mins = (s: number) => `${Math.round(s / 60)} min`;
 const dist = (m: number) => (m >= 1000 ? `${(m / 1000).toFixed(2)} km` : `${Math.round(m)} m`);
 
 /** Inline SVG of the route shape — orientation without needing tiles or signal. */
-function shapeSvg(scenic: [number, number][], fast: [number, number][]): string {
-  const all = [...scenic, ...fast];
+function shapeSvg(
+  scenic: [number, number][],
+  fast: [number, number][] | null,
+  isLoop = false,
+): string {
+  const all = fast ? [...scenic, ...fast] : scenic;
   let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
   for (const [lon, lat] of all) {
     if (lon < minX) minX = lon;
@@ -241,10 +252,16 @@ function shapeSvg(scenic: [number, number][], fast: [number, number][]): string 
     `<polyline points="${c.map(px).join(" ")}" fill="none" stroke="${stroke}" stroke-width="${width}" ${dash} stroke-linejoin="round" stroke-linecap="round"/>`;
 
   return `<svg viewBox="-8 -8 ${w * scale + 16} ${h * scale + 16}" preserveAspectRatio="xMidYMid meet" style="width:100%;max-width:300px;max-height:300px">
-    ${line(fast, "#94a3b8", 3, 'stroke-dasharray="4 4"')}
+    ${fast ? line(fast, "#94a3b8", 3, 'stroke-dasharray="4 4"') : ""}
     ${line(scenic, "#059669", 4)}
     <circle cx="${px(scenic[0]).split(",")[0]}" cy="${px(scenic[0]).split(",")[1]}" r="5" fill="#0f172a"/>
-    <circle cx="${px(scenic[scenic.length - 1]).split(",")[0]}" cy="${px(scenic[scenic.length - 1]).split(",")[1]}" r="5" fill="#dc2626"/>
+    ${
+      // A loop ends where it started, so a red "destination" dot on top of the
+      // black start dot just reads as a different place.
+      isLoop
+        ? ""
+        : `<circle cx="${px(scenic[scenic.length - 1]).split(",")[0]}" cy="${px(scenic[scenic.length - 1]).split(",")[1]}" r="5" fill="#dc2626"/>`
+    }
   </svg>`;
 }
 
@@ -277,22 +294,53 @@ async function main() {
     }
     const scenic = applyInterests(core, layers);
 
-    const source = nearestNode(artifact, walk.from[0], walk.from[1]);
-    const target = nearestNode(artifact, walk.to[0], walk.to[1]);
-    const plan = planRoutes(g, scratch, { source, target, scenic, slackMin: walk.slackMin });
-    if (!plan) {
-      console.log(`✗ ${walk.name}: no route`);
-      continue;
+    const isLoop = walk.mode === "loop";
+    let best: Route;
+    let fastest: Route | null = null;
+    let onTarget = true;
+    /** Seconds over the fastest route. Meaningless for a loop, which has none. */
+    let detour = 0;
+
+    if (isLoop) {
+      const origin = nearestNode(artifact, walk.at![0], walk.at![1]);
+      const result = planLoops(g, scratch, {
+        origin,
+        durationMin: walk.durationMin!,
+        scenic,
+        interestScores: layers.map((l) => l.layer.scores),
+      });
+      if (result.loops.length === 0) {
+        console.log(`✗ ${walk.name}: no loop`);
+        continue;
+      }
+      best = result.loops[0];
+      onTarget = result.loops[0].onTarget;
+    } else {
+      const source = nearestNode(artifact, walk.from![0], walk.from![1]);
+      const target = nearestNode(artifact, walk.to![0], walk.to![1]);
+      const plan = planRoutes(g, scratch, {
+        source, target, scenic, slackMin: walk.slackMin ?? 15,
+      });
+      if (!plan) {
+        console.log(`✗ ${walk.name}: no route`);
+        continue;
+      }
+      fastest = plan.routes[0];
+      const pick = plan.routes.reduce((a, b) => (b.scenic > a.scenic ? b : a));
+      best = pick;
+      detour = pick.detour;
     }
 
-    const fastest = plan.routes[0];
-    const best = plan.routes.reduce((a, b) => (b.scenic > a.scenic ? b : a));
-
     const scenicCoords = coordinates(artifact, best);
-    const fastCoords = coordinates(artifact, fastest);
+    const fastCoords = fastest ? coordinates(artifact, fastest) : null;
 
-    await writeFile(path.join(OUT, `${walk.id}.gpx`), gpx(`${walk.name} (scenic)`, scenicCoords));
-    await writeFile(path.join(OUT, `${walk.id}-fast.gpx`), gpx(`${walk.name} (fastest)`, fastCoords));
+    await writeFile(path.join(OUT, `${walk.id}.gpx`), gpx(isLoop ? walk.name : `${walk.name} (scenic)`, scenicCoords));
+    if (fastCoords) {
+      await writeFile(
+        path.join(OUT, `${walk.id}-fast.gpx`),
+        gpx(`${walk.name} (fastest)`, fastCoords),
+      );
+    }
 
     const steps = directions(artifact, best);
     const axisRow = (axis: (typeof SCENIC_AXES)[number]) => {
@@ -322,15 +370,23 @@ async function main() {
   <p class="tests"><strong>What this is testing.</strong> ${escapeHtml(walk.tests)}</p>
   ${priorRatings}
   <div class="row">
-    <div class="shape">${shapeSvg(scenicCoords, fastCoords)}
-      <p class="legend"><span class="sw green"></span>walk this &nbsp; <span class="sw grey"></span>fastest, for comparison</p>
+    <div class="shape">${shapeSvg(scenicCoords, fastCoords, isLoop)}
+      <p class="legend"><span class="sw green"></span>walk this${fastCoords ? ' &nbsp; <span class="sw grey"></span>fastest, for comparison' : " &nbsp; &#9679; start &amp; finish"}</p>
     </div>
     <div class="stats">
       <p class="big">${mins(best.time)} &middot; ${dist(best.len)}</p>
-      <p class="sub">${best.detour > 30 ? `+${mins(best.detour)} over the fastest route (${mins(fastest.time)})` : "same as the fastest route"}</p>
+      <p class="sub">${
+        isLoop
+          ? onTarget
+            ? `you asked for ${walk.durationMin} min &middot; starts and ends in the same place`
+            : `you asked for ${walk.durationMin} min &mdash; this is the longest loop that fits here`
+          : fastest && detour > 30
+            ? `+${mins(detour)} over the fastest route (${mins(fastest.time)})`
+            : "same as the fastest route"
+      }</p>
       ${interestLines}
       <table>${SCENIC_AXES.map(axisRow).join("")}</table>
-      <p class="sub">GPX: <code>${walk.id}.gpx</code> &middot; fastest: <code>${walk.id}-fast.gpx</code></p>
+      <p class="sub">GPX: <code>${walk.id}.gpx</code>${fastCoords ? ` &middot; fastest: <code>${walk.id}-fast.gpx</code>` : ""}</p>
     </div>
   </div>
   <h3>Directions</h3>
@@ -348,7 +404,10 @@ async function main() {
 
     console.log(
       `✓ ${walk.name.padEnd(42)} ${mins(best.time)} · ${dist(best.len)} · ` +
-        `+${mins(best.detour)} · ${steps.length} steps`,
+        (isLoop
+          ? `loop${onTarget ? "" : " (short — geography)"}`
+          : `+${mins(detour)}`) +
+        ` · ${steps.length} steps`,
     );
   }
 
@@ -403,7 +462,7 @@ ${cards.join("\n")}
 `;
 
   await writeFile(path.join(OUT, "index.html"), html);
-  console.log(`\n→ data/walk-test/  (index.html + ${walks.length * 2} GPX files)`);
+  console.log(`\n→ data/walk-test/index.html + GPX`);
 }
 
 main().catch((err) => {

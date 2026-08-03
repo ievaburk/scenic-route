@@ -1,9 +1,11 @@
 {
-  "note": "Three walks to actually go and do. PLAN.md §11 calls this the single most valuable thing in the whole plan and the easiest to skip: there is no ground truth for 'scenic', and every automated check so far grades the scoring against assumptions rather than against New York. Each walk is chosen to test a *different* claim the system makes, so a bad result points at a cause rather than just feeling wrong.",
+  "note": "Walks to actually go and do. PLAN.md §11 calls this the single most valuable thing in the whole plan and the easiest to skip: there is no ground truth for 'scenic', and every automated check grades the scoring against assumptions rather than against New York. Each walk tests a *different* claim, so a bad result points at a cause rather than just feeling wrong.",
   "howToRate": "Walk it, then fill in `rating` (1-5) and `notes`. Re-run `npm run walk:test` after any scoring change and re-rate — a change that improves the fixtures but makes a real walk worse is a change that should be reverted. Keep old ratings; the history is the point.",
+  "dontDoAllOfThem": "Six walks is not a to-do list. The A-to-B walks test whether the *scoring* is right; the loops test whether the *loop builder* produces something you'd actually choose to do on a Saturday, which is a different question and the one Phase 4 rests on. One of each is worth more than all six of one kind.",
   "walks": [
     {
       "id": "waterfront-detour",
+      "mode": "ab",
       "name": "Dumbo → Cobble Hill",
       "tests": "Is a 9-minute detour to the waterfront worth it? The scorer says Brooklyn Bridge Park is 0.84 and pulls the route through 1.2km of it. If the answer is no, the water and green axes are overweighted.",
       "from": [-73.989, 40.703],
@@ -14,6 +16,7 @@
     },
     {
       "id": "interest-statues",
+      "mode": "ab",
       "name": "Chelsea → East Village, asking for statues",
       "tests": "Do custom interests change the walk in a way you actually notice? Asking for statues adds ~580m of statuary. If you can't tell the difference on the ground, the interest weight is too low or the sparse layer is too diffuse.",
       "from": [-74.0, 40.746],
@@ -24,13 +27,44 @@
     },
     {
       "id": "grid-quiet",
+      "mode": "ab",
       "name": "Union Sq → Central Park South, green + quiet",
       "tests": "The 'canal path, not the avenue' claim from §2, and the cheapest win the router offers. Quiet exposure triples for about 30 seconds of detour. If the quieter street doesn't feel meaningfully better, the quiet axis — the one with no data behind it — is wrong.",
       "from": [-73.9903, 40.734],
       "to": [-73.9772, 40.7614],
       "slackMin": 12,
       "interests": [],
-      "weights": { "green": 1, "quiet": 1, "water": 0, "architecture": 0, "art": 0, "hills": 0 },
+      "ratings": []
+    },
+
+    {
+      "id": "loop-waterfront",
+      "mode": "loop",
+      "name": "40 minutes from Brooklyn Heights",
+      "tests": "The headline product claim, in the best case available. The loop builder should find the Promenade and Brooklyn Bridge Park and bring you home without retracing. Two things to judge: does it feel like a loop or a there-and-back, and does 40 minutes actually take 40 minutes? Overlap is measured at 0-2% here, so if it *feels* repetitive the overlap metric is measuring the wrong thing.",
+      "at": [-73.995, 40.696],
+      "durationMin": 40,
+      "interests": [],
+      "ratings": []
+    },
+    {
+      "id": "loop-brownstone",
+      "mode": "loop",
+      "name": "40 minutes from Park Slope",
+      "tests": "The ordinary-beautiful-street case in loop form. No water, no landmarks — this walk lives or dies on the LPC historic district and the street tree census, the two datasets §5 predicted would carry the ordinary blocks. If it's dull, that prediction is wrong and the whole Phase 1 bet needs revisiting.",
+      "at": [-73.98, 40.672],
+      "durationMin": 40,
+      "interests": [],
+      "ratings": []
+    },
+    {
+      "id": "loop-grid-short",
+      "mode": "loop",
+      "name": "20 minutes from Union Square",
+      "tests": "The hardest case for the product: a short loop in a dense grid with no obvious anchor. This is the daily-walker scenario from §1 — the one the whole thing is designed around — and also where there's least to work with. If a 20-minute Union Square loop isn't worth doing, loop mode works only where the city is already obviously nice, which is not a product.",
+      "at": [-73.9903, 40.734],
+      "durationMin": 20,
+      "interests": [],
       "ratings": []
     }
   ]
