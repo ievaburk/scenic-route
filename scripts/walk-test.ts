@@ -26,7 +26,7 @@ import path from "node:path";
 import { buildRoutingGraph, makeScratch, type Route } from "../lib/router";
 import { planRoutes } from "../lib/plan-route";
 import { scenicArray, type ScoreArtifact } from "../lib/scoring";
-import { AXIS_KEYS, DEFAULT_WEIGHTS, SCENIC_AXES, type ScenicAxis } from "../lib/features";
+import { DEFAULT_WEIGHTS, SCENIC_AXES, type ScenicAxis } from "../lib/features";
 import { DICTIONARY } from "../lib/interests";
 import { applyInterests, interestLayer, type InterestLayer } from "../lib/interest-layers";
 import type { GraphArtifact } from "../lib/graph";
