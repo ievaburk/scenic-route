@@ -17,7 +17,7 @@
  * layers on `styledata` not `load`, `h-full` never `absolute inset-0`, and
  * always wire `map.on("error")`.
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   Map as MapLibreMap,
   Marker,
@@ -26,6 +26,16 @@ import {
 } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { SCENIC_AXES, type ScenicAxis } from "@/lib/features";
+import {
+  deleteWalk,
+  noWalksSnapshot,
+  savedSnapshot,
+  saveWalk,
+  subscribe,
+  walkToGpx,
+  type Prefs,
+  type SavedWalk,
+} from "@/lib/prefs";
 
 const STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
 const OSM_ATTRIBUTION =
@@ -107,7 +117,15 @@ function reasons(loop: ApiLoop): string[] {
   return out.slice(0, 4);
 }
 
-export default function LoopMap() {
+export default function LoopMap({
+  prefs,
+  onEditPrefs,
+  onPrefsChange,
+}: {
+  prefs: Prefs;
+  onEditPrefs: () => void;
+  onPrefsChange: (p: Prefs) => void;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const markerRef = useRef<Marker | null>(null);
@@ -117,8 +135,9 @@ export default function LoopMap() {
   const [mapError, setMapError] = useState<string | null>(null);
   const [origin, setOrigin] = useState<Pt | null>(null);
   const [duration, setDuration] = useState(40);
-  const [interests, setInterests] = useState<string[]>([]);
-  const [draft, setDraft] = useState("");
+  const saved = useSyncExternalStore(subscribe, savedSnapshot, noWalksSnapshot);
+  const [showSaved, setShowSaved] = useState(false);
+  const interests = prefs.interests;
   const [seed, setSeed] = useState(0);
   const [result, setResult] = useState<ApiResponse | null>(null);
   const [selected, setSelected] = useState(0);
@@ -137,6 +156,7 @@ export default function LoopMap() {
           origin: o,
           durationMin: mins,
           interests: ints,
+          weights: prefs.weights,
           seed: s,
         }),
       });
@@ -277,19 +297,29 @@ export default function LoopMap() {
     if (origin) void findLoops(origin, mins, interests, 0);
   }
 
-  function addInterest() {
-    const phrase = draft.trim();
-    if (!phrase || interests.length >= 5) return;
-    const next = [...interests, phrase];
-    setInterests(next);
-    setDraft("");
-    if (origin) void findLoops(origin, duration, next, seed);
+  function keep(loop: ApiLoop) {
+    const walk: SavedWalk = {
+      id: `${Date.now()}-${loop.id}`,
+      name: `${Math.round(loop.time / 60)} min from here`,
+      savedAt: new Date().toISOString(),
+      kind: "loop",
+      timeSeconds: loop.time,
+      metres: loop.len,
+      reasons: reasons(loop),
+      geometry: loop.geometry,
+    };
+    saveWalk(walk);
   }
 
-  function removeInterest(phrase: string) {
-    const next = interests.filter((p) => p !== phrase);
-    setInterests(next);
-    if (origin) void findLoops(origin, duration, next, seed);
+  /** A saved walk is no use trapped in a tab — hand it over as GPX. */
+  function download(walk: SavedWalk) {
+    const blob = new Blob([walkToGpx(walk)], { type: "application/gpx+xml" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${walk.name.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.gpx`;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   function regenerate() {
@@ -346,55 +376,80 @@ export default function LoopMap() {
           </div>
         </div>
 
-        <div className="mt-3">
-          <div className="flex gap-1">
-            <input
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && addInterest()}
-              placeholder="anything you're into? bridges…"
-              disabled={interests.length >= 5}
-              className="min-w-0 flex-1 rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm placeholder:text-slate-400 disabled:bg-slate-50"
-            />
+        {/*
+          Preferences are set in onboarding and summarised here rather than
+          re-edited inline. The counts still show, because §6 wants the proof
+          that we listened to stay visible — not just appear once at signup.
+        */}
+        <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs">
+          {interests.map((phrase) => {
+            const report = result?.query.interests.find((r) => r.phrase === phrase);
+            const good =
+              report?.status === "resolved" && report.coverage !== "not-extracted";
+            return (
+              <span
+                key={phrase}
+                className={`rounded-full border px-2 py-0.5 ${
+                  good
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+                    : "border-amber-200 bg-amber-50 text-amber-800"
+                }`}
+              >
+                {report?.label ?? phrase}
+                {good && report?.matchCount ? ` ✓ ${fmt.format(report.matchCount)}` : ""}
+                {report?.status === "unresolved" ? " — can't map that" : ""}
+                {report?.coverage === "not-extracted" ? " — no data yet" : ""}
+              </span>
+            );
+          })}
+          <button
+            type="button"
+            onClick={onEditPrefs}
+            className="rounded-full border border-slate-300 px-2 py-0.5 text-slate-600 hover:bg-slate-50"
+          >
+            {interests.length ? "edit" : "what I like"}
+          </button>
+          {saved.length > 0 && (
             <button
               type="button"
-              onClick={addInterest}
-              disabled={!draft.trim() || interests.length >= 5}
-              className="rounded-lg border border-slate-300 px-2.5 text-sm text-slate-700 hover:bg-slate-50 disabled:text-slate-300"
+              onClick={() => setShowSaved((v) => !v)}
+              className="rounded-full border border-slate-300 px-2 py-0.5 text-slate-600 hover:bg-slate-50"
             >
-              add
+              saved ({saved.length})
             </button>
-          </div>
-
-          <ul className="mt-1.5 flex flex-wrap gap-1.5">
-            {interests.map((phrase) => {
-              const report = result?.query.interests.find((r) => r.phrase === phrase);
-              const good =
-                report?.status === "resolved" && report.coverage !== "not-extracted";
-              return (
-                <li
-                  key={phrase}
-                  className={`flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs ${
-                    good
-                      ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-                      : "border-amber-200 bg-amber-50 text-amber-800"
-                  }`}
-                >
-                  {/* The count is what proves we listened, before any walk is drawn. */}
-                  <span>
-                    {report?.label ?? phrase}
-                    {good && report?.matchCount ? ` ✓ ${fmt.format(report.matchCount)}` : ""}
-                    {report?.status === "unresolved" ? " — can't map that" : ""}
-                    {report?.coverage === "not-extracted" ? " — no data yet" : ""}
-                  </span>
-                  <button type="button" onClick={() => removeInterest(phrase)} aria-label={`Remove ${phrase}`}>
-                    ×
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          )}
         </div>
+
+        {showSaved && (
+          <ul className="mt-2 space-y-1.5">
+            {saved.map((walk) => (
+              <li
+                key={walk.id}
+                className="flex items-center gap-2 rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm"
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="font-medium">{walk.name}</span>{" "}
+                  <span className="text-slate-500">{km(walk.metres)}</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => download(walk)}
+                  className="shrink-0 text-xs text-slate-600 underline underline-offset-2"
+                >
+                  GPX
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteWalk(walk.id)}
+                  aria-label={`Delete ${walk.name}`}
+                  className="shrink-0 text-slate-400 hover:text-slate-900"
+                >
+                  ×
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {pending && <p className="mt-4 text-sm text-slate-500">Finding walks…</p>}
         {error && (
@@ -445,13 +500,22 @@ export default function LoopMap() {
               ))}
             </ul>
 
-            <button
-              type="button"
-              onClick={regenerate}
-              className="mt-3 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
-            >
-              Show me something else
-            </button>
+            <div className="mt-3 flex gap-2">
+              <button
+                type="button"
+                onClick={regenerate}
+                className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                Show me something else
+              </button>
+              <button
+                type="button"
+                onClick={() => result.loops[selected] && keep(result.loops[selected])}
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                Save
+              </button>
+            </div>
           </>
         )}
 

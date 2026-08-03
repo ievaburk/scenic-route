@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { tryLoadGraph } from "@/lib/graph-server";
 import { scoresFor } from "@/lib/scores-server";
-import LoopMap from "./loop-map";
+import AppShell from "./app-shell";
 
 export const metadata: Metadata = {
   title: "Scenic Route — a nice walk from here",
@@ -30,5 +30,5 @@ export default function Home() {
     );
   }
 
-  return <LoopMap />;
+  return <AppShell />;
 }
