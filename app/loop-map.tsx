@@ -50,16 +50,22 @@ const LOOP_COLORS = ["#059669", "#0284c7", "#b45309"];
 
 type Pt = { lon: number; lat: number };
 
-type ApiLoop = {
+/**
+ * A walk, whichever mode produced it. `onTarget` is loop-only, `detour`
+ * A-to-B-only; everything the card needs is common to both.
+ */
+type Walk = {
   id: number;
   time: number;
-  onTarget: boolean;
   len: number;
   scenic: number;
-  overlap: number;
   axes: Record<ScenicAxis, number>;
   interests: { id: string; label: string; metres: number }[];
   geometry: { type: "LineString"; coordinates: [number, number][] };
+  /** Loop mode: did it hit the requested duration? */
+  onTarget?: boolean;
+  /** A-to-B: seconds over the fastest route. 0 is the baseline. */
+  detour?: number;
 };
 
 type ApiResponse = {
@@ -72,8 +78,7 @@ type ApiResponse = {
       coverage?: string;
     }[];
   };
-  meta: { targetSeconds: number; ms: number; snapped: Pt };
-  loops: ApiLoop[];
+  walks: Walk[];
 };
 
 const fmt = new Intl.NumberFormat("en-US");
@@ -89,7 +94,7 @@ const km = (m: number) => `${(m / 1000).toFixed(1)} km`;
  * explicitly asked for, and seeing your own request reflected back is the
  * moment the app proves it listened.
  */
-function reasons(loop: ApiLoop): string[] {
+function reasons(loop: Walk): string[] {
   const out: string[] = [];
 
   for (const i of loop.interests) {
@@ -128,13 +133,22 @@ export default function LoopMap({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
-  const markerRef = useRef<Marker | null>(null);
+  const markersRef = useRef<Marker[]>([]);
   const requestId = useRef(0);
 
   const [ready, setReady] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
   const [origin, setOrigin] = useState<Pt | null>(null);
+  /** Set only in A-to-B mode. */
+  const [destination, setDestination] = useState<Pt | null>(null);
+  const [mode, setMode] = useState<"loop" | "ab">("loop");
   const [duration, setDuration] = useState(40);
+  /**
+   * §8's slider, in the only unit a walker can calibrate: minutes over the
+   * fastest way there. Anchored against the fastest route, which is computed
+   * first and always shown as the baseline.
+   */
+  const [slackMin, setSlackMin] = useState(10);
   const saved = useSyncExternalStore(subscribe, savedSnapshot, noWalksSnapshot);
   const [showSaved, setShowSaved] = useState(false);
   const interests = prefs.interests;
@@ -144,26 +158,56 @@ export default function LoopMap({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function findLoops(o: Pt, mins: number, ints: string[], s: number) {
+  /**
+   * One fetch for both modes.
+   *
+   * The two endpoints answer genuinely different questions — a loop has a
+   * duration target and no baseline, an A-to-B route has a baseline and a
+   * detour budget — but the *card* is the same either way, because what the
+   * walker wants to know is the same: how long, and why is it worth it. So the
+   * responses are normalised to one shape here rather than forking the UI.
+   */
+  async function findWalks(opts: {
+    mode: "loop" | "ab";
+    origin: Pt;
+    destination?: Pt | null;
+    durationMin: number;
+    slackMin: number;
+    interests: string[];
+    seed: number;
+  }) {
     const id = ++requestId.current;
     setPending(true);
     setError(null);
     try {
-      const res = await fetch("/api/loop", {
+      const isLoop = opts.mode === "loop";
+      const res = await fetch(isLoop ? "/api/loop" : "/api/route", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          origin: o,
-          durationMin: mins,
-          interests: ints,
-          weights: prefs.weights,
-          seed: s,
-        }),
+        body: JSON.stringify(
+          isLoop
+            ? {
+                origin: opts.origin,
+                durationMin: opts.durationMin,
+                interests: opts.interests,
+                weights: prefs.weights,
+                seed: opts.seed,
+              }
+            : {
+                origin: opts.origin,
+                destination: opts.destination,
+                slackMin: opts.slackMin,
+                interests: opts.interests,
+                weights: prefs.weights,
+              },
+        ),
       });
       const body = await res.json();
       if (id !== requestId.current) return;
       if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
-      setResult(body as ApiResponse);
+
+      const walks: Walk[] = (isLoop ? body.loops : body.routes) as Walk[];
+      setResult({ query: body.query, walks });
       setSelected(0);
     } catch (err) {
       if (id !== requestId.current) return;
@@ -230,7 +274,16 @@ export default function LoopMap({
     if (map.isStyleLoaded()) addLayers();
     else map.on("styledata", addLayers);
 
+    // MapLibre sizes its canvas once and never re-checks, so any change to the
+    // container leaves a stale canvas with dead space around it — switching
+    // between the stacked and side-by-side layouts, or rotating a phone, both
+    // do it. The window `resize` event isn't enough: the container can change
+    // size while the window doesn't.
+    const observer = new ResizeObserver(() => map.resize());
+    observer.observe(container);
+
     return () => {
+      observer.disconnect();
       map.remove();
       mapRef.current = null;
     };
@@ -242,26 +295,46 @@ export default function LoopMap({
     if (!map || !ready) return;
     const onClick = (e: { lngLat: { lng: number; lat: number } }) => {
       const pt = { lon: e.lngLat.lng, lat: e.lngLat.lat };
-      setOrigin(pt);
       setSeed(0);
-      void findLoops(pt, duration, interests, 0);
+
+      if (mode === "loop") {
+        setOrigin(pt);
+        void findWalks({ mode, origin: pt, durationMin: duration, slackMin, interests, seed: 0 });
+        return;
+      }
+
+      // A-to-B: first tap is where you are, second is where you're going, a
+      // third starts over.
+      if (!origin || destination) {
+        setOrigin(pt);
+        setDestination(null);
+        setResult(null);
+      } else {
+        setDestination(pt);
+        void findWalks({ mode, origin, destination: pt, durationMin: duration, slackMin, interests, seed: 0 });
+      }
     };
     map.on("click", onClick);
     return () => {
       map.off("click", onClick);
     };
-  }, [ready, duration, interests]);
+  }, [ready, mode, duration, slackMin, interests, origin, destination]);
 
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
-    markerRef.current?.remove();
-    if (origin) {
-      markerRef.current = new Marker({ color: "#0f172a" })
-        .setLngLat([origin.lon, origin.lat])
-        .addTo(map);
+    for (const m of markersRef.current) m.remove();
+    markersRef.current = [];
+    for (const [pt, color] of [
+      [origin, "#0f172a"],
+      [mode === "ab" ? destination : null, "#dc2626"],
+    ] as const) {
+      if (!pt) continue;
+      markersRef.current.push(
+        new Marker({ color }).setLngLat([pt.lon, pt.lat]).addTo(map),
+      );
     }
-  }, [ready, origin]);
+  }, [ready, origin, destination, mode]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -271,15 +344,15 @@ export default function LoopMap({
 
     (source as { setData: (d: unknown) => void }).setData({
       type: "FeatureCollection",
-      features: (result?.loops ?? []).map((loop, i) => ({
+      features: (result?.walks ?? []).map((loop, i) => ({
         type: "Feature" as const,
         properties: { color: LOOP_COLORS[i] ?? "#059669", active: i === selected },
         geometry: loop.geometry,
       })),
     });
 
-    const loop = result?.loops[selected];
-    if (loop) {
+    const loop = result?.walks[selected];
+    if (loop && loop.geometry.coordinates.length > 1) {
       let w = 180, e = -180, s = 90, n = -90;
       for (const [lon, lat] of loop.geometry.coordinates) {
         if (lon < w) w = lon;
@@ -287,22 +360,49 @@ export default function LoopMap({
         if (lat < s) s = lat;
         if (lat > n) n = lat;
       }
-      map.fitBounds([[w, s], [e, n]], { padding: 60, duration: 600, maxZoom: 15 });
+      // A degenerate box — start and destination on the same node — makes
+      // fitBounds zoom out to the whole planet, which is a startling way to
+      // respond to a double tap. Guarded rather than clamped, because the
+      // useful reaction is to leave the view alone.
+      if (e > w || n > s) {
+        map.fitBounds([[w, s], [e, n]], { padding: 60, duration: 600, maxZoom: 15 });
+      }
     }
   }, [ready, result, selected]);
 
   function ask(mins: number) {
     setDuration(mins);
     setSeed(0);
-    if (origin) void findLoops(origin, mins, interests, 0);
+    if (origin) {
+      void findWalks({ mode, origin, destination, durationMin: mins, slackMin, interests, seed: 0 });
+    }
   }
 
-  function keep(loop: ApiLoop) {
+  function changeSlack(value: number) {
+    setSlackMin(value);
+    if (origin && destination) {
+      void findWalks({ mode, origin, destination, durationMin: duration, slackMin: value, interests, seed: 0 });
+    }
+  }
+
+  function switchMode(next: "loop" | "ab") {
+    setMode(next);
+    setDestination(null);
+    setResult(null);
+    setSeed(0);
+    // A loop needs only a start, so it can run immediately; A-to-B waits for
+    // a destination.
+    if (next === "loop" && origin) {
+      void findWalks({ mode: next, origin, durationMin: duration, slackMin, interests, seed: 0 });
+    }
+  }
+
+  function keep(loop: Walk) {
     const walk: SavedWalk = {
       id: `${Date.now()}-${loop.id}`,
       name: `${Math.round(loop.time / 60)} min from here`,
       savedAt: new Date().toISOString(),
-      kind: "loop",
+      kind: mode,
       timeSeconds: loop.time,
       metres: loop.len,
       reasons: reasons(loop),
@@ -326,7 +426,7 @@ export default function LoopMap({
     if (!origin) return;
     const next = seed + 1;
     setSeed(next);
-    void findLoops(origin, duration, interests, next);
+    void findWalks({ mode, origin, destination, durationMin: duration, slackMin, interests, seed: next });
   }
 
   return (
@@ -349,15 +449,57 @@ export default function LoopMap({
 
       <aside className="flex max-h-[55vh] w-full shrink-0 flex-col overflow-y-auto border-slate-200 bg-white p-4 md:max-h-none md:w-96 md:border-r">
         <h1 className="text-xl font-semibold tracking-tight">
-          A nice walk from here
+          {mode === "loop" ? "A nice walk from here" : "A nicer way there"}
         </h1>
         <p className="mt-1 text-sm text-slate-600">
-          {origin
-            ? "Tap anywhere to start somewhere else."
-            : "Tap the map to say where you're starting."}
+          {mode === "loop"
+            ? origin
+              ? "Tap anywhere to start somewhere else."
+              : "Tap the map to say where you're starting."
+            : !origin
+              ? "Tap where you're starting."
+              : !destination
+                ? "Now tap where you're going."
+                : "Tap again to start over."}
         </p>
 
+        {/*
+          Two genuinely different questions, so they get a real switch rather
+          than a hidden mode. §3: loop mode is the wedge — the request no other
+          app can express — and A-to-B is the retention layer, so loop leads.
+        */}
+        <div className="mt-3 flex rounded-lg border border-slate-200 p-0.5">
+          {(["loop", "ab"] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => switchMode(m)}
+              className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition ${
+                mode === m ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-50"
+              }`}
+            >
+              {m === "loop" ? "Round trip" : "Get me there"}
+            </button>
+          ))}
+        </div>
+
         <div className="mt-4">
+          {mode === "ab" ? (
+            <label className="block text-sm text-slate-600">
+              I&apos;ll spend up to{" "}
+              <span className="font-semibold text-slate-900">+{slackMin} min</span>{" "}
+              more than the quickest way
+              <input
+                type="range"
+                min={0}
+                max={45}
+                step={1}
+                value={slackMin}
+                onChange={(e) => changeSlack(Number(e.target.value))}
+                className="mt-1.5 w-full accent-slate-900"
+              />
+            </label>
+          ) : (
           <div className="flex gap-1.5">
             {DURATIONS.map((m) => (
               <button
@@ -374,6 +516,7 @@ export default function LoopMap({
               </button>
             ))}
           </div>
+          )}
         </div>
 
         {/*
@@ -390,9 +533,14 @@ export default function LoopMap({
               <span
                 key={phrase}
                 className={`rounded-full border px-2 py-0.5 ${
-                  good
-                    ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-                    : "border-amber-200 bg-amber-50 text-amber-800"
+                  // Neutral until a route comes back: amber before we've asked
+                  // reads as "we can't map that", which is a different and
+                  // much worse claim than "we don't know yet".
+                  !report
+                    ? "border-slate-200 text-slate-600"
+                    : good
+                      ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+                      : "border-amber-200 bg-amber-50 text-amber-800"
                 }`}
               >
                 {report?.label ?? phrase}
@@ -458,10 +606,16 @@ export default function LoopMap({
           </p>
         )}
 
-        {result && !pending && (
+        {result && !pending && result.walks.every((w) => w.len === 0) && (
+          <p className="mt-4 rounded-lg border border-slate-200 p-3 text-sm text-slate-600">
+            That&apos;s where you already are. Tap somewhere else to walk to.
+          </p>
+        )}
+
+        {result && !pending && result.walks.some((w) => w.len > 0) && (
           <>
             <ul className="mt-4 space-y-2">
-              {result.loops.map((loop, i) => (
+              {result.walks.filter((w) => w.len > 0).map((loop, i) => (
                 <li key={loop.id}>
                   <button
                     type="button"
@@ -482,9 +636,16 @@ export default function LoopMap({
                       </span>
                       <span className="text-sm text-slate-500">{km(loop.len)}</span>
                       {/* Honest when the geography couldn't answer the question. */}
-                      {!loop.onTarget && (
+                      {mode === "loop" && loop.onTarget === false && (
                         <span className="ml-auto text-xs text-amber-700">
                           longest that fits here
+                        </span>
+                      )}
+                      {mode === "ab" && (
+                        <span className="ml-auto text-xs text-slate-500">
+                          {loop.detour && loop.detour > 30
+                            ? `+${Math.round(loop.detour / 60)} min`
+                            : "quickest"}
                         </span>
                       )}
                     </div>
@@ -501,19 +662,21 @@ export default function LoopMap({
             </ul>
 
             <div className="mt-3 flex gap-2">
+              {mode === "loop" && (
+                <button
+                  type="button"
+                  onClick={regenerate}
+                  className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                >
+                  Show me something else
+                </button>
+              )}
               <button
                 type="button"
-                onClick={regenerate}
+                onClick={() => result.walks[selected] && keep(result.walks[selected])}
                 className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
               >
-                Show me something else
-              </button>
-              <button
-                type="button"
-                onClick={() => result.loops[selected] && keep(result.loops[selected])}
-                className="rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
-              >
-                Save
+                Save this one
               </button>
             </div>
           </>
