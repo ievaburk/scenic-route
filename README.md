@@ -35,6 +35,7 @@ npm run check:landmarks   # Phase 1 regression net — run on every scoring chan
 npm run check:router      # proves the A* is optimal, against plain Dijkstra
 npm run check:routes      # Phase 2 fixtures — 20 O/D pairs, budget/α/diversity
 npm run check:interests   # Phase 3 fixtures — resolution + does asking change the walk
+npm run check:loops       # Phase 4 fixtures — 10 origins × 3 durations
 npm run walk:test         # generate GPX + a field sheet for three real walks
 ```
 
@@ -173,8 +174,24 @@ walk changes nothing, because Museum Mile is a kilometre off-corridor and a
 per-edge discount can't fund that. Via-points remain the mechanism for "go
 there".
 
-**Next up: Phase 4 (loop mode)** — the first real user-facing surface, with
-anchor selection biased by the interests built above.
+**Phase 4 (loop mode) — done.** `/` is now the product: tap where you are, pick
+20/40/60 minutes, get three walks that come back to you.
+
+| | |
+|---|---|
+| fixtures | 10/10 origins, 89/90 loops within ±10% |
+| per request | ~130 ms |
+| overlap | 0–16% against a 30% limit |
+
+Interests bias *where the loop goes*, not just which streets it picks — asking
+for bridges from Dumbo moves bridge exposure 650 m → 1,956 m.
+
+The one loop that misses its target is honest about it: Dumbo is boxed in by the
+river and no 60-minute loop exists there, so it comes back labelled "longest
+that fits here" rather than pretending.
+
+**Next up: Phase 5 (product shell)** — onboarding, Supabase auth, saved routes,
+and A-to-B with the detour slider made user-facing.
 
 ## Data
 

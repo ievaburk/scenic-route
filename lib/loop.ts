@@ -67,6 +67,16 @@ export type Loop = Route & {
   scenicPerKm: number;
   /** The two anchor nodes it was built around, for debugging. */
   anchors: [number, number];
+  /**
+   * Did this land within §9's ±10% of the requested duration?
+   *
+   * Exposed rather than hidden because some origins genuinely can't answer the
+   * question: Dumbo is boxed in by the river and the bridge approaches, and no
+   * 60-minute loop exists there. Padding the list with a 50-minute loop and
+   * calling it 60 would be a lie; returning it labelled honestly — "50 min,
+   * couldn't find a full hour from here" — is a real answer.
+   */
+  onTarget: boolean;
 };
 
 export type LoopOptions = {
@@ -83,6 +93,15 @@ export type LoopOptions = {
   interestScores?: Map<number, number>[];
   /** How many to return. */
   count?: number;
+  /**
+   * Rotates the bearing sweep, so the same request can yield a different set.
+   *
+   * This is §4's "regenerate / something else", which it calls critical for
+   * loop mode — a walker who doesn't fancy today's three should get three more,
+   * not the same three again. Rotating rather than randomising keeps each
+   * result reproducible from its seed.
+   */
+  seed?: number;
 };
 
 export type LoopResult = {
@@ -206,7 +225,7 @@ export function planLoops(
   scratch: SearchScratch,
   opts: LoopOptions,
 ): LoopResult {
-  const { origin, durationMin, scenic, interestScores = [], count = 3 } = opts;
+  const { origin, durationMin, scenic, interestScores = [], count = 3, seed = 0 } = opts;
 
   const targetSeconds = durationMin * 60;
   const targetMetres = targetSeconds * WALK_SPEED_MPS;
@@ -264,8 +283,9 @@ export function planLoops(
   let searches = 0;
   let considered = 0;
 
-  for (let i = 0; i < BEARINGS; i++) {
-    const bearing = (360 / BEARINGS) * i;
+  const sweep = (offsetDeg: number) => {
+   for (let i = 0; i < BEARINGS; i++) {
+    const bearing = (360 / BEARINGS) * i + offsetDeg;
 
     // §9 step 4: bisect the anchor radius until the walk lands in tolerance.
     let lo = RADIUS_BOUNDS[0];
@@ -297,6 +317,7 @@ export function planLoops(
         overlap: overlapOf(g, built.route),
         scenicPerKm: built.route.len > 0 ? built.route.scenic : 0,
         anchors: [a, b],
+        onTarget: false,
       };
 
       const error = Math.abs(loop.time - targetSeconds) / targetSeconds;
@@ -312,9 +333,21 @@ export function planLoops(
     }
 
     if (best && best.overlap <= MAX_OVERLAP) {
-      inTolerance(best, targetSeconds) ? onTarget.push(best) : misses.push(best);
+      best.onTarget = inTolerance(best, targetSeconds);
+      (best.onTarget ? onTarget : misses).push(best);
     }
-  }
+   }
+  };
+
+  const baseOffset = (seed * 360) / (BEARINGS * 3);
+  sweep(baseOffset);
+
+  // Some origins simply can't make the requested length in the first ten
+  // directions — Dumbo is boxed in by the river and the bridge approaches, and
+  // a 60-minute loop there needs anchors the initial sweep never proposed.
+  // Half-offset bearings are cheap and find them, which beats padding the list
+  // with loops of the wrong duration when duration is the whole request.
+  if (onTarget.length < count) sweep(baseOffset + 180 / BEARINGS);
 
   // Rank by scenery per kilometre (§9 step 5) *within* the loops that are the
   // right length, then fall back to the closest misses only to fill the list.

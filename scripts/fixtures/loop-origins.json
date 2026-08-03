@@ -1,0 +1,17 @@
+{
+  "note": "Phase 4 fixtures (PLAN.md §13): ten loop origins across the pilot area, each at three durations. Chosen to span the situations that break loop construction differently — waterfront origins lose half their annulus to the river, park-adjacent origins have an obvious anchor in one direction only, and dense-grid origins have too many equally good choices. Ratings are for after you've walked one.",
+  "durations": [20, 40, 60],
+  "origins": [
+    { "name": "Brooklyn Heights", "at": [-73.995, 40.696], "shape": "waterfront — half the annulus is river" },
+    { "name": "Park Slope", "at": [-73.98, 40.672], "shape": "park-adjacent, brownstone grid" },
+    { "name": "Union Square", "at": [-73.9903, 40.734], "shape": "dense grid, many equal options" },
+    { "name": "Upper West Side", "at": [-73.976, 40.785], "shape": "between two large parks" },
+    { "name": "West Village", "at": [-74.003, 40.735], "shape": "irregular street pattern" },
+    { "name": "Dumbo", "at": [-73.989, 40.703], "shape": "waterfront plus bridge approaches" },
+    { "name": "East Village", "at": [-73.984, 40.727], "shape": "grid, few parks" },
+    { "name": "Tribeca", "at": [-74.006, 40.72], "shape": "cobbled, close to two waterfronts" },
+    { "name": "Fort Greene", "at": [-73.974, 40.69], "shape": "park on one side only" },
+    { "name": "Midtown East", "at": [-73.973, 40.755], "shape": "arterial-heavy, little green" }
+  ],
+  "ratings": []
+}
