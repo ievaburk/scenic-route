@@ -35,6 +35,7 @@ npm run check:landmarks   # Phase 1 regression net — run on every scoring chan
 npm run check:router      # proves the A* is optimal, against plain Dijkstra
 npm run check:routes      # Phase 2 fixtures — 20 O/D pairs, budget/α/diversity
 npm run check:interests   # Phase 3 fixtures — resolution + does asking change the walk
+npm run walk:test         # generate GPX + a field sheet for three real walks
 ```
 
 ## Where this is up to

@@ -1,0 +1,37 @@
+{
+  "note": "Three walks to actually go and do. PLAN.md §11 calls this the single most valuable thing in the whole plan and the easiest to skip: there is no ground truth for 'scenic', and every automated check so far grades the scoring against assumptions rather than against New York. Each walk is chosen to test a *different* claim the system makes, so a bad result points at a cause rather than just feeling wrong.",
+  "howToRate": "Walk it, then fill in `rating` (1-5) and `notes`. Re-run `npm run walk:test` after any scoring change and re-rate — a change that improves the fixtures but makes a real walk worse is a change that should be reverted. Keep old ratings; the history is the point.",
+  "walks": [
+    {
+      "id": "waterfront-detour",
+      "name": "Dumbo → Cobble Hill",
+      "tests": "Is a 9-minute detour to the waterfront worth it? The scorer says Brooklyn Bridge Park is 0.84 and pulls the route through 1.2km of it. If the answer is no, the water and green axes are overweighted.",
+      "from": [-73.989, 40.703],
+      "to": [-73.995, 40.687],
+      "slackMin": 15,
+      "interests": [],
+      "ratings": []
+    },
+    {
+      "id": "interest-statues",
+      "name": "Chelsea → East Village, asking for statues",
+      "tests": "Do custom interests change the walk in a way you actually notice? Asking for statues adds ~580m of statuary. If you can't tell the difference on the ground, the interest weight is too low or the sparse layer is too diffuse.",
+      "from": [-74.0, 40.746],
+      "to": [-73.984, 40.727],
+      "slackMin": 15,
+      "interests": ["statues"],
+      "ratings": []
+    },
+    {
+      "id": "grid-quiet",
+      "name": "Union Sq → Central Park South, green + quiet",
+      "tests": "The 'canal path, not the avenue' claim from §2, and the cheapest win the router offers. Quiet exposure triples for about 30 seconds of detour. If the quieter street doesn't feel meaningfully better, the quiet axis — the one with no data behind it — is wrong.",
+      "from": [-73.9903, 40.734],
+      "to": [-73.9772, 40.7614],
+      "slackMin": 12,
+      "interests": [],
+      "weights": { "green": 1, "quiet": 1, "water": 0, "architecture": 0, "art": 0, "hills": 0 },
+      "ratings": []
+    }
+  ]
+}

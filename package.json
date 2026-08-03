@@ -16,7 +16,8 @@
     "check:landmarks": "tsx scripts/check-landmarks.ts",
     "check:router": "tsx scripts/check-router.ts",
     "check:routes": "tsx scripts/check-routes.ts",
-    "check:interests": "tsx scripts/check-interests.ts"
+    "check:interests": "tsx scripts/check-interests.ts",
+    "walk:test": "tsx scripts/walk-test.ts"
   },
   "dependencies": {
     "maplibre-gl": "^6.1.0",
