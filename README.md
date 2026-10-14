@@ -1,7 +1,7 @@
 # Scenic Route
 
-Walking navigation that optimises for *most interesting* instead of *fastest* —
-through parks rather than along arterials, past water, quiet streets, notable
+Walking navigation that optimises for most interesting instead of fastest, whether
+through parks, past water, quiet streets, notable
 architecture, statues and viewpoints, and past whatever else you happen to be
 obsessed with.
 
