@@ -1,9 +1,6 @@
 # Scenic Route
 
-Walking navigation that optimises for most interesting instead of fastest, whether
-through parks, past water, quiet streets, notable
-architecture, statues and viewpoints, and past whatever else you happen to be
-obsessed with.
+Most maps get you there fast. This one tries to get you there well. It’s a walking-only map for New York City that scores routes on how nice they are to walk. I built it for fun with Claude Code.
 
 See [AGENTS.md](AGENTS.md) for working conventions.
 
