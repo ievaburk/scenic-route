@@ -1,0 +1,5857 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-08-02T05:09:51Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 357623574,
+  "lat": 40.6613238,
+  "lon": -73.9504483,
+  "tags": {
+    "amenity": "place_of_worship",
+    "denomination": "roman_catholic",
+    "ele": "17",
+    "gnis:feature_id": "2097096",
+    "name": "Saint Francis of Assisi Church",
+    "religion": "christian",
+    "website": "https://www.sfa-stb.org/",
+    "wikidata": "Q5117222",
+    "wikipedia": "en:Church of St. Francis of Assisi and St. Blaise (Brooklyn)"
+  }
+},
+{
+  "type": "node",
+  "id": 357623698,
+  "lat": 40.6550000,
+  "lon": -73.9391668,
+  "tags": {
+    "amenity": "place_of_worship",
+    "denomination": "jehovahs_witness",
+    "ele": "14",
+    "gnis:feature_id": "2097244",
+    "name": "Utica Congregation of Jehovah's Witnesses",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 357623703,
+  "lat": 40.6588889,
+  "lon": -73.9394444,
+  "tags": {
+    "amenity": "place_of_worship",
+    "ele": "11",
+    "gnis:feature_id": "2097246",
+    "name": "Freedom Hall Church of God",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 357623712,
+  "lat": 40.6611111,
+  "lon": -73.9405556,
+  "tags": {
+    "amenity": "place_of_worship",
+    "ele": "12",
+    "gnis:feature_id": "2097250",
+    "name": "Congregation Ahavas Moische",
+    "religion": "jewish"
+  }
+},
+{
+  "type": "node",
+  "id": 357623878,
+  "lat": 40.6577778,
+  "lon": -73.9305556,
+  "tags": {
+    "amenity": "place_of_worship",
+    "ele": "10",
+    "gnis:feature_id": "2097388",
+    "name": "Jesus Christ Apostolic Church",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 357623900,
+  "lat": 40.6630556,
+  "lon": -73.9533333,
+  "tags": {
+    "amenity": "place_of_worship",
+    "ele": "20",
+    "gnis:feature_id": "2097398",
+    "name": "Living Word Church of God",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 1672905739,
+  "lat": 40.6732012,
+  "lon": -73.9419124,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 2566580905,
+  "lat": 40.6589661,
+  "lon": -73.9531489,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "Church of God",
+    "name:fr": "Eglise de Dieu"
+  }
+},
+{
+  "type": "node",
+  "id": 2566580919,
+  "lat": 40.6590216,
+  "lon": -73.9531531,
+  "tags": {
+    "amenity": "place_of_worship",
+    "check_date": "2022-06-19",
+    "name": "The Brooklyn Christadelphian Ecclesial Hall"
+  }
+},
+{
+  "type": "node",
+  "id": 2566603539,
+  "lat": 40.6573381,
+  "lon": -73.9599967,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "Emmanuel Christian Mission",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 2566631739,
+  "lat": 40.6615070,
+  "lon": -73.9537910,
+  "tags": {
+    "addr:housenumber": "452",
+    "addr:postcode": "11225",
+    "addr:street": "Rogers Avenue",
+    "amenity": "place_of_worship",
+    "name": "Eglise du Nazareen Libre",
+    "name:en": "Free Nazareen Church",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 2567062216,
+  "lat": 40.6683220,
+  "lon": -73.9531668,
+  "tags": {
+    "addr:housenumber": "1125",
+    "addr:postcode": "11225",
+    "addr:street": "President Street",
+    "amenity": "place_of_worship",
+    "fixme": "find name (sign is damaged)",
+    "phone": "+1-347-261-3536",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 2568144057,
+  "lat": 40.6717737,
+  "lon": -73.9334776,
+  "tags": {
+    "addr:housenumber": "211A",
+    "addr:postcode": "11213",
+    "addr:street": "Schenectady Avenue",
+    "amenity": "place_of_worship",
+    "denomination": "pentecostal",
+    "name": "Solid Rock Redemption Church of God",
+    "phone": "+1-646-752-4190",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 2705995456,
+  "lat": 40.6737798,
+  "lon": -73.9566877,
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "725",
+    "addr:postcode": "11216",
+    "addr:street": "Franklin Avenue",
+    "amenity": "place_of_worship",
+    "check_date": "2022-08-10",
+    "denomination": "protestant",
+    "name": "The Gospel Tabernacle Church",
+    "phone": "+1 347-533-9421; +1 917-284-7894",
+    "religion": "christian",
+    "website": "https://gtcfranklinave.com"
+  }
+},
+{
+  "type": "node",
+  "id": 2706023194,
+  "lat": 40.6736778,
+  "lon": -73.9567254,
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "729",
+    "addr:postcode": "11216",
+    "addr:street": "Franklin Avenue",
+    "amenity": "place_of_worship",
+    "check_date": "2022-08-10",
+    "denomination": "pentecostal",
+    "name": "The Straightway Church of God in Christ",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 5759695357,
+  "lat": 40.6603296,
+  "lon": -73.9532878,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "Word of Life Ministries International",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 6240117725,
+  "lat": 40.6735367,
+  "lon": -73.9500175,
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "695",
+    "addr:postcode": "11216",
+    "addr:state": "NY",
+    "addr:street": "Nostrand Avenue",
+    "amenity": "place_of_worship",
+    "name": "Masjid Ul Kawthar",
+    "religion": "muslim"
+  }
+},
+{
+  "type": "node",
+  "id": 6582352776,
+  "lat": 40.6640057,
+  "lon": -73.9529171,
+  "tags": {
+    "addr:housenumber": "279",
+    "addr:street": "Empire Boulevard",
+    "description": "The Museum of Women's Resistance (MoWRe) examines the influence of women of African descent and women of color from the Global South and their resistance movements.",
+    "name": "Museum of Women's Resistance",
+    "opening_hours": "Mo-Fr 10:30-17:30",
+    "phone": "+1-347-533-9103",
+    "tourism": "museum",
+    "website": "https://www.museumofwomensresistance.org/"
+  }
+},
+{
+  "type": "node",
+  "id": 6681855549,
+  "lat": 40.6656756,
+  "lon": -73.9507384,
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "909",
+    "addr:state": "NY",
+    "addr:street": "Nostrand Avenue",
+    "amenity": "place_of_worship",
+    "denomination": "baptist",
+    "name": "Emmanuel Baptist Church",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 6943152480,
+  "lat": 40.6728545,
+  "lon": -73.9502872,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 6943152481,
+  "lat": 40.6727715,
+  "lon": -73.9501557,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 6943152482,
+  "lat": 40.6729822,
+  "lon": -73.9502758,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 6943152484,
+  "lat": 40.6731104,
+  "lon": -73.9502657,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279175909,
+  "lat": 40.6627931,
+  "lon": -73.9416517,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279175910,
+  "lat": 40.6628418,
+  "lon": -73.9408496,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279175911,
+  "lat": 40.6626921,
+  "lon": -73.9405822,
+  "tags": {
+    "leaf_cycle": "evergreen",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279175912,
+  "lat": 40.6628162,
+  "lon": -73.9407306,
+  "tags": {
+    "leaf_cycle": "evergreen",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279175913,
+  "lat": 40.6623305,
+  "lon": -73.9407113,
+  "tags": {
+    "leaf_cycle": "evergreen",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279175914,
+  "lat": 40.6624500,
+  "lon": -73.9407204,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279175915,
+  "lat": 40.6622025,
+  "lon": -73.9416230,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279175916,
+  "lat": 40.6622141,
+  "lon": -73.9413709,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193317,
+  "lat": 40.6622334,
+  "lon": -73.9411229,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193318,
+  "lat": 40.6622480,
+  "lon": -73.9408993,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193319,
+  "lat": 40.6622990,
+  "lon": -73.9405780,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193320,
+  "lat": 40.6623046,
+  "lon": -73.9404867,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193321,
+  "lat": 40.6623101,
+  "lon": -73.9403954,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193322,
+  "lat": 40.6623212,
+  "lon": -73.9402127,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193323,
+  "lat": 40.6623157,
+  "lon": -73.9403040,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193324,
+  "lat": 40.6624086,
+  "lon": -73.9401427,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193325,
+  "lat": 40.6625002,
+  "lon": -73.9401524,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193326,
+  "lat": 40.6625616,
+  "lon": -73.9405701,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193327,
+  "lat": 40.6625665,
+  "lon": -73.9404888,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193328,
+  "lat": 40.6625714,
+  "lon": -73.9404074,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193329,
+  "lat": 40.6625764,
+  "lon": -73.9403260,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193330,
+  "lat": 40.6625813,
+  "lon": -73.9402447,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193331,
+  "lat": 40.6626590,
+  "lon": -73.9401691,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193332,
+  "lat": 40.6628181,
+  "lon": -73.9402041,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193333,
+  "lat": 40.6627960,
+  "lon": -73.9402812,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193334,
+  "lat": 40.6627915,
+  "lon": -73.9404283,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9279193335,
+  "lat": 40.6628287,
+  "lon": -73.9405176,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9419291805,
+  "lat": 40.6660118,
+  "lon": -73.9534712,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "Church of God of Prophecy",
+    "phone": "+1-718-771-1347",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 9419303533,
+  "lat": 40.6641060,
+  "lon": -73.9580771,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "Church of Jesus Teaching Healing & Deliverance Ministry",
+    "phone": "+1-347-276-5129",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 9419323936,
+  "lat": 40.6662010,
+  "lon": -73.9565028,
+  "tags": {
+    "amenity": "place_of_worship",
+    "denomination": "pentecostal",
+    "name": "Iglesia Dios Pentecostal Pricipe de Paz",
+    "phone": "+1-347-295-3137",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 9419323939,
+  "lat": 40.6661482,
+  "lon": -73.9565221,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "The New York Kosmon Temple",
+    "phone": "+1-718-493-7120",
+    "religion": "kosmon"
+  }
+},
+{
+  "type": "node",
+  "id": 9543748334,
+  "lat": 40.6618299,
+  "lon": -73.9538243,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "Wayside Bethany Full Gospel Church of God",
+    "phone": "+1-718-282-4479",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 9543748336,
+  "lat": 40.6632369,
+  "lon": -73.9536299,
+  "tags": {
+    "amenity": "place_of_worship",
+    "denomination": "church_of_god_in_christ",
+    "name": "Eglise de Dieu en Christ de la Parole Vivante",
+    "name:en": "Living Word Church of God in Christ",
+    "name:fr": "Eglise de Dieu en Christ de la Parole Vivante",
+    "phone": "+1-718-771-3323",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 9776139855,
+  "lat": 40.6592713,
+  "lon": -73.9539855,
+  "tags": {
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 9776139856,
+  "lat": 40.6592669,
+  "lon": -73.9536645,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 10048543916,
+  "lat": 40.6617272,
+  "lon": -73.9472185,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 10048544717,
+  "lat": 40.6617362,
+  "lon": -73.9470248,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 10048544718,
+  "lat": 40.6617455,
+  "lon": -73.9468243,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 10048544719,
+  "lat": 40.6618344,
+  "lon": -73.9475387,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 10048544720,
+  "lat": 40.6618528,
+  "lon": -73.9472103,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 10048544721,
+  "lat": 40.6618629,
+  "lon": -73.9470291,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 10048544722,
+  "lat": 40.6618738,
+  "lon": -73.9468347,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11043963181,
+  "lat": 40.6721275,
+  "lon": -73.9334429,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "Palace of Joy",
+    "phone": "+1-718-810-9141",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 11423769873,
+  "lat": 40.6603422,
+  "lon": -73.9310092,
+  "tags": {
+    "addr:housenumber": "535",
+    "addr:postcode": "11203",
+    "addr:street": "Utica Avenue",
+    "addr:unit": "C",
+    "amenity": "place_of_worship",
+    "name": "House of Prayer & Praise International",
+    "phone": "+1-929-603-7387",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 11712244757,
+  "lat": 40.6628349,
+  "lon": -73.9409642,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11712244758,
+  "lat": 40.6628279,
+  "lon": -73.9410788,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11712244759,
+  "lat": 40.6628210,
+  "lon": -73.9411934,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11712244760,
+  "lat": 40.6628140,
+  "lon": -73.9413079,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11712244761,
+  "lat": 40.6628070,
+  "lon": -73.9414225,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11712244762,
+  "lat": 40.6628001,
+  "lon": -73.9415371,
+  "tags": {
+    "leaf_cycle": "deciduous",
+    "leaf_type": "broadleaved",
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11905245000,
+  "lat": 40.6630426,
+  "lon": -73.9312338,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11905245001,
+  "lat": 40.6631029,
+  "lon": -73.9313016,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 11905245002,
+  "lat": 40.6631691,
+  "lon": -73.9313759,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 12024621024,
+  "lat": 40.6627285,
+  "lon": -73.9339500,
+  "tags": {
+    "addr:housenumber": "859",
+    "addr:postcode": "11203",
+    "addr:street": "East New York Avenue",
+    "amenity": "place_of_worship",
+    "gnis:feature_id": "2097391",
+    "name": "Shekinah Temple of Praise",
+    "phone": "+1-718-774-7370",
+    "religion": "christian",
+    "website": "https://shekinahtempleofpraise.org"
+  }
+},
+{
+  "type": "node",
+  "id": 12360441508,
+  "lat": 40.6575222,
+  "lon": -73.9504455,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "The Solution Center",
+    "phone": "+1-917-791-5788",
+    "religion": "christian",
+    "website": "https://www.solutioncenternyc.com"
+  }
+},
+{
+  "type": "node",
+  "id": 12360441515,
+  "lat": 40.6583284,
+  "lon": -73.9505302,
+  "tags": {
+    "alt_name": "Apostolic Doctrine Pentecostal Church",
+    "amenity": "place_of_worship",
+    "name": "Brooklyn Christian Center",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 12360441537,
+  "lat": 40.6583885,
+  "lon": -73.9505770,
+  "tags": {
+    "amenity": "place_of_worship",
+    "name": "Pyramid of Truth",
+    "religion": "christian"
+  }
+},
+{
+  "type": "node",
+  "id": 13296726907,
+  "lat": 40.6646118,
+  "lon": -73.9584874,
+  "tags": {
+    "historic": "memorial",
+    "memorial": "plaque",
+    "name": "Ebbets Field Home Plate"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019542,
+  "lat": 40.6739119,
+  "lon": -73.9528234,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019543,
+  "lat": 40.6742072,
+  "lon": -73.9528013,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019544,
+  "lat": 40.6743114,
+  "lon": -73.9527899,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019545,
+  "lat": 40.6733755,
+  "lon": -73.9536240,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019546,
+  "lat": 40.6732750,
+  "lon": -73.9535568,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019547,
+  "lat": 40.6732021,
+  "lon": -73.9534884,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019548,
+  "lat": 40.6731530,
+  "lon": -73.9535568,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019549,
+  "lat": 40.6730749,
+  "lon": -73.9534791,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019550,
+  "lat": 40.6730964,
+  "lon": -73.9535771,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019551,
+  "lat": 40.6732533,
+  "lon": -73.9533195,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019552,
+  "lat": 40.6729029,
+  "lon": -73.9534248,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019553,
+  "lat": 40.6728114,
+  "lon": -73.9535609,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019554,
+  "lat": 40.6727935,
+  "lon": -73.9539010,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019555,
+  "lat": 40.6727883,
+  "lon": -73.9538077,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019556,
+  "lat": 40.6727805,
+  "lon": -73.9536785,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019557,
+  "lat": 40.6727574,
+  "lon": -73.9532322,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019558,
+  "lat": 40.6735766,
+  "lon": -73.9538085,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019559,
+  "lat": 40.6736450,
+  "lon": -73.9530976,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019560,
+  "lat": 40.6736510,
+  "lon": -73.9531955,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019561,
+  "lat": 40.6736602,
+  "lon": -73.9533380,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019562,
+  "lat": 40.6736683,
+  "lon": -73.9535298,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019563,
+  "lat": 40.6736741,
+  "lon": -73.9536562,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019564,
+  "lat": 40.6735658,
+  "lon": -73.9536190,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019565,
+  "lat": 40.6735610,
+  "lon": -73.9534890,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019566,
+  "lat": 40.6735511,
+  "lon": -73.9533384,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019567,
+  "lat": 40.6735444,
+  "lon": -73.9532368,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019568,
+  "lat": 40.6736237,
+  "lon": -73.9527657,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019569,
+  "lat": 40.6736197,
+  "lon": -73.9526760,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019570,
+  "lat": 40.6736156,
+  "lon": -73.9525953,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019571,
+  "lat": 40.6736130,
+  "lon": -73.9525318,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019572,
+  "lat": 40.6735069,
+  "lon": -73.9525861,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019573,
+  "lat": 40.6735021,
+  "lon": -73.9524922,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019574,
+  "lat": 40.6734068,
+  "lon": -73.9530390,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019575,
+  "lat": 40.6732678,
+  "lon": -73.9530526,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019577,
+  "lat": 40.6731573,
+  "lon": -73.9530606,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019578,
+  "lat": 40.6728860,
+  "lon": -73.9530877,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019579,
+  "lat": 40.6729810,
+  "lon": -73.9529199,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019580,
+  "lat": 40.6725074,
+  "lon": -73.9529574,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019581,
+  "lat": 40.6723723,
+  "lon": -73.9529714,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019582,
+  "lat": 40.6723018,
+  "lon": -73.9529790,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019583,
+  "lat": 40.6719918,
+  "lon": -73.9531684,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019584,
+  "lat": 40.6720618,
+  "lon": -73.9531640,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019585,
+  "lat": 40.6721346,
+  "lon": -73.9531580,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019586,
+  "lat": 40.6722910,
+  "lon": -73.9531449,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019587,
+  "lat": 40.6723586,
+  "lon": -73.9531377,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019588,
+  "lat": 40.6724402,
+  "lon": -73.9531305,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019589,
+  "lat": 40.6725207,
+  "lon": -73.9531218,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019590,
+  "lat": 40.6726453,
+  "lon": -73.9532025,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019591,
+  "lat": 40.6726508,
+  "lon": -73.9532901,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019592,
+  "lat": 40.6726545,
+  "lon": -73.9533757,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019593,
+  "lat": 40.6726600,
+  "lon": -73.9534764,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019594,
+  "lat": 40.6726727,
+  "lon": -73.9537026,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019595,
+  "lat": 40.6726813,
+  "lon": -73.9538402,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019596,
+  "lat": 40.6726912,
+  "lon": -73.9540517,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019597,
+  "lat": 40.6727901,
+  "lon": -73.9526058,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019598,
+  "lat": 40.6728477,
+  "lon": -73.9525540,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019599,
+  "lat": 40.6729075,
+  "lon": -73.9525433,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963019600,
+  "lat": 40.6730135,
+  "lon": -73.9525200,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071201,
+  "lat": 40.6730769,
+  "lon": -73.9524105,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071202,
+  "lat": 40.6730861,
+  "lon": -73.9524993,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071203,
+  "lat": 40.6730279,
+  "lon": -73.9524251,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071204,
+  "lat": 40.6730563,
+  "lon": -73.9523048,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071205,
+  "lat": 40.6731011,
+  "lon": -73.9519770,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071206,
+  "lat": 40.6731007,
+  "lon": -73.9517696,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071207,
+  "lat": 40.6731851,
+  "lon": -73.9517562,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071208,
+  "lat": 40.6731077,
+  "lon": -73.9516424,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071209,
+  "lat": 40.6731003,
+  "lon": -73.9515435,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071210,
+  "lat": 40.6730824,
+  "lon": -73.9511064,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13963071211,
+  "lat": 40.6732151,
+  "lon": -73.9506626,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663957,
+  "lat": 40.6739468,
+  "lon": -73.9533576,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663958,
+  "lat": 40.6740604,
+  "lon": -73.9533133,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663959,
+  "lat": 40.6741412,
+  "lon": -73.9533407,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663966,
+  "lat": 40.6741837,
+  "lon": -73.9532596,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663967,
+  "lat": 40.6749836,
+  "lon": -73.9531481,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663969,
+  "lat": 40.6748308,
+  "lon": -73.9534688,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663970,
+  "lat": 40.6747384,
+  "lon": -73.9535050,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663971,
+  "lat": 40.6745505,
+  "lon": -73.9533542,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663972,
+  "lat": 40.6745353,
+  "lon": -73.9531015,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663973,
+  "lat": 40.6745306,
+  "lon": -73.9530135,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663974,
+  "lat": 40.6746166,
+  "lon": -73.9529244,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663975,
+  "lat": 40.6748235,
+  "lon": -73.9529055,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663976,
+  "lat": 40.6749300,
+  "lon": -73.9528974,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663981,
+  "lat": 40.6749141,
+  "lon": -73.9536438,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663982,
+  "lat": 40.6747828,
+  "lon": -73.9536977,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663983,
+  "lat": 40.6746666,
+  "lon": -73.9537366,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663984,
+  "lat": 40.6747241,
+  "lon": -73.9541842,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663985,
+  "lat": 40.6746957,
+  "lon": -73.9544017,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663986,
+  "lat": 40.6746500,
+  "lon": -73.9541672,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663987,
+  "lat": 40.6746288,
+  "lon": -73.9540619,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663988,
+  "lat": 40.6746083,
+  "lon": -73.9539701,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "node",
+  "id": 13971663989,
+  "lat": 40.6749433,
+  "lon": -73.9543982,
+  "tags": {
+    "natural": "tree"
+  }
+},
+{
+  "type": "way",
+  "id": 56760379,
+  "bounds": {
+    "minlat": 40.6730832,
+    "minlon": -73.9445117,
+    "maxlat": 40.6747259,
+    "maxlon": -73.9419027
+  },
+  "nodes": [
+    2453655677,
+    6251020393,
+    6251020387,
+    8710735669,
+    6251020373,
+    6251020335,
+    6251020377,
+    6240894779,
+    6240894778,
+    2453655672,
+    2453655667,
+    6252122831,
+    2453655670,
+    2453655677
+  ],
+  "geometry": [
+    { "lat": 40.6740465, "lon": -73.9444420 },
+    { "lat": 40.6740034, "lon": -73.9435362 },
+    { "lat": 40.6740251, "lon": -73.9435023 },
+    { "lat": 40.6741644, "lon": -73.9434908 },
+    { "lat": 40.6743076, "lon": -73.9434789 },
+    { "lat": 40.6743021, "lon": -73.9433620 },
+    { "lat": 40.6747259, "lon": -73.9433269 },
+    { "lat": 40.6747054, "lon": -73.9428958 },
+    { "lat": 40.6738182, "lon": -73.9429692 },
+    { "lat": 40.6737675, "lon": -73.9419027 },
+    { "lat": 40.6730832, "lon": -73.9419593 },
+    { "lat": 40.6731543, "lon": -73.9434532 },
+    { "lat": 40.6732047, "lon": -73.9445117 },
+    { "lat": 40.6740465, "lon": -73.9444420 }
+  ],
+  "tags": {
+    "ele": "24",
+    "gnis:feature_id": "944902",
+    "leisure": "park",
+    "name": "Brower Park",
+    "operator": "New York City Department of Parks and Recreation",
+    "operator:short": "NYC Parks",
+    "operator:type": "government",
+    "operator:wikidata": "Q1894232",
+    "website": "https://www.nycgovparks.org/parks/brower-park/",
+    "wikidata": "Q27988240",
+    "wikipedia": "en:Brower Park"
+  }
+},
+{
+  "type": "way",
+  "id": 241825463,
+  "bounds": {
+    "minlat": 40.6732603,
+    "minlon": -73.9508499,
+    "maxlat": 40.6733609,
+    "maxlon": -73.9506654
+  },
+  "nodes": [
+    2494088935,
+    2494088755,
+    2494088956,
+    2494088998,
+    2494088994,
+    2494088935
+  ],
+  "geometry": [
+    { "lat": 40.6732603, "lon": -73.9506739 },
+    { "lat": 40.6732699, "lon": -73.9508499 },
+    { "lat": 40.6732818, "lon": -73.9508488 },
+    { "lat": 40.6733609, "lon": -73.9508414 },
+    { "lat": 40.6733514, "lon": -73.9506654 },
+    { "lat": 40.6732603, "lon": -73.9506739 }
+  ],
+  "tags": {
+    "addr:housenumber": "812",
+    "addr:postcode": "11216",
+    "addr:street": "Park Place",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "seventh_day_adventist",
+    "ele": "29",
+    "gnis:feature_id": "2104245",
+    "height": "15.7",
+    "name": "Mahanaim SDA Church of Brooklyn",
+    "name:fr": "Mahanaim Eglise Adventiste D'Expression Francaise",
+    "nycdoitt:bin": "3031504",
+    "old_name": "Ancient Divine Theological Baptist Church",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 241825477,
+  "bounds": {
+    "minlat": 40.6744777,
+    "minlon": -73.9515621,
+    "maxlat": 40.6746095,
+    "maxlon": -73.9513362
+  },
+  "nodes": [
+    2494089830,
+    2494089827,
+    2494089789,
+    2494089715,
+    2494089744,
+    2494089830
+  ],
+  "geometry": [
+    { "lat": 40.6746095, "lon": -73.9515511 },
+    { "lat": 40.6746006, "lon": -73.9513362 },
+    { "lat": 40.6745517, "lon": -73.9513397 },
+    { "lat": 40.6744777, "lon": -73.9513451 },
+    { "lat": 40.6744891, "lon": -73.9515621 },
+    { "lat": 40.6746095, "lon": -73.9515511 }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "755",
+    "addr:postcode": "11216",
+    "addr:state": "NY",
+    "addr:street": "Prospect Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "pentecostal",
+    "height": "8.7",
+    "name": "Mount Calvary Pentecostal Church of God",
+    "nycdoitt:bin": "3030980",
+    "phone": "+1-718-756-2803",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 241825524,
+  "bounds": {
+    "minlat": 40.6736388,
+    "minlon": -73.9524771,
+    "maxlat": 40.6739897,
+    "maxlon": -73.9523368
+  },
+  "nodes": [
+    2494088712,
+    2494089057,
+    2494089363,
+    2494089359,
+    2494088712
+  ],
+  "geometry": [
+    { "lat": 40.6736388, "lon": -73.9523761 },
+    { "lat": 40.6736455, "lon": -73.9524771 },
+    { "lat": 40.6739897, "lon": -73.9524379 },
+    { "lat": 40.6739830, "lon": -73.9523368 },
+    { "lat": 40.6736388, "lon": -73.9523761 }
+  ],
+  "tags": {
+    "addr:housenumber": "761",
+    "addr:postcode": "11216",
+    "addr:street": "Park Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "baptist",
+    "height": "6.7",
+    "name": "Mt. Joy Baptist Church",
+    "nycdoitt:bin": "3031227",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 241825579,
+  "bounds": {
+    "minlat": 40.6730759,
+    "minlon": -73.9522206,
+    "maxlat": 40.6734340,
+    "maxlon": -73.9520092
+  },
+  "nodes": [
+    2494088722,
+    2494088864,
+    2494088999,
+    2494089021,
+    2494089020,
+    2494088997,
+    2494088922,
+    2494088888,
+    2494088722
+  ],
+  "geometry": [
+    { "lat": 40.6730759, "lon": -73.9520418 },
+    { "lat": 40.6730856, "lon": -73.9522206 },
+    { "lat": 40.6733634, "lon": -73.9521946 },
+    { "lat": 40.6734340, "lon": -73.9521879 },
+    { "lat": 40.6734243, "lon": -73.9520092 },
+    { "lat": 40.6733602, "lon": -73.9520152 },
+    { "lat": 40.6732280, "lon": -73.9520276 },
+    { "lat": 40.6731505, "lon": -73.9520348 },
+    { "lat": 40.6730759, "lon": -73.9520418 }
+  ],
+  "tags": {
+    "addr:housenumber": "770",
+    "addr:postcode": "11216",
+    "addr:street": "Park Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "height": "9.9",
+    "name": "Kingdom Life Ministries",
+    "nycdoitt:bin": "3031493",
+    "phone": "+1-718-363-7344",
+    "religion": "christian",
+    "website": "https://klministries.org"
+  }
+},
+{
+  "type": "way",
+  "id": 241842529,
+  "bounds": {
+    "minlat": 40.6728664,
+    "minlon": -73.9547727,
+    "maxlat": 40.6730283,
+    "maxlon": -73.9543903
+  },
+  "nodes": [
+    2494221634,
+    2494221625,
+    2494221622,
+    2494221628,
+    2494221645,
+    2494221643,
+    2494221662,
+    2494221656,
+    2494221634
+  ],
+  "geometry": [
+    { "lat": 40.6729631, "lon": -73.9543903 },
+    { "lat": 40.6728679, "lon": -73.9544226 },
+    { "lat": 40.6728664, "lon": -73.9544612 },
+    { "lat": 40.6729278, "lon": -73.9547727 },
+    { "lat": 40.6730060, "lon": -73.9547461 },
+    { "lat": 40.6730029, "lon": -73.9547300 },
+    { "lat": 40.6730283, "lon": -73.9547214 },
+    { "lat": 40.6730248, "lon": -73.9547036 },
+    { "lat": 40.6729631, "lon": -73.9543903 }
+  ],
+  "tags": {
+    "addr:housenumber": "1476",
+    "addr:postcode": "11216",
+    "addr:street": "Bedford Avenue",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "height": "13.1",
+    "name": "New Life Tabernacle",
+    "nycdoitt:bin": "3031430",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 247910190,
+  "bounds": {
+    "minlat": 40.6556766,
+    "minlon": -73.9536178,
+    "maxlat": 40.6559557,
+    "maxlon": -73.9534452
+  },
+  "nodes": [
+    2547608693,
+    2547608682,
+    2547608880,
+    2547608885,
+    2547608872,
+    2547608693
+  ],
+  "geometry": [
+    { "lat": 40.6556855, "lon": -73.9534452 },
+    { "lat": 40.6556766, "lon": -73.9535888 },
+    { "lat": 40.6559467, "lon": -73.9536178 },
+    { "lat": 40.6559557, "lon": -73.9534742 },
+    { "lat": 40.6559161, "lon": -73.9534700 },
+    { "lat": 40.6556855, "lon": -73.9534452 }
+  ],
+  "tags": {
+    "addr:housenumber": "600",
+    "addr:postcode": "11226",
+    "addr:street": "Parkside Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "jehovahs_witness",
+    "ele": "18",
+    "gnis:feature_id": "2097094",
+    "height": "5.7",
+    "name": "Kingdom Hall of Jehovahs Witnesses",
+    "nycdoitt:bin": "3116009",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 247910509,
+  "bounds": {
+    "minlat": 40.6570728,
+    "minlon": -73.9570190,
+    "maxlat": 40.6573132,
+    "maxlon": -73.9566887
+  },
+  "nodes": [
+    2547611061,
+    2547611062,
+    2547611012,
+    2547611013,
+    2547610992,
+    2547610991,
+    2547610987,
+    357623533,
+    2547610997,
+    2547610989,
+    2547611135,
+    2547611139,
+    2547610022,
+    2547611061
+  ],
+  "geometry": [
+    { "lat": 40.6571786, "lon": -73.9567136 },
+    { "lat": 40.6571790, "lon": -73.9567072 },
+    { "lat": 40.6571158, "lon": -73.9567006 },
+    { "lat": 40.6571164, "lon": -73.9566920 },
+    { "lat": 40.6570849, "lon": -73.9566887 },
+    { "lat": 40.6570844, "lon": -73.9566974 },
+    { "lat": 40.6570808, "lon": -73.9566970 },
+    { "lat": 40.6570728, "lon": -73.9568316 },
+    { "lat": 40.6570932, "lon": -73.9568337 },
+    { "lat": 40.6570834, "lon": -73.9569971 },
+    { "lat": 40.6572958, "lon": -73.9570190 },
+    { "lat": 40.6573132, "lon": -73.9567275 },
+    { "lat": 40.6572688, "lon": -73.9567229 },
+    { "lat": 40.6571786, "lon": -73.9567136 }
+  ],
+  "tags": {
+    "addr:housenumber": "1950",
+    "addr:postcode": "11225",
+    "addr:street": "Bedford Avenue",
+    "building": "church",
+    "denomination": "congregational",
+    "gnis:feature_id": "2097075",
+    "height": "14.4",
+    "name": "Church of the Evangel",
+    "nycdoitt:bin": "3115676",
+    "phone": "+1-718-287-1189",
+    "religion": "christian",
+    "website": "https://churchoftheevangelucc.weebly.com",
+    "wikidata": "Q5160732",
+    "wikipedia": "en:Congregational Church of the Evangel"
+  }
+},
+{
+  "type": "way",
+  "id": 247910808,
+  "bounds": {
+    "minlat": 40.6580678,
+    "minlon": -73.9556558,
+    "maxlat": 40.6582617,
+    "maxlon": -73.9554762
+  },
+  "nodes": [
+    2547613951,
+    2547613952,
+    2547613898,
+    2547613885,
+    2547613939,
+    2547613945,
+    357623566,
+    9545820606,
+    9545820607,
+    2547613968,
+    2547614060,
+    2547614068,
+    2547614064,
+    2547614061,
+    2547614055,
+    2547614051,
+    2547614047,
+    2547614041,
+    2547614028,
+    2547614023,
+    2547613951
+  ],
+  "geometry": [
+    { "lat": 40.6581508, "lon": -73.9554900 },
+    { "lat": 40.6581511, "lon": -73.9554863 },
+    { "lat": 40.6580820, "lon": -73.9554762 },
+    { "lat": 40.6580678, "lon": -73.9556457 },
+    { "lat": 40.6581372, "lon": -73.9556558 },
+    { "lat": 40.6581414, "lon": -73.9556047 },
+    { "lat": 40.6581618, "lon": -73.9556076 },
+    { "lat": 40.6581594, "lon": -73.9556366 },
+    { "lat": 40.6582063, "lon": -73.9556435 },
+    { "lat": 40.6582088, "lon": -73.9556145 },
+    { "lat": 40.6582535, "lon": -73.9556210 },
+    { "lat": 40.6582617, "lon": -73.9555230 },
+    { "lat": 40.6582578, "lon": -73.9555224 },
+    { "lat": 40.6582545, "lon": -73.9555088 },
+    { "lat": 40.6582503, "lon": -73.9555014 },
+    { "lat": 40.6582459, "lon": -73.9554977 },
+    { "lat": 40.6582405, "lon": -73.9554949 },
+    { "lat": 40.6582361, "lon": -73.9554942 },
+    { "lat": 40.6582283, "lon": -73.9554950 },
+    { "lat": 40.6582246, "lon": -73.9555007 },
+    { "lat": 40.6581508, "lon": -73.9554900 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "gnis:feature_id": "2097093",
+    "height": "10.6",
+    "name": "Bethany Gospel Chapel",
+    "nycdoitt:bin": "3115556",
+    "phone": "+1-718-469-4333",
+    "religion": "christian",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 247910838,
+  "bounds": {
+    "minlat": 40.6581781,
+    "minlon": -73.9536764,
+    "maxlat": 40.6584267,
+    "maxlon": -73.9534182
+  },
+  "nodes": [
+    2547614123,
+    2547614124,
+    2547614038,
+    2547614032,
+    2547614006,
+    2547614004,
+    2547613995,
+    2547613993,
+    2547613987,
+    2547613986,
+    2547614008,
+    2547614005,
+    2547613978,
+    357623564,
+    2547614114,
+    2547612936,
+    2547614126,
+    2547614129,
+    2547614130,
+    2547614131,
+    2547614123
+  ],
+  "geometry": [
+    { "lat": 40.6583663, "lon": -73.9534407 },
+    { "lat": 40.6583668, "lon": -73.9534326 },
+    { "lat": 40.6582343, "lon": -73.9534182 },
+    { "lat": 40.6582319, "lon": -73.9534564 },
+    { "lat": 40.6582102, "lon": -73.9534540 },
+    { "lat": 40.6582093, "lon": -73.9534687 },
+    { "lat": 40.6582033, "lon": -73.9534681 },
+    { "lat": 40.6582019, "lon": -73.9534908 },
+    { "lat": 40.6581949, "lon": -73.9534900 },
+    { "lat": 40.6581937, "lon": -73.9535094 },
+    { "lat": 40.6582120, "lon": -73.9535114 },
+    { "lat": 40.6582100, "lon": -73.9535421 },
+    { "lat": 40.6581856, "lon": -73.9535394 },
+    { "lat": 40.6581781, "lon": -73.9536574 },
+    { "lat": 40.6583523, "lon": -73.9536764 },
+    { "lat": 40.6583527, "lon": -73.9536701 },
+    { "lat": 40.6583747, "lon": -73.9536725 },
+    { "lat": 40.6583876, "lon": -73.9534677 },
+    { "lat": 40.6584251, "lon": -73.9534718 },
+    { "lat": 40.6584267, "lon": -73.9534473 },
+    { "lat": 40.6583663, "lon": -73.9534407 }
+  ],
+  "tags": {
+    "addr:housenumber": "276",
+    "addr:postcode": "11225",
+    "addr:street": "Fenimore Street",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "check_date": "2026-07-04",
+    "denomination": "methodist",
+    "gnis:feature_id": "2097092",
+    "height": "10.3",
+    "name": "Fenimore Street United Methodist Church",
+    "nycdoitt:bin": "3115569",
+    "phone": "+1-718-469-8816",
+    "religion": "christian",
+    "website": "https://www.fenimoreumc.org"
+  }
+},
+{
+  "type": "way",
+  "id": 250149116,
+  "bounds": {
+    "minlat": 40.6557970,
+    "minlon": -73.9350844,
+    "maxlat": 40.6558648,
+    "maxlon": -73.9348482
+  },
+  "nodes": [
+    2566458163,
+    2566458268,
+    2566458287,
+    2566458210,
+    2566458163
+  ],
+  "geometry": [
+    { "lat": 40.6557970, "lon": -73.9350781 },
+    { "lat": 40.6558486, "lon": -73.9350844 },
+    { "lat": 40.6558648, "lon": -73.9348544 },
+    { "lat": 40.6558131, "lon": -73.9348482 },
+    { "lat": 40.6557970, "lon": -73.9350781 }
+  ],
+  "tags": {
+    "addr:housenumber": "252",
+    "addr:postcode": "11203",
+    "addr:street": "East 46th Street",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "ele": "12",
+    "gnis:feature_id": "2097245",
+    "height": "7.5",
+    "name": "Life Light Apostolic Church",
+    "nycdoitt:bin": "3107994",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250149117,
+  "bounds": {
+    "minlat": 40.6549038,
+    "minlon": -73.9393153,
+    "maxlat": 40.6551616,
+    "maxlon": -73.9390633
+  },
+  "nodes": [
+    2566457144,
+    2566457147,
+    2566457119,
+    2566457117,
+    2566457070,
+    2566457071,
+    2566457052,
+    2566457050,
+    2566457044,
+    2566457041,
+    2566457045,
+    2566457155,
+    2566457168,
+    2566457144
+  ],
+  "geometry": [
+    { "lat": 40.6551371, "lon": -73.9391009 },
+    { "lat": 40.6551383, "lon": -73.9390828 },
+    { "lat": 40.6550993, "lon": -73.9390785 },
+    { "lat": 40.6550982, "lon": -73.9390966 },
+    { "lat": 40.6550010, "lon": -73.9390859 },
+    { "lat": 40.6550022, "lon": -73.9390677 },
+    { "lat": 40.6549625, "lon": -73.9390633 },
+    { "lat": 40.6549614, "lon": -73.9390815 },
+    { "lat": 40.6549162, "lon": -73.9390765 },
+    { "lat": 40.6549038, "lon": -73.9392691 },
+    { "lat": 40.6549168, "lon": -73.9392898 },
+    { "lat": 40.6551481, "lon": -73.9393153 },
+    { "lat": 40.6551616, "lon": -73.9391036 },
+    { "lat": 40.6551371, "lon": -73.9391009 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "jehovahs_witness",
+    "height": "4.2",
+    "nycdoitt:bin": "3107895",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250160515,
+  "bounds": {
+    "minlat": 40.6604595,
+    "minlon": -73.9353547,
+    "maxlat": 40.6607596,
+    "maxlon": -73.9344127
+  },
+  "nodes": [
+    2566538994,
+    2566538970,
+    2566538968,
+    2566538964,
+    2566538962,
+    2566538991,
+    2566538984,
+    2566539002,
+    2566539016,
+    2566538996,
+    2566538994
+  ],
+  "geometry": [
+    { "lat": 40.6606453, "lon": -73.9344877 },
+    { "lat": 40.6605109, "lon": -73.9344733 },
+    { "lat": 40.6605086, "lon": -73.9345103 },
+    { "lat": 40.6604807, "lon": -73.9345073 },
+    { "lat": 40.6604595, "lon": -73.9348486 },
+    { "lat": 40.6606321, "lon": -73.9348671 },
+    { "lat": 40.6606024, "lon": -73.9353440 },
+    { "lat": 40.6607017, "lon": -73.9353547 },
+    { "lat": 40.6607596, "lon": -73.9344245 },
+    { "lat": 40.6606500, "lon": -73.9344127 },
+    { "lat": 40.6606453, "lon": -73.9344877 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "ele": "9",
+    "gnis:feature_id": "2097247",
+    "height": "4.7",
+    "name": "Faith Gospel Assembly Church",
+    "nycdoitt:bin": "3327670",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250161116,
+  "bounds": {
+    "minlat": 40.6600474,
+    "minlon": -73.9310908,
+    "maxlat": 40.6602535,
+    "maxlon": -73.9307682
+  },
+  "nodes": [
+    2566546651,
+    2566546658,
+    2566546659,
+    2566546610,
+    357623881,
+    2566546651
+  ],
+  "geometry": [
+    { "lat": 40.6602357, "lon": -73.9310908 },
+    { "lat": 40.6602400, "lon": -73.9310179 },
+    { "lat": 40.6602535, "lon": -73.9307874 },
+    { "lat": 40.6600652, "lon": -73.9307682 },
+    { "lat": 40.6600474, "lon": -73.9310716 },
+    { "lat": 40.6602357, "lon": -73.9310908 }
+  ],
+  "tags": {
+    "addr:housenumber": "545",
+    "addr:postcode": "11203",
+    "addr:street": "Utica Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "baptist",
+    "gnis:feature_id": "2097389",
+    "height": "7.5",
+    "name": "United Community Baptist Church",
+    "nycdoitt:bin": "3099656",
+    "phone": "+1-718-467-7708",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250163051,
+  "bounds": {
+    "minlat": 40.6613659,
+    "minlon": -73.9453525,
+    "maxlat": 40.6614259,
+    "maxlon": -73.9452043
+  },
+  "nodes": [
+    2566568242,
+    2566568207,
+    2566568200,
+    2566568228,
+    2566568231,
+    2566568240,
+    2566568242
+  ],
+  "geometry": [
+    { "lat": 40.6614259, "lon": -73.9452098 },
+    { "lat": 40.6613749, "lon": -73.9452043 },
+    { "lat": 40.6613659, "lon": -73.9453490 },
+    { "lat": 40.6613977, "lon": -73.9453525 },
+    { "lat": 40.6613986, "lon": -73.9453377 },
+    { "lat": 40.6614178, "lon": -73.9453397 },
+    { "lat": 40.6614259, "lon": -73.9452098 }
+  ],
+  "tags": {
+    "addr:housenumber": "537",
+    "addr:postcode": "11225",
+    "addr:street": "Brooklyn Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "ele": "13",
+    "gnis:feature_id": "2097394",
+    "height": "8.4",
+    "name": "Marantha Assembly of God Church",
+    "nycdoitt:bin": "3106547",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250163056,
+  "bounds": {
+    "minlat": 40.6598385,
+    "minlon": -73.9451372,
+    "maxlat": 40.6601007,
+    "maxlon": -73.9449047
+  },
+  "nodes": [
+    2566566926,
+    2566566928,
+    2566566911,
+    2566566912,
+    6768683027,
+    2566566816,
+    2566566810,
+    2566566804,
+    2566566902,
+    2566566903,
+    2566566929,
+    2566566938,
+    2566566926
+  ],
+  "geometry": [
+    { "lat": 40.6600865, "lon": -73.9449596 },
+    { "lat": 40.6600876, "lon": -73.9449413 },
+    { "lat": 40.6600687, "lon": -73.9449393 },
+    { "lat": 40.6600695, "lon": -73.9449259 },
+    { "lat": 40.6598697, "lon": -73.9449047 },
+    { "lat": 40.6598690, "lon": -73.9449172 },
+    { "lat": 40.6598507, "lon": -73.9449152 },
+    { "lat": 40.6598385, "lon": -73.9451141 },
+    { "lat": 40.6600566, "lon": -73.9451372 },
+    { "lat": 40.6600575, "lon": -73.9451222 },
+    { "lat": 40.6600907, "lon": -73.9451257 },
+    { "lat": 40.6601007, "lon": -73.9449611 },
+    { "lat": 40.6600865, "lon": -73.9449596 }
+  ],
+  "tags": {
+    "addr:housenumber": "467",
+    "addr:postcode": "11203",
+    "addr:street": "Rutland Road",
+    "building": "church",
+    "gnis:feature_id": "2097392",
+    "height": "7.0",
+    "name": "Church of God of Prophecy",
+    "nycdoitt:bin": "3107035",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250163058,
+  "bounds": {
+    "minlat": 40.6609470,
+    "minlon": -73.9432217,
+    "maxlat": 40.6611211,
+    "maxlon": -73.9428075
+  },
+  "nodes": [
+    2566568048,
+    2566568052,
+    2566568058,
+    2566568060,
+    2566568050,
+    2566568069,
+    2566567965,
+    2566567963,
+    2566567950,
+    2566567944,
+    2566567959,
+    2566567946,
+    2566567938,
+    2566567936,
+    2566567942,
+    2566567934,
+    2566568026,
+    2566568048
+  ],
+  "geometry": [
+    { "lat": 40.6611033, "lon": -73.9432217 },
+    { "lat": 40.6611086, "lon": -73.9431351 },
+    { "lat": 40.6611145, "lon": -73.9431357 },
+    { "lat": 40.6611158, "lon": -73.9431145 },
+    { "lat": 40.6611034, "lon": -73.9431132 },
+    { "lat": 40.6611211, "lon": -73.9428227 },
+    { "lat": 40.6609774, "lon": -73.9428075 },
+    { "lat": 40.6609763, "lon": -73.9428258 },
+    { "lat": 40.6609612, "lon": -73.9428242 },
+    { "lat": 40.6609594, "lon": -73.9428527 },
+    { "lat": 40.6609746, "lon": -73.9428543 },
+    { "lat": 40.6609598, "lon": -73.9430982 },
+    { "lat": 40.6609489, "lon": -73.9430971 },
+    { "lat": 40.6609480, "lon": -73.9431131 },
+    { "lat": 40.6609526, "lon": -73.9431136 },
+    { "lat": 40.6609470, "lon": -73.9432052 },
+    { "lat": 40.6610366, "lon": -73.9432146 },
+    { "lat": 40.6611033, "lon": -73.9432217 }
+  ],
+  "tags": {
+    "addr:housenumber": "520",
+    "addr:postcode": "11225",
+    "addr:street": "Kingston Avenue",
+    "building": "church",
+    "denomination": "seventh_day_adventist",
+    "gnis:feature_id": "2097098",
+    "height": "7.4",
+    "name": "HOREB French Speaking SDA Church",
+    "nycdoitt:bin": "3106778",
+    "old_name": "Roman Catholic Church of Saint Blaise",
+    "religion": "christian",
+    "website": "https://horebny.adventistchurch.org"
+  }
+},
+{
+  "type": "way",
+  "id": 250163394,
+  "bounds": {
+    "minlat": 40.6582269,
+    "minlon": -73.9502487,
+    "maxlat": 40.6584638,
+    "maxlon": -73.9493665
+  },
+  "nodes": [
+    2566569876,
+    2566569929,
+    2566569928,
+    2566569957,
+    2566569963,
+    2566569937,
+    2566569955,
+    2566569868,
+    2566569805,
+    2566569903,
+    2566569896,
+    2566569888,
+    2566569876
+  ],
+  "geometry": [
+    { "lat": 40.6582616, "lon": -73.9502238 },
+    { "lat": 40.6583802, "lon": -73.9502355 },
+    { "lat": 40.6583798, "lon": -73.9502423 },
+    { "lat": 40.6584440, "lon": -73.9502487 },
+    { "lat": 40.6584638, "lon": -73.9499032 },
+    { "lat": 40.6583989, "lon": -73.9498968 },
+    { "lat": 40.6584283, "lon": -73.9493836 },
+    { "lat": 40.6582550, "lon": -73.9493665 },
+    { "lat": 40.6582269, "lon": -73.9498579 },
+    { "lat": 40.6582946, "lon": -73.9498646 },
+    { "lat": 40.6582851, "lon": -73.9500308 },
+    { "lat": 40.6582728, "lon": -73.9500296 },
+    { "lat": 40.6582616, "lon": -73.9502238 }
+  ],
+  "tags": {
+    "addr:housenumber": "1187",
+    "addr:postcode": "11225",
+    "addr:street": "Nostrand Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "ele": "17",
+    "gnis:feature_id": "2097139",
+    "height": "5.1",
+    "name": "Revival Center",
+    "nycdoitt:bin": "3107261",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250163395,
+  "bounds": {
+    "minlat": 40.6580492,
+    "minlon": -73.9492674,
+    "maxlat": 40.6584273,
+    "maxlon": -73.9489089
+  },
+  "nodes": [
+    2566569701,
+    2566569696,
+    2566569635,
+    2566569633,
+    2566569626,
+    2566569624,
+    2566569632,
+    2566569631,
+    2566569673,
+    2566569668,
+    2566569848,
+    2566569839,
+    2566569866,
+    2566569859,
+    2566569918,
+    2566569919,
+    2566569938,
+    2566569940,
+    2566569943,
+    2566569953,
+    2566569701
+  ],
+  "geometry": [
+    { "lat": 40.6581318, "lon": -73.9489089 },
+    { "lat": 40.6581301, "lon": -73.9489326 },
+    { "lat": 40.6580873, "lon": -73.9489273 },
+    { "lat": 40.6580840, "lon": -73.9489732 },
+    { "lat": 40.6580550, "lon": -73.9489697 },
+    { "lat": 40.6580492, "lon": -73.9490515 },
+    { "lat": 40.6580782, "lon": -73.9490551 },
+    { "lat": 40.6580750, "lon": -73.9490998 },
+    { "lat": 40.6581207, "lon": -73.9491054 },
+    { "lat": 40.6581189, "lon": -73.9491300 },
+    { "lat": 40.6582405, "lon": -73.9491449 },
+    { "lat": 40.6582371, "lon": -73.9491929 },
+    { "lat": 40.6582540, "lon": -73.9491950 },
+    { "lat": 40.6582495, "lon": -73.9492573 },
+    { "lat": 40.6583318, "lon": -73.9492674 },
+    { "lat": 40.6583338, "lon": -73.9492388 },
+    { "lat": 40.6584001, "lon": -73.9492470 },
+    { "lat": 40.6584026, "lon": -73.9492110 },
+    { "lat": 40.6584084, "lon": -73.9492117 },
+    { "lat": 40.6584273, "lon": -73.9489451 },
+    { "lat": 40.6581318, "lon": -73.9489089 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "episcopal",
+    "ele": "17",
+    "gnis:feature_id": "2097097",
+    "height": "10.5",
+    "name": "Saint Gabriels Episcopal Church",
+    "nycdoitt:bin": "3320601",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250163889,
+  "bounds": {
+    "minlat": 40.6590800,
+    "minlon": -73.9458367,
+    "maxlat": 40.6593350,
+    "maxlon": -73.9454489
+  },
+  "nodes": [
+    2566572501,
+    2566572423,
+    2566572513,
+    2566572511,
+    2566572522,
+    2566572524,
+    2566572526,
+    2566572525,
+    2566572548,
+    2566572559,
+    2566572529,
+    2566572528,
+    2566572501
+  ],
+  "geometry": [
+    { "lat": 40.6590916, "lon": -73.9454546 },
+    { "lat": 40.6590800, "lon": -73.9456504 },
+    { "lat": 40.6591105, "lon": -73.9456535 },
+    { "lat": 40.6591083, "lon": -73.9456903 },
+    { "lat": 40.6591478, "lon": -73.9456943 },
+    { "lat": 40.6591499, "lon": -73.9456575 },
+    { "lat": 40.6591756, "lon": -73.9456601 },
+    { "lat": 40.6591661, "lon": -73.9458217 },
+    { "lat": 40.6593130, "lon": -73.9458367 },
+    { "lat": 40.6593350, "lon": -73.9454637 },
+    { "lat": 40.6591891, "lon": -73.9454489 },
+    { "lat": 40.6591882, "lon": -73.9454644 },
+    { "lat": 40.6590916, "lon": -73.9454546 }
+  ],
+  "tags": {
+    "addr:housenumber": "511",
+    "addr:postcode": "11203",
+    "addr:street": "Fenimore Street",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "check_date": "2022-06-19",
+    "denomination": "jehovahs_witness",
+    "height": "6.5",
+    "name": "Kingdom Hall of Jehovah's Witnesses",
+    "nycdoitt:bin": "3339032",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250165196,
+  "bounds": {
+    "minlat": 40.6583185,
+    "minlon": -73.9531111,
+    "maxlat": 40.6583855,
+    "maxlon": -73.9529202
+  },
+  "nodes": [
+    2566581796,
+    2566580927,
+    2566581854,
+    2566581801,
+    2566581796
+  ],
+  "geometry": [
+    { "lat": 40.6583185, "lon": -73.9531047 },
+    { "lat": 40.6583729, "lon": -73.9531111 },
+    { "lat": 40.6583855, "lon": -73.9529266 },
+    { "lat": 40.6583311, "lon": -73.9529202 },
+    { "lat": 40.6583185, "lon": -73.9531047 }
+  ],
+  "tags": {
+    "addr:housenumber": "553",
+    "addr:postcode": "11225",
+    "addr:street": "Rogers Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "baptist",
+    "ele": "18",
+    "gnis:feature_id": "2097138",
+    "height": "7.1",
+    "name": "Saint Marks Baptist Church",
+    "nycdoitt:bin": "3115597",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250169364,
+  "bounds": {
+    "minlat": 40.6612102,
+    "minlon": -73.9505208,
+    "maxlat": 40.6614596,
+    "maxlon": -73.9500045
+  },
+  "nodes": [
+    2566625471,
+    2566625465,
+    2566625472,
+    2566625464,
+    2566625165,
+    2566625562,
+    2566625475,
+    2566625473,
+    2566625471
+  ],
+  "geometry": [
+    { "lat": 40.6612170, "lon": -73.9500609 },
+    { "lat": 40.6612107, "lon": -73.9501790 },
+    { "lat": 40.6612273, "lon": -73.9501805 },
+    { "lat": 40.6612102, "lon": -73.9505002 },
+    { "lat": 40.6614330, "lon": -73.9505208 },
+    { "lat": 40.6614596, "lon": -73.9500245 },
+    { "lat": 40.6612425, "lon": -73.9500045 },
+    { "lat": 40.6612393, "lon": -73.9500630 },
+    { "lat": 40.6612170, "lon": -73.9500609 }
+  ],
+  "tags": {
+    "addr:housenumber": "1081",
+    "addr:postcode": "11225",
+    "addr:street": "Nostrand Avenue",
+    "building": "church",
+    "height": "21.9",
+    "nycdoitt:bin": "3327663"
+  }
+},
+{
+  "type": "way",
+  "id": 250169914,
+  "bounds": {
+    "minlat": 40.6615877,
+    "minlon": -73.9573580,
+    "maxlat": 40.6618226,
+    "maxlon": -73.9571731
+  },
+  "nodes": [
+    2566642063,
+    2566642064,
+    11229041661,
+    11229041663,
+    11229041664,
+    11229041662,
+    2566642026,
+    2566642024,
+    2566641962,
+    11229041658,
+    11229041659,
+    11229041660,
+    11229041657,
+    2566641957,
+    11229041670,
+    11229041671,
+    11229041672,
+    11229041669,
+    2566642068,
+    11229041665,
+    11229041667,
+    11229041668,
+    11229041666,
+    2566642070,
+    2566642063
+  ],
+  "geometry": [
+    { "lat": 40.6617662, "lon": -73.9572238 },
+    { "lat": 40.6617684, "lon": -73.9571879 },
+    { "lat": 40.6617436, "lon": -73.9571854 },
+    { "lat": 40.6617440, "lon": -73.9571798 },
+    { "lat": 40.6616793, "lon": -73.9571731 },
+    { "lat": 40.6616789, "lon": -73.9571798 },
+    { "lat": 40.6616561, "lon": -73.9571775 },
+    { "lat": 40.6616539, "lon": -73.9572136 },
+    { "lat": 40.6616078, "lon": -73.9572088 },
+    { "lat": 40.6616050, "lon": -73.9572549 },
+    { "lat": 40.6615895, "lon": -73.9572533 },
+    { "lat": 40.6615877, "lon": -73.9572834 },
+    { "lat": 40.6616034, "lon": -73.9572850 },
+    { "lat": 40.6616004, "lon": -73.9573344 },
+    { "lat": 40.6616982, "lon": -73.9573446 },
+    { "lat": 40.6616974, "lon": -73.9573567 },
+    { "lat": 40.6617105, "lon": -73.9573580 },
+    { "lat": 40.6617112, "lon": -73.9573456 },
+    { "lat": 40.6618038, "lon": -73.9573552 },
+    { "lat": 40.6618067, "lon": -73.9573061 },
+    { "lat": 40.6618208, "lon": -73.9573076 },
+    { "lat": 40.6618226, "lon": -73.9572775 },
+    { "lat": 40.6618085, "lon": -73.9572761 },
+    { "lat": 40.6618113, "lon": -73.9572285 },
+    { "lat": 40.6617662, "lon": -73.9572238 }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "1800",
+    "addr:postcode": "11225",
+    "addr:state": "NY",
+    "addr:street": "Bedford Avenue",
+    "building": "church",
+    "ele": "20",
+    "gnis:feature_id": "2097395",
+    "height": "11.1",
+    "nycdoitt:bin": "3035245"
+  }
+},
+{
+  "type": "way",
+  "id": 250170002,
+  "bounds": {
+    "minlat": 40.6613281,
+    "minlon": -73.9573327,
+    "maxlat": 40.6615743,
+    "maxlon": -73.9571544
+  },
+  "nodes": [
+    2566641654,
+    2566641656,
+    2566641625,
+    2566641615,
+    2566641807,
+    11229041673,
+    11229041675,
+    11229041677,
+    11229041679,
+    11229041681,
+    11229041683,
+    11229041684,
+    11229041682,
+    11229041680,
+    11229041678,
+    11229041676,
+    11229041674,
+    2566641814,
+    2566641654
+  ],
+  "geometry": [
+    { "lat": 40.6613761, "lon": -73.9571736 },
+    { "lat": 40.6613771, "lon": -73.9571589 },
+    { "lat": 40.6613385, "lon": -73.9571544 },
+    { "lat": 40.6613281, "lon": -73.9573085 },
+    { "lat": 40.6615322, "lon": -73.9573327 },
+    { "lat": 40.6615345, "lon": -73.9572990 },
+    { "lat": 40.6615417, "lon": -73.9572980 },
+    { "lat": 40.6615491, "lon": -73.9572951 },
+    { "lat": 40.6615558, "lon": -73.9572886 },
+    { "lat": 40.6615608, "lon": -73.9572802 },
+    { "lat": 40.6615728, "lon": -73.9572814 },
+    { "lat": 40.6615743, "lon": -73.9572510 },
+    { "lat": 40.6615627, "lon": -73.9572500 },
+    { "lat": 40.6615593, "lon": -73.9572390 },
+    { "lat": 40.6615538, "lon": -73.9572312 },
+    { "lat": 40.6615472, "lon": -73.9572264 },
+    { "lat": 40.6615396, "lon": -73.9572232 },
+    { "lat": 40.6615416, "lon": -73.9571932 },
+    { "lat": 40.6613761, "lon": -73.9571736 }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "163",
+    "addr:postcode": "11225",
+    "addr:state": "NY",
+    "addr:street": "Lincoln Road",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "check_date": "2026-04-22",
+    "construction_date": "1893",
+    "height": "9.0",
+    "name": "Grace Reformed Church",
+    "nycdoitt:bin": "3379189",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250211091,
+  "bounds": {
+    "minlat": 40.6641004,
+    "minlon": -73.9369950,
+    "maxlat": 40.6642213,
+    "maxlon": -73.9366606
+  },
+  "nodes": [
+    2566962769,
+    2566962974,
+    2566962936,
+    2566962758,
+    2566962767,
+    2566962764,
+    2566962769
+  ],
+  "geometry": [
+    { "lat": 40.6641134, "lon": -73.9369950 },
+    { "lat": 40.6642213, "lon": -73.9369850 },
+    { "lat": 40.6642038, "lon": -73.9366606 },
+    { "lat": 40.6641004, "lon": -73.9366703 },
+    { "lat": 40.6641118, "lon": -73.9368820 },
+    { "lat": 40.6641073, "lon": -73.9368824 },
+    { "lat": 40.6641134, "lon": -73.9369950 }
+  ],
+  "tags": {
+    "addr:housenumber": "417",
+    "addr:postcode": "11213",
+    "addr:street": "Troy Avenue",
+    "building": "synagogue",
+    "height": "13.3",
+    "nycdoitt:bin": "3038370"
+  }
+},
+{
+  "type": "way",
+  "id": 250211417,
+  "bounds": {
+    "minlat": 40.6608361,
+    "minlon": -73.9403323,
+    "maxlat": 40.6609371,
+    "maxlon": -73.9399642
+  },
+  "nodes": [
+    2566964599,
+    2566964610,
+    2566964614,
+    2566964615,
+    2566964601,
+    2566964604,
+    2566964621,
+    2566964622,
+    2566964626,
+    2566964566,
+    2566964551,
+    2566964564,
+    2566964599
+  ],
+  "geometry": [
+    { "lat": 40.6609148, "lon": -73.9403323 },
+    { "lat": 40.6609223, "lon": -73.9402040 },
+    { "lat": 40.6609276, "lon": -73.9401121 },
+    { "lat": 40.6609281, "lon": -73.9401033 },
+    { "lat": 40.6609176, "lon": -73.9401023 },
+    { "lat": 40.6609195, "lon": -73.9400694 },
+    { "lat": 40.6609314, "lon": -73.9400705 },
+    { "lat": 40.6609316, "lon": -73.9400667 },
+    { "lat": 40.6609371, "lon": -73.9399722 },
+    { "lat": 40.6608569, "lon": -73.9399642 },
+    { "lat": 40.6608361, "lon": -73.9403245 },
+    { "lat": 40.6608556, "lon": -73.9403264 },
+    { "lat": 40.6609148, "lon": -73.9403323 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "mormon",
+    "ele": "12",
+    "gnis:feature_id": "2097249",
+    "height": "7.0",
+    "name": "The Church of Jesus Christ of Latter-day Saints",
+    "nycdoitt:bin": "3319757",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250220475,
+  "bounds": {
+    "minlat": 40.6688379,
+    "minlon": -73.9429594,
+    "maxlat": 40.6690651,
+    "maxlon": -73.9426644
+  },
+  "nodes": [
+    2567032693,
+    2567032691,
+    2567032550,
+    2567032559,
+    2567032569,
+    2567032577,
+    2567032621,
+    2567032618,
+    2567032661,
+    2567032660,
+    2567032728,
+    2567032730,
+    2567032747,
+    2567032737,
+    2567032693
+  ],
+  "geometry": [
+    { "lat": 40.6689816, "lon": -73.9426813 },
+    { "lat": 40.6689807, "lon": -73.9426644 },
+    { "lat": 40.6688379, "lon": -73.9426781 },
+    { "lat": 40.6688448, "lon": -73.9428021 },
+    { "lat": 40.6688574, "lon": -73.9428008 },
+    { "lat": 40.6688662, "lon": -73.9429594 },
+    { "lat": 40.6689045, "lon": -73.9429557 },
+    { "lat": 40.6689039, "lon": -73.9429447 },
+    { "lat": 40.6689431, "lon": -73.9429410 },
+    { "lat": 40.6689426, "lon": -73.9429318 },
+    { "lat": 40.6690292, "lon": -73.9429235 },
+    { "lat": 40.6690298, "lon": -73.9429336 },
+    { "lat": 40.6690651, "lon": -73.9429302 },
+    { "lat": 40.6690510, "lon": -73.9426747 },
+    { "lat": 40.6689816, "lon": -73.9426813 }
+  ],
+  "tags": {
+    "addr:housenumber": "770",
+    "addr:postcode": "11213",
+    "addr:street": "Eastern Parkway",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "orthodox",
+    "height": "13.9",
+    "name": "770",
+    "nycdoitt:bin": "3033033",
+    "religion": "jewish",
+    "wikidata": "Q2778297",
+    "wikipedia": "en:770 Eastern Parkway"
+  }
+},
+{
+  "type": "way",
+  "id": 250220476,
+  "bounds": {
+    "minlat": 40.6688302,
+    "minlon": -73.9426813,
+    "maxlat": 40.6690591,
+    "maxlon": -73.9424964
+  },
+  "nodes": [
+    2567032682,
+    2567032684,
+    2567032541,
+    2567032550,
+    2567032691,
+    2567032693,
+    2567032737,
+    2567032743,
+    2567032735,
+    2567032682
+  ],
+  "geometry": [
+    { "lat": 40.6689718, "lon": -73.9425038 },
+    { "lat": 40.6689730, "lon": -73.9425255 },
+    { "lat": 40.6688302, "lon": -73.9425391 },
+    { "lat": 40.6688379, "lon": -73.9426781 },
+    { "lat": 40.6689807, "lon": -73.9426644 },
+    { "lat": 40.6689816, "lon": -73.9426813 },
+    { "lat": 40.6690510, "lon": -73.9426747 },
+    { "lat": 40.6690591, "lon": -73.9426739 },
+    { "lat": 40.6690493, "lon": -73.9424964 },
+    { "lat": 40.6689718, "lon": -73.9425038 }
+  ],
+  "tags": {
+    "addr:housenumber": "784",
+    "addr:postcode": "11213",
+    "addr:street": "Eastern Parkway",
+    "building": "synagogue",
+    "height": "13.0",
+    "nycdoitt:bin": "3033034"
+  }
+},
+{
+  "type": "way",
+  "id": 250220477,
+  "bounds": {
+    "minlat": 40.6688212,
+    "minlon": -73.9425038,
+    "maxlat": 40.6690493,
+    "maxlon": -73.9423558
+  },
+  "nodes": [
+    2567032735,
+    2567032734,
+    2567032530,
+    2567032536,
+    2567032679,
+    2567032682,
+    2567032735
+  ],
+  "geometry": [
+    { "lat": 40.6690493, "lon": -73.9424964 },
+    { "lat": 40.6690415, "lon": -73.9423558 },
+    { "lat": 40.6688212, "lon": -73.9423769 },
+    { "lat": 40.6688279, "lon": -73.9424963 },
+    { "lat": 40.6689706, "lon": -73.9424827 },
+    { "lat": 40.6689718, "lon": -73.9425038 },
+    { "lat": 40.6690493, "lon": -73.9424964 }
+  ],
+  "tags": {
+    "addr:housenumber": "788",
+    "addr:postcode": "11213",
+    "addr:street": "Eastern Parkway",
+    "building": "synagogue",
+    "height": "13.0",
+    "nycdoitt:bin": "3033035"
+  }
+},
+{
+  "type": "way",
+  "id": 250220500,
+  "bounds": {
+    "minlat": 40.6687651,
+    "minlon": -73.9421116,
+    "maxlat": 40.6690199,
+    "maxlon": -73.9418107
+  },
+  "nodes": [
+    2567032475,
+    2567032481,
+    2567032483,
+    2567032546,
+    2567032552,
+    2567032717,
+    2567032716,
+    2567032722,
+    2567032713,
+    2567032635,
+    2567032475
+  ],
+  "geometry": [
+    { "lat": 40.6687651, "lon": -73.9418298 },
+    { "lat": 40.6687723, "lon": -73.9419888 },
+    { "lat": 40.6687751, "lon": -73.9420507 },
+    { "lat": 40.6688363, "lon": -73.9420459 },
+    { "lat": 40.6688393, "lon": -73.9421116 },
+    { "lat": 40.6690157, "lon": -73.9420978 },
+    { "lat": 40.6690128, "lon": -73.9420332 },
+    { "lat": 40.6690199, "lon": -73.9420326 },
+    { "lat": 40.6690098, "lon": -73.9418107 },
+    { "lat": 40.6689184, "lon": -73.9418178 },
+    { "lat": 40.6687651, "lon": -73.9418298 }
+  ],
+  "tags": {
+    "addr:housenumber": "792",
+    "addr:postcode": "11213",
+    "addr:street": "Eastern Parkway",
+    "building": "yes",
+    "height": "30.8",
+    "name": "Jewish Childrens Museum",
+    "nycdoitt:bin": "3033058",
+    "source": "surey",
+    "tourism": "museum",
+    "website": "https://www.jcm.museum/",
+    "wheelchair": "yes",
+    "wikidata": "Q568036"
+  }
+},
+{
+  "type": "way",
+  "id": 250220501,
+  "bounds": {
+    "minlat": 40.6686995,
+    "minlon": -73.9447269,
+    "maxlat": 40.6688630,
+    "maxlon": -73.9443656
+  },
+  "nodes": [
+    2567032529,
+    2567032522,
+    2567032416,
+    9421600193,
+    9421600194,
+    9421600196,
+    9421600195,
+    2567032439,
+    9421600199,
+    9421600200,
+    2567030168,
+    2567032469,
+    2567032472,
+    2567032510,
+    2567032508,
+    9421600198,
+    2567032544,
+    9421600197,
+    2567030179,
+    2567032533,
+    2567032575,
+    2567032573,
+    2567032529
+  ],
+  "geometry": [
+    { "lat": 40.6688275, "lon": -73.9444442 },
+    { "lat": 40.6688234, "lon": -73.9443656 },
+    { "lat": 40.6686995, "lon": -73.9443767 },
+    { "lat": 40.6687036, "lon": -73.9444553 },
+    { "lat": 40.6687093, "lon": -73.9444548 },
+    { "lat": 40.6687168, "lon": -73.9446004 },
+    { "lat": 40.6687111, "lon": -73.9446009 },
+    { "lat": 40.6687152, "lon": -73.9446810 },
+    { "lat": 40.6687084, "lon": -73.9446913 },
+    { "lat": 40.6687091, "lon": -73.9447050 },
+    { "lat": 40.6687169, "lon": -73.9447140 },
+    { "lat": 40.6687601, "lon": -73.9447101 },
+    { "lat": 40.6687609, "lon": -73.9447269 },
+    { "lat": 40.6688040, "lon": -73.9447231 },
+    { "lat": 40.6688013, "lon": -73.9446706 },
+    { "lat": 40.6688326, "lon": -73.9446678 },
+    { "lat": 40.6688390, "lon": -73.9446672 },
+    { "lat": 40.6688350, "lon": -73.9445898 },
+    { "lat": 40.6688292, "lon": -73.9445903 },
+    { "lat": 40.6688245, "lon": -73.9444986 },
+    { "lat": 40.6688630, "lon": -73.9444951 },
+    { "lat": 40.6688602, "lon": -73.9444413 },
+    { "lat": 40.6688275, "lon": -73.9444442 }
+  ],
+  "tags": {
+    "addr:housenumber": "1417",
+    "addr:postcode": "11213",
+    "addr:street": "Union Street",
+    "building": "church",
+    "denomination": "episcopal",
+    "height": "15.3",
+    "name": "Church of St. Mark",
+    "nycdoitt:bin": "3033019",
+    "phone": "+1-718-756-6607",
+    "religion": "christian",
+    "website": "https://stmarkschurchbrooklyn.org"
+  }
+},
+{
+  "type": "way",
+  "id": 250221739,
+  "bounds": {
+    "minlat": 40.6649248,
+    "minlon": -73.9536143,
+    "maxlat": 40.6651436,
+    "maxlon": -73.9531513
+  },
+  "nodes": [
+    2567046779,
+    2567046781,
+    2567046773,
+    2567046770,
+    2567046927,
+    2567046919,
+    11048094422,
+    11048094421,
+    2567046872,
+    2567046854,
+    2567046841,
+    2567046805,
+    2567046793,
+    2567046785,
+    2567046779
+  ],
+  "geometry": [
+    { "lat": 40.6649473, "lon": -73.9534267 },
+    { "lat": 40.6649362, "lon": -73.9534260 },
+    { "lat": 40.6649312, "lon": -73.9535075 },
+    { "lat": 40.6649248, "lon": -73.9536143 },
+    { "lat": 40.6651436, "lon": -73.9535943 },
+    { "lat": 40.6651380, "lon": -73.9534887 },
+    { "lat": 40.6651249, "lon": -73.9532393 },
+    { "lat": 40.6650973, "lon": -73.9532406 },
+    { "lat": 40.6650951, "lon": -73.9531961 },
+    { "lat": 40.6650864, "lon": -73.9531962 },
+    { "lat": 40.6650694, "lon": -73.9531513 },
+    { "lat": 40.6649852, "lon": -73.9531517 },
+    { "lat": 40.6649649, "lon": -73.9531966 },
+    { "lat": 40.6649589, "lon": -73.9531967 },
+    { "lat": 40.6649473, "lon": -73.9534267 }
+  ],
+  "tags": {
+    "addr:housenumber": "333",
+    "addr:postcode": "11225",
+    "addr:street": "Rogers Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "ele": "26",
+    "gnis:feature_id": "2485796",
+    "height": "9.6",
+    "name": "Brooklyn Miracle Temple",
+    "nycdoitt:bin": "3330690;3330807",
+    "phone": "+1-718-774-7352",
+    "religion": "christian",
+    "website": "https://www.brooklynmiracletemple.org"
+  }
+},
+{
+  "type": "way",
+  "id": 250221878,
+  "bounds": {
+    "minlat": 40.6641235,
+    "minlon": -73.9497277,
+    "maxlat": 40.6643997,
+    "maxlon": -73.9495322
+  },
+  "nodes": [
+    2567046544,
+    2567046546,
+    2567046541,
+    2567046399,
+    2567046390,
+    2567046383,
+    2567046542,
+    2567046544
+  ],
+  "geometry": [
+    { "lat": 40.6643945, "lon": -73.9497277 },
+    { "lat": 40.6643997, "lon": -73.9496330 },
+    { "lat": 40.6643885, "lon": -73.9496208 },
+    { "lat": 40.6641484, "lon": -73.9495322 },
+    { "lat": 40.6641321, "lon": -73.9495451 },
+    { "lat": 40.6641235, "lon": -73.9497021 },
+    { "lat": 40.6643892, "lon": -73.9497272 },
+    { "lat": 40.6643945, "lon": -73.9497277 }
+  ],
+  "tags": {
+    "building": "church",
+    "height": "4.9",
+    "nycdoitt:bin": "3034560"
+  }
+},
+{
+  "type": "way",
+  "id": 250221900,
+  "bounds": {
+    "minlat": 40.6645074,
+    "minlon": -73.9486970,
+    "maxlat": 40.6646357,
+    "maxlon": -73.9483396
+  },
+  "nodes": [
+    2567046606,
+    2567046627,
+    2567046625,
+    2567046636,
+    2567046631,
+    2567046594,
+    2567046606
+  ],
+  "geometry": [
+    { "lat": 40.6645271, "lon": -73.9486970 },
+    { "lat": 40.6645910, "lon": -73.9486908 },
+    { "lat": 40.6645859, "lon": -73.9486003 },
+    { "lat": 40.6646357, "lon": -73.9485954 },
+    { "lat": 40.6646212, "lon": -73.9483396 },
+    { "lat": 40.6645074, "lon": -73.9483508 },
+    { "lat": 40.6645271, "lon": -73.9486970 }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "450",
+    "addr:postcode": "11225",
+    "addr:state": "NY",
+    "addr:street": "New York Avenue",
+    "building": "synagogue",
+    "height": "4.9",
+    "nycdoitt:bin": "3034554"
+  }
+},
+{
+  "type": "way",
+  "id": 250224303,
+  "bounds": {
+    "minlat": 40.6690790,
+    "minlon": -73.9511559,
+    "maxlat": 40.6695143,
+    "maxlon": -73.9508091
+  },
+  "nodes": [
+    2567062828,
+    2567062839,
+    2567062799,
+    2567062802,
+    2567062803,
+    2567062867,
+    2567062886,
+    2567063700,
+    2567063721,
+    2567063747,
+    357647136,
+    2567063744,
+    2567063712,
+    2567063692,
+    2567062978,
+    2567062842,
+    2567062828
+  ],
+  "geometry": [
+    { "lat": 40.6690976, "lon": -73.9508388 },
+    { "lat": 40.6691026, "lon": -73.9509266 },
+    { "lat": 40.6690790, "lon": -73.9509288 },
+    { "lat": 40.6690869, "lon": -73.9510736 },
+    { "lat": 40.6690872, "lon": -73.9510791 },
+    { "lat": 40.6691106, "lon": -73.9510769 },
+    { "lat": 40.6691149, "lon": -73.9511559 },
+    { "lat": 40.6694314, "lon": -73.9511261 },
+    { "lat": 40.6694662, "lon": -73.9510936 },
+    { "lat": 40.6695143, "lon": -73.9510891 },
+    { "lat": 40.6695076, "lon": -73.9509658 },
+    { "lat": 40.6695009, "lon": -73.9508424 },
+    { "lat": 40.6694528, "lon": -73.9508470 },
+    { "lat": 40.6694133, "lon": -73.9508091 },
+    { "lat": 40.6691310, "lon": -73.9508357 },
+    { "lat": 40.6691032, "lon": -73.9508383 },
+    { "lat": 40.6690976, "lon": -73.9508388 }
+  ],
+  "tags": {
+    "addr:housenumber": "530",
+    "addr:postcode": "11225",
+    "addr:street": "Eastern Parkway",
+    "alt_name": "Philadelphian Sabbath Cathedral",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "philadelphian",
+    "gnis:feature_id": "2473673",
+    "height": "19.7",
+    "name": "Philadelphia Church of Universal Brotherhood",
+    "nycdoitt:bin": "3032906",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250224778,
+  "bounds": {
+    "minlat": 40.6644689,
+    "minlon": -73.9567271,
+    "maxlat": 40.6648797,
+    "maxlon": -73.9564569
+  },
+  "nodes": [
+    2567069736,
+    2567069754,
+    2567070096,
+    2567070092,
+    2567070114,
+    2567070113,
+    2567070014,
+    2567069953,
+    2567069736
+  ],
+  "geometry": [
+    { "lat": 40.6644689, "lon": -73.9564957 },
+    { "lat": 40.6644817, "lon": -73.9567271 },
+    { "lat": 40.6648563, "lon": -73.9566061 },
+    { "lat": 40.6648532, "lon": -73.9565494 },
+    { "lat": 40.6648797, "lon": -73.9565468 },
+    { "lat": 40.6648747, "lon": -73.9564569 },
+    { "lat": 40.6647525, "lon": -73.9564686 },
+    { "lat": 40.6647028, "lon": -73.9564733 },
+    { "lat": 40.6644689, "lon": -73.9564957 }
+  ],
+  "tags": {
+    "addr:housenumber": "131",
+    "addr:postcode": "11225",
+    "addr:street": "Sullivan Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "height": "11.7",
+    "name": "Full Gospel Assembly",
+    "nycdoitt:bin": "3396427",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250225916,
+  "bounds": {
+    "minlat": 40.6678018,
+    "minlon": -73.9542460,
+    "maxlat": 40.6681676,
+    "maxlon": -73.9538525
+  },
+  "nodes": [
+    2567079039,
+    2567079041,
+    2567079022,
+    2567079023,
+    2567079024,
+    2567079026,
+    2567079027,
+    2567079028,
+    2567079029,
+    2567079210,
+    2567079185,
+    2567079151,
+    2567079039
+  ],
+  "geometry": [
+    { "lat": 40.6678534, "lon": -73.9538839 },
+    { "lat": 40.6678579, "lon": -73.9539563 },
+    { "lat": 40.6678018, "lon": -73.9539624 },
+    { "lat": 40.6678028, "lon": -73.9539779 },
+    { "lat": 40.6678073, "lon": -73.9540509 },
+    { "lat": 40.6678115, "lon": -73.9541184 },
+    { "lat": 40.6678142, "lon": -73.9541611 },
+    { "lat": 40.6678182, "lon": -73.9542249 },
+    { "lat": 40.6678195, "lon": -73.9542460 },
+    { "lat": 40.6681676, "lon": -73.9542086 },
+    { "lat": 40.6681453, "lon": -73.9538525 },
+    { "lat": 40.6681019, "lon": -73.9538571 },
+    { "lat": 40.6678534, "lon": -73.9538839 }
+  ],
+  "tags": {
+    "addr:housenumber": "1110",
+    "addr:postcode": "11225",
+    "addr:street": "President Street",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "height": "12.8",
+    "name": "Miller Evangelical Christian Union Church",
+    "nycdoitt:bin": "3033485",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250225976,
+  "bounds": {
+    "minlat": 40.6692246,
+    "minlon": -73.9538085,
+    "maxlat": 40.6696620,
+    "maxlon": -73.9534333
+  },
+  "nodes": [
+    2567079422,
+    2567079424,
+    2567079330,
+    2567079332,
+    2567079519,
+    2567079515,
+    2567079426,
+    2567079422
+  ],
+  "geometry": [
+    { "lat": 40.6695047, "lon": -73.9534422 },
+    { "lat": 40.6695051, "lon": -73.9534540 },
+    { "lat": 40.6692246, "lon": -73.9534712 },
+    { "lat": 40.6692366, "lon": -73.9538085 },
+    { "lat": 40.6696620, "lon": -73.9537824 },
+    { "lat": 40.6696495, "lon": -73.9534333 },
+    { "lat": 40.6695118, "lon": -73.9534418 },
+    { "lat": 40.6695047, "lon": -73.9534422 }
+  ],
+  "tags": {
+    "addr:housenumber": "450",
+    "addr:postcode": "11225",
+    "addr:street": "Eastern Parkway",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "baptist",
+    "height": "9.7",
+    "name": "First Baptist Church of Crown Heights",
+    "nycdoitt:bin": "3032891",
+    "phone": "+1-718-778-1200",
+    "religion": "christian",
+    "website": "https://www.myfbcch.org"
+  }
+},
+{
+  "type": "way",
+  "id": 250227249,
+  "bounds": {
+    "minlat": 40.6671663,
+    "minlon": -73.9570019,
+    "maxlat": 40.6674677,
+    "maxlon": -73.9567583
+  },
+  "nodes": [
+    2567092087,
+    2567092091,
+    2567092088,
+    2567092092,
+    2567092100,
+    2567092119,
+    2567092160,
+    2567092183,
+    2567092171,
+    2567092147,
+    2567092112,
+    2567092087
+  ],
+  "geometry": [
+    { "lat": 40.6671663, "lon": -73.9568552 },
+    { "lat": 40.6671798, "lon": -73.9569203 },
+    { "lat": 40.6671725, "lon": -73.9569229 },
+    { "lat": 40.6671889, "lon": -73.9570019 },
+    { "lat": 40.6672108, "lon": -73.9569941 },
+    { "lat": 40.6672975, "lon": -73.9569632 },
+    { "lat": 40.6674109, "lon": -73.9569227 },
+    { "lat": 40.6674677, "lon": -73.9569024 },
+    { "lat": 40.6674379, "lon": -73.9567583 },
+    { "lat": 40.6673718, "lon": -73.9567819 },
+    { "lat": 40.6672569, "lon": -73.9568229 },
+    { "lat": 40.6671663, "lon": -73.9568552 }
+  ],
+  "tags": {
+    "addr:housenumber": "1032",
+    "addr:postcode": "11225",
+    "addr:street": "Carroll Street",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "jehovahs_witness",
+    "height": "5.7",
+    "name": "Kingdom Hall of Jehovah's Witnesses",
+    "nycdoitt:bin": "3033789",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250227266,
+  "bounds": {
+    "minlat": 40.6681684,
+    "minlon": -73.9564740,
+    "maxlat": 40.6683422,
+    "maxlon": -73.9560890
+  },
+  "nodes": [
+    2567092500,
+    2567092534,
+    2567092547,
+    2567092513,
+    2567092446,
+    2567092497,
+    2567092490,
+    2567092494,
+    2567092500
+  ],
+  "geometry": [
+    { "lat": 40.6682361, "lon": -73.9564740 },
+    { "lat": 40.6683014, "lon": -73.9564495 },
+    { "lat": 40.6683422, "lon": -73.9564342 },
+    { "lat": 40.6682670, "lon": -73.9560890 },
+    { "lat": 40.6681684, "lon": -73.9561260 },
+    { "lat": 40.6682251, "lon": -73.9563860 },
+    { "lat": 40.6682176, "lon": -73.9563888 },
+    { "lat": 40.6682234, "lon": -73.9564156 },
+    { "lat": 40.6682361, "lon": -73.9564740 }
+  ],
+  "tags": {
+    "addr:housenumber": "1058",
+    "addr:postcode": "11225",
+    "addr:street": "President Street",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "baptist",
+    "height": "12.3",
+    "name": "Ebenezer Haitian Baptist Church",
+    "nycdoitt:bin": "3033459",
+    "phone": "+1-718-773-3054",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250227487,
+  "bounds": {
+    "minlat": 40.6693385,
+    "minlon": -73.9589265,
+    "maxlat": 40.6695173,
+    "maxlon": -73.9585428
+  },
+  "nodes": [
+    2567094243,
+    2567094178,
+    2567094194,
+    2567094225,
+    2567094272,
+    2567094307,
+    2567094297,
+    2567094259,
+    2567094243
+  ],
+  "geometry": [
+    { "lat": 40.6694444, "lon": -73.9585428 },
+    { "lat": 40.6693385, "lon": -73.9585816 },
+    { "lat": 40.6693573, "lon": -73.9586705 },
+    { "lat": 40.6694114, "lon": -73.9589265 },
+    { "lat": 40.6694685, "lon": -73.9589056 },
+    { "lat": 40.6695173, "lon": -73.9588877 },
+    { "lat": 40.6695101, "lon": -73.9588538 },
+    { "lat": 40.6694667, "lon": -73.9586482 },
+    { "lat": 40.6694444, "lon": -73.9585428 }
+  ],
+  "tags": {
+    "addr:housenumber": "836",
+    "addr:postcode": "11225",
+    "addr:street": "Franklin Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "pentecostal",
+    "height": "8.7",
+    "name": "Full Gospel Assembly",
+    "nycdoitt:bin": "3029692",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250306744,
+  "bounds": {
+    "minlat": 40.6709654,
+    "minlon": -73.9525139,
+    "maxlat": 40.6712810,
+    "maxlon": -73.9522018
+  },
+  "nodes": [
+    2567903088,
+    2567903085,
+    2567902903,
+    2567902913,
+    2567902895,
+    2567902898,
+    2567902908,
+    2567902912,
+    2567903044,
+    2567903037,
+    2567903095,
+    2567903090,
+    2567903111,
+    2567903109,
+    2567903088
+  ],
+  "geometry": [
+    { "lat": 40.6712651, "lon": -73.9522562 },
+    { "lat": 40.6712621, "lon": -73.9522018 },
+    { "lat": 40.6709748, "lon": -73.9522292 },
+    { "lat": 40.6709830, "lon": -73.9523778 },
+    { "lat": 40.6709654, "lon": -73.9523794 },
+    { "lat": 40.6709684, "lon": -73.9524332 },
+    { "lat": 40.6709784, "lon": -73.9524323 },
+    { "lat": 40.6709829, "lon": -73.9525139 },
+    { "lat": 40.6712290, "lon": -73.9524904 },
+    { "lat": 40.6712235, "lon": -73.9523904 },
+    { "lat": 40.6712701, "lon": -73.9523860 },
+    { "lat": 40.6712676, "lon": -73.9523408 },
+    { "lat": 40.6712810, "lon": -73.9523205 },
+    { "lat": 40.6712783, "lon": -73.9522717 },
+    { "lat": 40.6712651, "lon": -73.9522562 }
+  ],
+  "tags": {
+    "addr:housenumber": "721",
+    "addr:postcode": "11216",
+    "addr:street": "Lincoln Place",
+    "building": "church",
+    "denomination": "lutheran",
+    "height": "17.3",
+    "name": "Church of the Epiphany",
+    "nycdoitt:bin": "3032264",
+    "phone": "+1-718-773-7200"
+  }
+},
+{
+  "type": "way",
+  "id": 250306793,
+  "bounds": {
+    "minlat": 40.6708736,
+    "minlon": -73.9508162,
+    "maxlat": 40.6710849,
+    "maxlon": -73.9507266
+  },
+  "nodes": [
+    2567902821,
+    2567902825,
+    2567902935,
+    2567902982,
+    2567902978,
+    2567902930,
+    2567902821
+  ],
+  "geometry": [
+    { "lat": 40.6708736, "lon": -73.9507460 },
+    { "lat": 40.6708774, "lon": -73.9508162 },
+    { "lat": 40.6710053, "lon": -73.9508042 },
+    { "lat": 40.6710849, "lon": -73.9507967 },
+    { "lat": 40.6710811, "lon": -73.9507266 },
+    { "lat": 40.6710015, "lon": -73.9507340 },
+    { "lat": 40.6708736, "lon": -73.9507460 }
+  ],
+  "tags": {
+    "addr:housenumber": "777",
+    "addr:postcode": "11216",
+    "addr:street": "Lincoln Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "baptist",
+    "height": "9.8",
+    "name": "Mt. Bethel Baptist Church",
+    "nycdoitt:bin": "3032251",
+    "phone": "+1-718-773-6300",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250309120,
+  "bounds": {
+    "minlat": 40.6715486,
+    "minlon": -73.9455397,
+    "maxlat": 40.6718357,
+    "maxlon": -73.9452670
+  },
+  "nodes": [
+    2567918633,
+    2567918619,
+    2567918458,
+    2567918463,
+    2567918337,
+    2567918336,
+    2567918228,
+    2567918250,
+    2567918352,
+    2567918351,
+    2567918516,
+    2567918518,
+    2567918656,
+    2567918644,
+    2567918736,
+    2567918711,
+    2567918633
+  ],
+  "geometry": [
+    { "lat": 40.6718058, "lon": -73.9453543 },
+    { "lat": 40.6718003, "lon": -73.9452670 },
+    { "lat": 40.6717357, "lon": -73.9452739 },
+    { "lat": 40.6717365, "lon": -73.9452865 },
+    { "lat": 40.6716112, "lon": -73.9453000 },
+    { "lat": 40.6716103, "lon": -73.9452852 },
+    { "lat": 40.6715486, "lon": -73.9452919 },
+    { "lat": 40.6715640, "lon": -73.9455397 },
+    { "lat": 40.6716257, "lon": -73.9455331 },
+    { "lat": 40.6716248, "lon": -73.9455185 },
+    { "lat": 40.6717501, "lon": -73.9455050 },
+    { "lat": 40.6717510, "lon": -73.9455196 },
+    { "lat": 40.6718156, "lon": -73.9455127 },
+    { "lat": 40.6718104, "lon": -73.9454279 },
+    { "lat": 40.6718357, "lon": -73.9454252 },
+    { "lat": 40.6718311, "lon": -73.9453516 },
+    { "lat": 40.6718058, "lon": -73.9453543 }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "991",
+    "addr:postcode": "11213",
+    "addr:street": "Saint Johns Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "catholic",
+    "ele": "26",
+    "gnis:feature_id": "2081616",
+    "height": "16.8",
+    "name": "Saint Gregory's Roman Catholic Church",
+    "nycdoitt:bin": "3332427",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250309133,
+  "bounds": {
+    "minlat": 40.6724916,
+    "minlon": -73.9529008,
+    "maxlat": 40.6725749,
+    "maxlon": -73.9525446
+  },
+  "nodes": [
+    2567920292,
+    2567918162,
+    2567920294,
+    2567920285,
+    2567920288,
+    2567920291,
+    2567920292
+  ],
+  "geometry": [
+    { "lat": 40.6725105, "lon": -73.9529008 },
+    { "lat": 40.6725749, "lon": -73.9528948 },
+    { "lat": 40.6725560, "lon": -73.9525446 },
+    { "lat": 40.6724916, "lon": -73.9525506 },
+    { "lat": 40.6724979, "lon": -73.9526676 },
+    { "lat": 40.6725084, "lon": -73.9528622 },
+    { "lat": 40.6725105, "lon": -73.9529008 }
+  ],
+  "tags": {
+    "addr:housenumber": "143",
+    "addr:postcode": "11216",
+    "addr:street": "Rogers Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "pentecostal",
+    "height": "7.4",
+    "name": "St. John's Pentecostal Holy Church",
+    "nycdoitt:bin": "3031863",
+    "phone": "+1-718-778-2567",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250320615,
+  "bounds": {
+    "minlat": 40.6736992,
+    "minlon": -73.9472217,
+    "maxlat": 40.6738715,
+    "maxlon": -73.9468118
+  },
+  "nodes": [
+    2567997230,
+    2567997237,
+    2567997232,
+    2567997218,
+    2567997209,
+    2567997191,
+    2567997189,
+    2567997185,
+    2567997168,
+    2567997170,
+    2567997280,
+    2567997273,
+    2567997244,
+    2567997230
+  ],
+  "geometry": [
+    { "lat": 40.6738359, "lon": -73.9469321 },
+    { "lat": 40.6738467, "lon": -73.9469309 },
+    { "lat": 40.6738394, "lon": -73.9468190 },
+    { "lat": 40.6737858, "lon": -73.9468251 },
+    { "lat": 40.6737785, "lon": -73.9468118 },
+    { "lat": 40.6737623, "lon": -73.9468137 },
+    { "lat": 40.6737505, "lon": -73.9468150 },
+    { "lat": 40.6737448, "lon": -73.9468297 },
+    { "lat": 40.6736992, "lon": -73.9468349 },
+    { "lat": 40.6737246, "lon": -73.9472217 },
+    { "lat": 40.6738715, "lon": -73.9472051 },
+    { "lat": 40.6738685, "lon": -73.9471601 },
+    { "lat": 40.6738511, "lon": -73.9471621 },
+    { "lat": 40.6738359, "lon": -73.9469321 }
+  ],
+  "tags": {
+    "addr:housenumber": "179",
+    "addr:postcode": "11213",
+    "addr:street": "New York Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "baptist",
+    "height": "14.6",
+    "name": "Trinity Baptist Church",
+    "nycdoitt:bin": "3031284",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250322679,
+  "bounds": {
+    "minlat": 40.6725693,
+    "minlon": -73.9417635,
+    "maxlat": 40.6728510,
+    "maxlon": -73.9414456
+  },
+  "nodes": [
+    2568012106,
+    2568012089,
+    2568012095,
+    2568012135,
+    2568012161,
+    2568012218,
+    2568012220,
+    2568012238,
+    2568012237,
+    2568012240,
+    2568012239,
+    2568011105,
+    2568012235,
+    2568012214,
+    2568012206,
+    2568012140,
+    2568012141,
+    2568012101,
+    2568012106
+  ],
+  "geometry": [
+    { "lat": 40.6725916, "lon": -73.9416808 },
+    { "lat": 40.6725693, "lon": -73.9416824 },
+    { "lat": 40.6725718, "lon": -73.9417415 },
+    { "lat": 40.6726371, "lon": -73.9417354 },
+    { "lat": 40.6726571, "lon": -73.9417635 },
+    { "lat": 40.6727630, "lon": -73.9417537 },
+    { "lat": 40.6727713, "lon": -73.9417347 },
+    { "lat": 40.6728322, "lon": -73.9417290 },
+    { "lat": 40.6728286, "lon": -73.9416634 },
+    { "lat": 40.6728510, "lon": -73.9416613 },
+    { "lat": 40.6728436, "lon": -73.9415246 },
+    { "lat": 40.6728212, "lon": -73.9415267 },
+    { "lat": 40.6728175, "lon": -73.9414583 },
+    { "lat": 40.6727569, "lon": -73.9414639 },
+    { "lat": 40.6727463, "lon": -73.9414456 },
+    { "lat": 40.6726405, "lon": -73.9414554 },
+    { "lat": 40.6726411, "lon": -73.9414658 },
+    { "lat": 40.6725827, "lon": -73.9414712 },
+    { "lat": 40.6725916, "lon": -73.9416808 }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "1084",
+    "addr:postcode": "11213",
+    "addr:state": "NY",
+    "addr:street": "Park Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "church_of_god_in_christ",
+    "height": "21.6",
+    "name": "First Church Of God In Christ",
+    "nycdoitt:bin": "3330799",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250324041,
+  "bounds": {
+    "minlat": 40.6740499,
+    "minlon": -73.9444081,
+    "maxlat": 40.6747824,
+    "maxlon": -73.9433811
+  },
+  "nodes": [
+    2568023495,
+    2568023499,
+    2568023492,
+    2568023491,
+    2568023487,
+    2568023488,
+    2568023489,
+    2568023490,
+    2568023477,
+    2568023478,
+    2568023471,
+    2568023473,
+    2568023481,
+    2568023482,
+    2568023476,
+    2568023475,
+    2568023463,
+    2568023464,
+    2568023468,
+    2568023470,
+    2568023458,
+    2568023456,
+    2568023457,
+    2568023459,
+    2568023460,
+    2568023510,
+    2568023509,
+    2568023508,
+    2568023495
+  ],
+  "geometry": [
+    { "lat": 40.6746169, "lon": -73.9433916 },
+    { "lat": 40.6746238, "lon": -73.9435205 },
+    { "lat": 40.6745904, "lon": -73.9435236 },
+    { "lat": 40.6745880, "lon": -73.9434793 },
+    { "lat": 40.6745331, "lon": -73.9434843 },
+    { "lat": 40.6745419, "lon": -73.9436506 },
+    { "lat": 40.6745586, "lon": -73.9436491 },
+    { "lat": 40.6745613, "lon": -73.9436999 },
+    { "lat": 40.6742357, "lon": -73.9437297 },
+    { "lat": 40.6742374, "lon": -73.9437559 },
+    { "lat": 40.6741823, "lon": -73.9437610 },
+    { "lat": 40.6741892, "lon": -73.9438901 },
+    { "lat": 40.6742458, "lon": -73.9438850 },
+    { "lat": 40.6742600, "lon": -73.9441517 },
+    { "lat": 40.6742189, "lon": -73.9441555 },
+    { "lat": 40.6742172, "lon": -73.9441248 },
+    { "lat": 40.6740842, "lon": -73.9441370 },
+    { "lat": 40.6740883, "lon": -73.9442130 },
+    { "lat": 40.6741284, "lon": -73.9442093 },
+    { "lat": 40.6741308, "lon": -73.9442536 },
+    { "lat": 40.6740535, "lon": -73.9442606 },
+    { "lat": 40.6740499, "lon": -73.9443052 },
+    { "lat": 40.6740501, "lon": -73.9443351 },
+    { "lat": 40.6740543, "lon": -73.9443794 },
+    { "lat": 40.6740597, "lon": -73.9444081 },
+    { "lat": 40.6747824, "lon": -73.9443420 },
+    { "lat": 40.6747314, "lon": -73.9433811 },
+    { "lat": 40.6747229, "lon": -73.9433819 },
+    { "lat": 40.6746169, "lon": -73.9433916 }
+  ],
+  "tags": {
+    "addr:housenumber": "145",
+    "addr:postcode": "11213",
+    "addr:state": "NY",
+    "addr:street": "Brooklyn Avenue",
+    "building": "yes",
+    "ele": "23",
+    "gnis:feature_id": "2081615",
+    "height": "15.7",
+    "name": "Brooklyn Children's Museum",
+    "nycdoitt:bin": "3031049",
+    "opening_hours": "Tu, We, Fr 10:00-17:00; Th 10:00-18:00; Su 10:00-19:00",
+    "source": "USGS Geonames",
+    "tourism": "museum",
+    "website": "https://www.brooklynkids.org/",
+    "wikidata": "Q4974780"
+  }
+},
+{
+  "type": "way",
+  "id": 250328046,
+  "bounds": {
+    "minlat": 40.6741655,
+    "minlon": -73.9393467,
+    "maxlat": 40.6742327,
+    "maxlon": -73.9390846
+  },
+  "nodes": [
+    2568050569,
+    2568050574,
+    2568050595,
+    2568050588,
+    2568050569
+  ],
+  "geometry": [
+    { "lat": 40.6741655, "lon": -73.9390892 },
+    { "lat": 40.6741779, "lon": -73.9393467 },
+    { "lat": 40.6742327, "lon": -73.9393421 },
+    { "lat": 40.6742204, "lon": -73.9390846 },
+    { "lat": 40.6741655, "lon": -73.9390892 }
+  ],
+  "tags": {
+    "addr:housenumber": "182",
+    "addr:postcode": "11213",
+    "addr:street": "Albany Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "baptist",
+    "height": "7.4",
+    "name": "Emmanuel Baptist Church",
+    "nycdoitt:bin": "3031081",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250328143,
+  "bounds": {
+    "minlat": 40.6744266,
+    "minlon": -73.9415961,
+    "maxlat": 40.6745643,
+    "maxlon": -73.9415133
+  },
+  "nodes": [
+    2568050780,
+    2568050784,
+    2568050906,
+    2568050905,
+    2568050780
+  ],
+  "geometry": [
+    { "lat": 40.6744266, "lon": -73.9415264 },
+    { "lat": 40.6744306, "lon": -73.9415961 },
+    { "lat": 40.6745643, "lon": -73.9415829 },
+    { "lat": 40.6745603, "lon": -73.9415133 },
+    { "lat": 40.6744266, "lon": -73.9415264 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "pentecostal",
+    "height": "16.0",
+    "name": "Church of Seventh Day (Pentecostal) Inc.",
+    "nycdoitt:bin": "3031058",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250329717,
+  "bounds": {
+    "minlat": 40.6695876,
+    "minlon": -73.9388623,
+    "maxlat": 40.6698412,
+    "maxlon": -73.9386608
+  },
+  "nodes": [
+    2568063177,
+    2568063191,
+    2568063586,
+    2568063564,
+    2568063177
+  ],
+  "geometry": [
+    { "lat": 40.6695876, "lon": -73.9386823 },
+    { "lat": 40.6695968, "lon": -73.9388623 },
+    { "lat": 40.6698412, "lon": -73.9388408 },
+    { "lat": 40.6698320, "lon": -73.9386608 },
+    { "lat": 40.6695876, "lon": -73.9386823 }
+  ],
+  "tags": {
+    "addr:housenumber": "885",
+    "addr:postcode": "11213",
+    "addr:street": "Eastern Parkway",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "height": "16.3",
+    "nycdoitt:bin": "3037283",
+    "religion": "jewish"
+  }
+},
+{
+  "type": "way",
+  "id": 250335848,
+  "bounds": {
+    "minlat": 40.6702535,
+    "minlon": -73.9330945,
+    "maxlat": 40.6705577,
+    "maxlon": -73.9329381
+  },
+  "nodes": [
+    2568126785,
+    2568126788,
+    2568126796,
+    2568126904,
+    2568126990,
+    2568126988,
+    2568126785
+  ],
+  "geometry": [
+    { "lat": 40.6702535, "lon": -73.9329673 },
+    { "lat": 40.6702607, "lon": -73.9330945 },
+    { "lat": 40.6702847, "lon": -73.9330922 },
+    { "lat": 40.6704497, "lon": -73.9330760 },
+    { "lat": 40.6705577, "lon": -73.9330654 },
+    { "lat": 40.6705504, "lon": -73.9329381 },
+    { "lat": 40.6702535, "lon": -73.9329673 }
+  ],
+  "tags": {
+    "addr:housenumber": "1368",
+    "addr:postcode": "11213",
+    "addr:street": "Saint Johns Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "ele": "33",
+    "gnis:feature_id": "2485806",
+    "height": "7.0",
+    "name": "Bible Faith Tabernacle Church",
+    "nycdoitt:bin": "3037059",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250447855,
+  "bounds": {
+    "minlat": 40.6724181,
+    "minlon": -73.9597464,
+    "maxlat": 40.6727863,
+    "maxlon": -73.9594654
+  },
+  "nodes": [
+    2568873856,
+    2568873865,
+    2568873873,
+    2568873935,
+    2568873938,
+    2568873925,
+    6313249279,
+    6313249284,
+    2568873856
+  ],
+  "geometry": [
+    { "lat": 40.6724181, "lon": -73.9595874 },
+    { "lat": 40.6724713, "lon": -73.9597464 },
+    { "lat": 40.6725428, "lon": -73.9597213 },
+    { "lat": 40.6727812, "lon": -73.9596375 },
+    { "lat": 40.6727863, "lon": -73.9596357 },
+    { "lat": 40.6727579, "lon": -73.9594654 },
+    { "lat": 40.6727158, "lon": -73.9594805 },
+    { "lat": 40.6725943, "lon": -73.9595241 },
+    { "lat": 40.6724181, "lon": -73.9595874 }
+  ],
+  "tags": {
+    "addr:housenumber": "558",
+    "addr:postcode": "11238",
+    "addr:street": "Saint Johns Place",
+    "building": "yes",
+    "height": "4.2",
+    "name": "Five Myles",
+    "nycdoitt:bin": "3029584",
+    "phone": "+1-718-783-4438",
+    "tourism": "gallery",
+    "website": "https://fivemyles.org"
+  }
+},
+{
+  "type": "way",
+  "id": 250451733,
+  "bounds": {
+    "minlat": 40.6739446,
+    "minlon": -73.9601879,
+    "maxlat": 40.6742708,
+    "maxlon": -73.9595584
+  },
+  "nodes": [
+    2568900561,
+    2568900573,
+    2568900551,
+    2568900805,
+    2568901011,
+    2568901003,
+    2568900993,
+    2568900965,
+    2568900977,
+    2568900981,
+    2568900997,
+    2568900985,
+    2568900959,
+    2568900943,
+    2568900873,
+    2568900566,
+    2568900561
+  ],
+  "geometry": [
+    { "lat": 40.6739531, "lon": -73.9596252 },
+    { "lat": 40.6739598, "lon": -73.9596591 },
+    { "lat": 40.6739446, "lon": -73.9596643 },
+    { "lat": 40.6740491, "lon": -73.9601879 },
+    { "lat": 40.6742708, "lon": -73.9601115 },
+    { "lat": 40.6742529, "lon": -73.9600220 },
+    { "lat": 40.6742405, "lon": -73.9600263 },
+    { "lat": 40.6741878, "lon": -73.9597625 },
+    { "lat": 40.6742119, "lon": -73.9597542 },
+    { "lat": 40.6742184, "lon": -73.9597869 },
+    { "lat": 40.6742447, "lon": -73.9597778 },
+    { "lat": 40.6742318, "lon": -73.9597130 },
+    { "lat": 40.6741814, "lon": -73.9597304 },
+    { "lat": 40.6741471, "lon": -73.9595584 },
+    { "lat": 40.6740846, "lon": -73.9595799 },
+    { "lat": 40.6739555, "lon": -73.9596243 },
+    { "lat": 40.6739531, "lon": -73.9596252 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "catholic",
+    "ele": "38",
+    "gnis:feature_id": "2081617",
+    "height": "21.2",
+    "name": "Saint Teresa of Avila RC Church",
+    "nycdoitt:bin": "3029253",
+    "religion": "christian"
+  }
+},
+{
+  "type": "way",
+  "id": 250451734,
+  "bounds": {
+    "minlat": 40.6726987,
+    "minlon": -73.9582908,
+    "maxlat": 40.6730335,
+    "maxlon": -73.9580943
+  },
+  "nodes": [
+    2568899270,
+    2568899280,
+    2568899436,
+    2568899424,
+    2568899348,
+    2568899274,
+    2568899270
+  ],
+  "geometry": [
+    { "lat": 40.6726987, "lon": -73.9582097 },
+    { "lat": 40.6727156, "lon": -73.9582908 },
+    { "lat": 40.6730335, "lon": -73.9581754 },
+    { "lat": 40.6730165, "lon": -73.9580943 },
+    { "lat": 40.6728477, "lon": -73.9581556 },
+    { "lat": 40.6727055, "lon": -73.9582072 },
+    { "lat": 40.6726987, "lon": -73.9582097 }
+  ],
+  "tags": {
+    "addr:housenumber": "603",
+    "addr:postcode": "11238",
+    "addr:street": "Saint Johns Place",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "orthodox",
+    "height": "13.4",
+    "name": "Congregation Kul Israel",
+    "nycdoitt:bin": "3029501",
+    "religion": "jewish",
+    "wikidata": "Q6426929"
+  }
+},
+{
+  "type": "way",
+  "id": 292668930,
+  "bounds": {
+    "minlat": 40.6556625,
+    "minlon": -73.9476965,
+    "maxlat": 40.6559499,
+    "maxlon": -73.9473343
+  },
+  "nodes": [
+    357637174,
+    9128935224,
+    2962101312,
+    2962101313,
+    2962100115,
+    2962100116,
+    2962100117,
+    357637174
+  ],
+  "geometry": [
+    { "lat": 40.6556625, "lon": -73.9476567 },
+    { "lat": 40.6558465, "lon": -73.9476846 },
+    { "lat": 40.6558608, "lon": -73.9476868 },
+    { "lat": 40.6558866, "lon": -73.9476907 },
+    { "lat": 40.6559248, "lon": -73.9476965 },
+    { "lat": 40.6559499, "lon": -73.9473641 },
+    { "lat": 40.6556779, "lon": -73.9473343 },
+    { "lat": 40.6556625, "lon": -73.9476567 }
+  ],
+  "tags": {
+    "ele": "17",
+    "gnis:feature_id": "2377086",
+    "leisure": "park",
+    "name": "Rolph Henry Playground",
+    "operator": "New York City Department of Parks and Recreation",
+    "operator:short": "NYC Parks",
+    "operator:type": "public",
+    "operator:wikidata": "Q1894232",
+    "wikidata": "Q34858486"
+  }
+},
+{
+  "type": "way",
+  "id": 314011157,
+  "bounds": {
+    "minlat": 40.6700608,
+    "minlon": -73.9595091,
+    "maxlat": 40.6706360,
+    "maxlon": -73.9589798
+  },
+  "nodes": [
+    2567104484,
+    2567104498,
+    2567104518,
+    2567104527,
+    2567104548,
+    2567104563,
+    3200438858,
+    9434166472,
+    2567094679,
+    2567094677,
+    2567094676,
+    2567094673,
+    2567094672,
+    2567094675,
+    2567094674,
+    2567094678,
+    3200438859,
+    2567094671,
+    2567094667,
+    2567094659,
+    2567094646,
+    3200438860,
+    9520180758,
+    2567104484
+  ],
+  "geometry": [
+    { "lat": 40.6701394, "lon": -73.9595091 },
+    { "lat": 40.6702326, "lon": -73.9594748 },
+    { "lat": 40.6703183, "lon": -73.9594433 },
+    { "lat": 40.6703801, "lon": -73.9594206 },
+    { "lat": 40.6704856, "lon": -73.9593818 },
+    { "lat": 40.6705570, "lon": -73.9593555 },
+    { "lat": 40.6706360, "lon": -73.9593264 },
+    { "lat": 40.6706283, "lon": -73.9592908 },
+    { "lat": 40.6705940, "lon": -73.9591331 },
+    { "lat": 40.6705727, "lon": -73.9591410 },
+    { "lat": 40.6705686, "lon": -73.9591221 },
+    { "lat": 40.6705243, "lon": -73.9591387 },
+    { "lat": 40.6705173, "lon": -73.9591068 },
+    { "lat": 40.6705635, "lon": -73.9590895 },
+    { "lat": 40.6705597, "lon": -73.9590723 },
+    { "lat": 40.6705792, "lon": -73.9590650 },
+    { "lat": 40.6705607, "lon": -73.9589798 },
+    { "lat": 40.6704860, "lon": -73.9590069 },
+    { "lat": 40.6704126, "lon": -73.9590336 },
+    { "lat": 40.6703424, "lon": -73.9590591 },
+    { "lat": 40.6702566, "lon": -73.9590902 },
+    { "lat": 40.6700608, "lon": -73.9591613 },
+    { "lat": 40.6700953, "lon": -73.9593140 },
+    { "lat": 40.6701394, "lon": -73.9595091 }
+  ],
+  "tags": {
+    "addr:housenumber": "1029",
+    "addr:note": "signed address is 970 Union Street, which is incorrect",
+    "addr:postcode": "11225",
+    "addr:street": "Union Street",
+    "alt_name": "Eastern Parkway Coalition Garden",
+    "garden:type": "community",
+    "leisure": "garden",
+    "name": "Union Street Garden and Community Development",
+    "recycling:compost": "yes",
+    "short_name": "Union Street Garden",
+    "website": "https://www.grownyc.org/openspace/gardens/bk/eastern-parkway-coalition-garden"
+  }
+},
+{
+  "type": "way",
+  "id": 314366073,
+  "bounds": {
+    "minlat": 40.6743415,
+    "minlon": -73.9326319,
+    "maxlat": 40.6747104,
+    "maxlon": -73.9325136
+  },
+  "nodes": [
+    3204151306,
+    3204151307,
+    3204151308,
+    3204151309,
+    2568178166,
+    2568178087,
+    3204151306
+  ],
+  "geometry": [
+    { "lat": 40.6743450, "lon": -73.9326319 },
+    { "lat": 40.6743415, "lon": -73.9325446 },
+    { "lat": 40.6747058, "lon": -73.9325136 },
+    { "lat": 40.6747104, "lon": -73.9326008 },
+    { "lat": 40.6744691, "lon": -73.9326213 },
+    { "lat": 40.6743557, "lon": -73.9326310 },
+    { "lat": 40.6743450, "lon": -73.9326319 }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "1123",
+    "addr:postcode": "11213",
+    "addr:state": "NY",
+    "addr:street": "Saint Marks Avenue",
+    "garden:type": "community",
+    "leisure": "garden",
+    "name": "Neighborhood Community Garden",
+    "start_date": "1980"
+  }
+},
+{
+  "type": "way",
+  "id": 415388768,
+  "bounds": {
+    "minlat": 40.6607618,
+    "minlon": -73.9529087,
+    "maxlat": 40.6610555,
+    "maxlon": -73.9526663
+  },
+  "nodes": [
+    4164273364,
+    4164273365,
+    4164273366,
+    4164273367,
+    2566632719,
+    2566632375,
+    4164273364
+  ],
+  "geometry": [
+    { "lat": 40.6607618, "lon": -73.9528783 },
+    { "lat": 40.6607750, "lon": -73.9526663 },
+    { "lat": 40.6610555, "lon": -73.9526967 },
+    { "lat": 40.6610423, "lon": -73.9529087 },
+    { "lat": 40.6609656, "lon": -73.9529004 },
+    { "lat": 40.6608095, "lon": -73.9528835 },
+    { "lat": 40.6607618, "lon": -73.9528783 }
+  ],
+  "tags": {
+    "garden:type": "community",
+    "leisure": "garden",
+    "name": "Maple Street Community Garden",
+    "website": "https://maplestreetcommunitygarden.org/",
+    "wikidata": "Q107143984"
+  }
+},
+{
+  "type": "way",
+  "id": 417651365,
+  "bounds": {
+    "minlat": 40.6735161,
+    "minlon": -73.9360872,
+    "maxlat": 40.6752015,
+    "maxlon": -73.9334798
+  },
+  "nodes": [
+    4181657550,
+    9786575562,
+    9786575547,
+    9786575554,
+    4181657551,
+    4181657552,
+    4181657553,
+    9786575543,
+    9786575544,
+    9786575545,
+    2568084833,
+    9786575546,
+    4181657550
+  ],
+  "geometry": [
+    { "lat": 40.6752015, "lon": -73.9359402 },
+    { "lat": 40.6750800, "lon": -73.9359518 },
+    { "lat": 40.6747291, "lon": -73.9359851 },
+    { "lat": 40.6745148, "lon": -73.9360054 },
+    { "lat": 40.6736533, "lon": -73.9360872 },
+    { "lat": 40.6735161, "lon": -73.9336231 },
+    { "lat": 40.6750864, "lon": -73.9334798 },
+    { "lat": 40.6751324, "lon": -73.9348522 },
+    { "lat": 40.6749161, "lon": -73.9348712 },
+    { "lat": 40.6749309, "lon": -73.9351318 },
+    { "lat": 40.6749506, "lon": -73.9351299 },
+    { "lat": 40.6751554, "lon": -73.9351120 },
+    { "lat": 40.6752015, "lon": -73.9359402 }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:postcode": "11213",
+    "addr:state": "NY",
+    "leisure": "park",
+    "name": "St. John's Park",
+    "wikidata": "Q116201293"
+  }
+},
+{
+  "type": "way",
+  "id": 428923844,
+  "bounds": {
+    "minlat": 40.6654303,
+    "minlon": -73.9596626,
+    "maxlat": 40.6661349,
+    "maxlon": -73.9587913
+  },
+  "nodes": [
+    4280452422,
+    357635441,
+    4280452418,
+    4280452419,
+    4280452422
+  ],
+  "geometry": [
+    { "lat": 40.6661349, "lon": -73.9594586 },
+    { "lat": 40.6659965, "lon": -73.9587913 },
+    { "lat": 40.6654303, "lon": -73.9589954 },
+    { "lat": 40.6655686, "lon": -73.9596626 },
+    { "lat": 40.6661349, "lon": -73.9594586 }
+  ],
+  "tags": {
+    "ele": "28",
+    "gnis:feature_id": "2374999",
+    "leisure": "park",
+    "name": "Jackie Robinson Playground",
+    "name:etymology:wikidata": "Q221048",
+    "operator": "New York City Department of Parks and Recreation",
+    "operator:short": "NYC Parks",
+    "operator:type": "government",
+    "operator:wikidata": "Q1894232",
+    "website": "https://www.nycgovparks.org/parks/jackie-robinson-playground",
+    "wikidata": "Q49506080"
+  }
+},
+{
+  "type": "way",
+  "id": 479430048,
+  "bounds": {
+    "minlat": 40.6693175,
+    "minlon": -73.9608701,
+    "maxlat": 40.6699497,
+    "maxlon": -73.9599281
+  },
+  "nodes": [
+    4725336028,
+    13973226571,
+    4725336029,
+    4725336030,
+    4725336031,
+    4725336032,
+    4725336033,
+    4725336028
+  ],
+  "geometry": [
+    { "lat": 40.6699497, "lon": -73.9607354 },
+    { "lat": 40.6697986, "lon": -73.9600014 },
+    { "lat": 40.6697829, "lon": -73.9599281 },
+    { "lat": 40.6693175, "lon": -73.9601013 },
+    { "lat": 40.6694638, "lon": -73.9607821 },
+    { "lat": 40.6695649, "lon": -73.9607459 },
+    { "lat": 40.6695930, "lon": -73.9608701 },
+    { "lat": 40.6699497, "lon": -73.9607354 }
+  ],
+  "tags": {
+    "access": "private",
+    "landuse": "recreation_ground",
+    "leisure": "playground"
+  }
+},
+{
+  "type": "way",
+  "id": 721524178,
+  "bounds": {
+    "minlat": 40.6575732,
+    "minlon": -73.9451802,
+    "maxlat": 40.6596949,
+    "maxlon": -73.9432727
+  },
+  "nodes": [
+    9085136986,
+    9085136987,
+    6768683025,
+    6768683024,
+    6768683023,
+    2566566641,
+    2566566631,
+    2566566708,
+    6768683022,
+    9085136980,
+    9085136978,
+    9085136982,
+    13306702616,
+    9085136984,
+    9085136985,
+    9085136986
+  ],
+  "geometry": [
+    { "lat": 40.6575732, "lon": -73.9445957 },
+    { "lat": 40.6576044, "lon": -73.9442593 },
+    { "lat": 40.6576758, "lon": -73.9432727 },
+    { "lat": 40.6588537, "lon": -73.9433956 },
+    { "lat": 40.6588333, "lon": -73.9437068 },
+    { "lat": 40.6590180, "lon": -73.9437081 },
+    { "lat": 40.6589941, "lon": -73.9441049 },
+    { "lat": 40.6594564, "lon": -73.9441529 },
+    { "lat": 40.6596949, "lon": -73.9441760 },
+    { "lat": 40.6596613, "lon": -73.9446953 },
+    { "lat": 40.6596299, "lon": -73.9451802 },
+    { "lat": 40.6594233, "lon": -73.9451593 },
+    { "lat": 40.6591193, "lon": -73.9451281 },
+    { "lat": 40.6589512, "lon": -73.9451108 },
+    { "lat": 40.6589727, "lon": -73.9447455 },
+    { "lat": 40.6575732, "lon": -73.9445957 }
+  ],
+  "tags": {
+    "gnis:feature_id": "2437262;2377087",
+    "leisure": "park",
+    "name": "Wingate Park",
+    "name:-1957": "Hawthorne Field",
+    "name:1957-1987": "Hawthorne Field and George Wingate High School Park",
+    "name:etymology:wikidata": "Q5546490",
+    "operator": "New York City Department of Parks and Recreation",
+    "operator:short": "NYC Parks",
+    "operator:type": "public",
+    "operator:wikidata": "Q1894232",
+    "website": "https://www.nycgovparks.org/parks/wingate-park"
+  }
+},
+{
+  "type": "way",
+  "id": 732391440,
+  "bounds": {
+    "minlat": 40.6632783,
+    "minlon": -73.9502338,
+    "maxlat": 40.6638344,
+    "maxlon": -73.9497697
+  },
+  "nodes": [
+    357635450,
+    13052875017,
+    6858306179,
+    6858306178,
+    6858306177,
+    6858306176,
+    6858306175,
+    13052875013,
+    357635450
+  ],
+  "geometry": [
+    { "lat": 40.6638344, "lon": -73.9498263 },
+    { "lat": 40.6638252, "lon": -73.9499781 },
+    { "lat": 40.6638096, "lon": -73.9502338 },
+    { "lat": 40.6635470, "lon": -73.9502060 },
+    { "lat": 40.6635513, "lon": -73.9501356 },
+    { "lat": 40.6632783, "lon": -73.9501068 },
+    { "lat": 40.6632988, "lon": -73.9497697 },
+    { "lat": 40.6635738, "lon": -73.9497988 },
+    { "lat": 40.6638344, "lon": -73.9498263 }
+  ],
+  "tags": {
+    "access": "yes",
+    "ele": "19",
+    "gnis:feature_id": "2375001",
+    "leisure": "park",
+    "name": "Marc And Jason's Playground",
+    "operator": "New York City Department of Parks and Recreation",
+    "operator:short": "NYC Parks",
+    "operator:type": "government",
+    "operator:wikidata": "Q1894232",
+    "ref": "B284",
+    "website": "https://www.nycgovparks.org/parks/marc-and-jasons-playground"
+  }
+},
+{
+  "type": "way",
+  "id": 851907200,
+  "bounds": {
+    "minlat": 40.6564722,
+    "minlon": -73.9546369,
+    "maxlat": 40.6565079,
+    "maxlon": -73.9545515
+  },
+  "nodes": [
+    7946025751,
+    7946025776,
+    7946025777,
+    7946025783,
+    7946025784,
+    7946025785,
+    7946025787,
+    7946025778,
+    7946025786,
+    7946025788,
+    7946025792,
+    7946025779,
+    7946025789,
+    7946025780,
+    7946025790,
+    7946025781,
+    7946025791,
+    7946025782,
+    7946025775,
+    7946025751
+  ],
+  "geometry": [
+    { "lat": 40.6564912, "lon": -73.9546369 },
+    { "lat": 40.6564812, "lon": -73.9546126 },
+    { "lat": 40.6564791, "lon": -73.9546063 },
+    { "lat": 40.6564765, "lon": -73.9545966 },
+    { "lat": 40.6564737, "lon": -73.9545848 },
+    { "lat": 40.6564728, "lon": -73.9545797 },
+    { "lat": 40.6564722, "lon": -73.9545734 },
+    { "lat": 40.6564725, "lon": -73.9545671 },
+    { "lat": 40.6564742, "lon": -73.9545629 },
+    { "lat": 40.6564755, "lon": -73.9545598 },
+    { "lat": 40.6564779, "lon": -73.9545572 },
+    { "lat": 40.6564822, "lon": -73.9545553 },
+    { "lat": 40.6564857, "lon": -73.9545548 },
+    { "lat": 40.6564895, "lon": -73.9545544 },
+    { "lat": 40.6564939, "lon": -73.9545533 },
+    { "lat": 40.6564989, "lon": -73.9545521 },
+    { "lat": 40.6565041, "lon": -73.9545515 },
+    { "lat": 40.6565071, "lon": -73.9545526 },
+    { "lat": 40.6565079, "lon": -73.9546220 },
+    { "lat": 40.6564912, "lon": -73.9546369 }
+  ],
+  "tags": {
+    "landuse": "grass"
+  }
+},
+{
+  "type": "way",
+  "id": 851907202,
+  "bounds": {
+    "minlat": 40.6563622,
+    "minlon": -73.9548033,
+    "maxlat": 40.6564250,
+    "maxlon": -73.9547429
+  },
+  "nodes": [
+    7946025795,
+    7946025840,
+    7946025841,
+    7946025842,
+    7946025843,
+    7946025844,
+    7946025845,
+    7946025846,
+    7946025847,
+    7946025848,
+    7946025849,
+    7946025850,
+    7946025851,
+    7946025852,
+    7946025853,
+    7946025854,
+    7946025855,
+    7946025856,
+    7946025857,
+    7946025812,
+    7946025811,
+    7946025810,
+    7946025809,
+    7946025808,
+    7946025807,
+    7946025806,
+    7946025805,
+    7946025804,
+    7946025803,
+    7946025802,
+    7946025801,
+    7946025800,
+    7946025799,
+    7946025798,
+    7946025797,
+    7946025796,
+    7946025795
+  ],
+  "geometry": [
+    { "lat": 40.6564224, "lon": -73.9547849 },
+    { "lat": 40.6564048, "lon": -73.9547829 },
+    { "lat": 40.6564020, "lon": -73.9547865 },
+    { "lat": 40.6563961, "lon": -73.9547944 },
+    { "lat": 40.6563938, "lon": -73.9547980 },
+    { "lat": 40.6563911, "lon": -73.9547992 },
+    { "lat": 40.6563858, "lon": -73.9548005 },
+    { "lat": 40.6563811, "lon": -73.9548018 },
+    { "lat": 40.6563782, "lon": -73.9548028 },
+    { "lat": 40.6563730, "lon": -73.9548033 },
+    { "lat": 40.6563698, "lon": -73.9548028 },
+    { "lat": 40.6563671, "lon": -73.9548012 },
+    { "lat": 40.6563660, "lon": -73.9547981 },
+    { "lat": 40.6563642, "lon": -73.9547923 },
+    { "lat": 40.6563630, "lon": -73.9547837 },
+    { "lat": 40.6563624, "lon": -73.9547771 },
+    { "lat": 40.6563622, "lon": -73.9547699 },
+    { "lat": 40.6563628, "lon": -73.9547620 },
+    { "lat": 40.6563643, "lon": -73.9547565 },
+    { "lat": 40.6563664, "lon": -73.9547538 },
+    { "lat": 40.6563690, "lon": -73.9547486 },
+    { "lat": 40.6563738, "lon": -73.9547440 },
+    { "lat": 40.6563811, "lon": -73.9547429 },
+    { "lat": 40.6563834, "lon": -73.9547465 },
+    { "lat": 40.6563877, "lon": -73.9547525 },
+    { "lat": 40.6563929, "lon": -73.9547566 },
+    { "lat": 40.6563969, "lon": -73.9547579 },
+    { "lat": 40.6564018, "lon": -73.9547589 },
+    { "lat": 40.6564093, "lon": -73.9547587 },
+    { "lat": 40.6564160, "lon": -73.9547578 },
+    { "lat": 40.6564250, "lon": -73.9547558 },
+    { "lat": 40.6564250, "lon": -73.9547610 },
+    { "lat": 40.6564216, "lon": -73.9547647 },
+    { "lat": 40.6564168, "lon": -73.9547723 },
+    { "lat": 40.6564166, "lon": -73.9547769 },
+    { "lat": 40.6564190, "lon": -73.9547808 },
+    { "lat": 40.6564224, "lon": -73.9547849 }
+  ],
+  "tags": {
+    "garden:type": "show_garden",
+    "leisure": "garden",
+    "operator:type": "public"
+  }
+},
+{
+  "type": "way",
+  "id": 851907203,
+  "bounds": {
+    "minlat": 40.6563685,
+    "minlon": -73.9547144,
+    "maxlat": 40.6564904,
+    "maxlon": -73.9544929
+  },
+  "nodes": [
+    7946025815,
+    7946025858,
+    7946025859,
+    7946025860,
+    7946025861,
+    7946025862,
+    7946025863,
+    7946025864,
+    7946025865,
+    7946025866,
+    7946025867,
+    7946025868,
+    7946025869,
+    7946025870,
+    7946025871,
+    7946025872,
+    7946025873,
+    7946025874,
+    7946025875,
+    7946025876,
+    7946025877,
+    7946025878,
+    7946025879,
+    7946025880,
+    7946025881,
+    7946025882,
+    7946025883,
+    7946025884,
+    7946025885,
+    7946025886,
+    7946025887,
+    7946025836,
+    7946025888,
+    7946025835,
+    7946025834,
+    7946025833,
+    7946025832,
+    7946025831,
+    7946025830,
+    7946025829,
+    7946025828,
+    7946025827,
+    7946025826,
+    7946025825,
+    7946025824,
+    7946025823,
+    7946025822,
+    7946025821,
+    7946025889,
+    7946025820,
+    7946025819,
+    7946025818,
+    7946025817,
+    7946025816,
+    7946025815
+  ],
+  "geometry": [
+    { "lat": 40.6563685, "lon": -73.9547122 },
+    { "lat": 40.6563689, "lon": -73.9546871 },
+    { "lat": 40.6563698, "lon": -73.9546669 },
+    { "lat": 40.6563719, "lon": -73.9546244 },
+    { "lat": 40.6563735, "lon": -73.9546107 },
+    { "lat": 40.6563754, "lon": -73.9546076 },
+    { "lat": 40.6563760, "lon": -73.9546017 },
+    { "lat": 40.6563761, "lon": -73.9545903 },
+    { "lat": 40.6563791, "lon": -73.9545815 },
+    { "lat": 40.6563814, "lon": -73.9545698 },
+    { "lat": 40.6563821, "lon": -73.9545570 },
+    { "lat": 40.6563828, "lon": -73.9545453 },
+    { "lat": 40.6563835, "lon": -73.9545366 },
+    { "lat": 40.6563854, "lon": -73.9545240 },
+    { "lat": 40.6563859, "lon": -73.9545199 },
+    { "lat": 40.6563882, "lon": -73.9545163 },
+    { "lat": 40.6563919, "lon": -73.9545146 },
+    { "lat": 40.6563949, "lon": -73.9545160 },
+    { "lat": 40.6564017, "lon": -73.9545149 },
+    { "lat": 40.6564033, "lon": -73.9545195 },
+    { "lat": 40.6564190, "lon": -73.9545147 },
+    { "lat": 40.6564303, "lon": -73.9545108 },
+    { "lat": 40.6564352, "lon": -73.9545059 },
+    { "lat": 40.6564409, "lon": -73.9544983 },
+    { "lat": 40.6564434, "lon": -73.9544950 },
+    { "lat": 40.6564469, "lon": -73.9544940 },
+    { "lat": 40.6564562, "lon": -73.9544929 },
+    { "lat": 40.6564769, "lon": -73.9544943 },
+    { "lat": 40.6564800, "lon": -73.9544962 },
+    { "lat": 40.6564849, "lon": -73.9545046 },
+    { "lat": 40.6564904, "lon": -73.9545192 },
+    { "lat": 40.6564833, "lon": -73.9545203 },
+    { "lat": 40.6564692, "lon": -73.9545253 },
+    { "lat": 40.6564647, "lon": -73.9545270 },
+    { "lat": 40.6564557, "lon": -73.9545304 },
+    { "lat": 40.6564401, "lon": -73.9545374 },
+    { "lat": 40.6564269, "lon": -73.9545495 },
+    { "lat": 40.6564175, "lon": -73.9545597 },
+    { "lat": 40.6564092, "lon": -73.9545731 },
+    { "lat": 40.6564057, "lon": -73.9545854 },
+    { "lat": 40.6564012, "lon": -73.9546038 },
+    { "lat": 40.6563975, "lon": -73.9546184 },
+    { "lat": 40.6563970, "lon": -73.9546311 },
+    { "lat": 40.6563942, "lon": -73.9546362 },
+    { "lat": 40.6563891, "lon": -73.9546423 },
+    { "lat": 40.6563854, "lon": -73.9546474 },
+    { "lat": 40.6563829, "lon": -73.9546550 },
+    { "lat": 40.6563791, "lon": -73.9546655 },
+    { "lat": 40.6563779, "lon": -73.9546703 },
+    { "lat": 40.6563791, "lon": -73.9546766 },
+    { "lat": 40.6563818, "lon": -73.9546807 },
+    { "lat": 40.6563831, "lon": -73.9546902 },
+    { "lat": 40.6563802, "lon": -73.9547144 },
+    { "lat": 40.6563773, "lon": -73.9547103 },
+    { "lat": 40.6563685, "lon": -73.9547122 }
+  ],
+  "tags": {
+    "garden:type": "show_garden",
+    "leisure": "garden",
+    "operator:type": "public"
+  }
+},
+{
+  "type": "way",
+  "id": 851907204,
+  "bounds": {
+    "minlat": 40.6565781,
+    "minlon": -73.9546574,
+    "maxlat": 40.6567770,
+    "maxlon": -73.9539927
+  },
+  "nodes": [
+    7946025890,
+    7946025895,
+    7946025896,
+    7946025897,
+    7946025898,
+    7946025899,
+    7946025900,
+    7946025901,
+    7946025902,
+    7946025903,
+    7946025891,
+    7944318223,
+    7944318224,
+    7944318225,
+    7944318226,
+    7944318227,
+    7944318228,
+    7944318229,
+    7944318230,
+    7944318231,
+    7944318232,
+    7944318233,
+    7944318234,
+    7944318244,
+    7944318243,
+    7944318242,
+    7944318241,
+    7944318240,
+    7944318239,
+    7944318238,
+    7944318237,
+    7944318236,
+    7944318235,
+    7944318205,
+    7946025892,
+    7944312878,
+    7944312877,
+    7944312876,
+    7944312875,
+    7944312874,
+    7944312873,
+    7944312872,
+    7944312871,
+    7944312870,
+    7946025894,
+    7946025890
+  ],
+  "geometry": [
+    { "lat": 40.6567770, "lon": -73.9539979 },
+    { "lat": 40.6567463, "lon": -73.9539927 },
+    { "lat": 40.6567463, "lon": -73.9540520 },
+    { "lat": 40.6567468, "lon": -73.9540984 },
+    { "lat": 40.6567468, "lon": -73.9541274 },
+    { "lat": 40.6567468, "lon": -73.9541560 },
+    { "lat": 40.6567440, "lon": -73.9541964 },
+    { "lat": 40.6567394, "lon": -73.9542485 },
+    { "lat": 40.6567371, "lon": -73.9542760 },
+    { "lat": 40.6567340, "lon": -73.9542980 },
+    { "lat": 40.6567276, "lon": -73.9543146 },
+    { "lat": 40.6567319, "lon": -73.9543207 },
+    { "lat": 40.6567308, "lon": -73.9543369 },
+    { "lat": 40.6567275, "lon": -73.9543531 },
+    { "lat": 40.6567222, "lon": -73.9543674 },
+    { "lat": 40.6567135, "lon": -73.9543854 },
+    { "lat": 40.6567043, "lon": -73.9544031 },
+    { "lat": 40.6566991, "lon": -73.9544127 },
+    { "lat": 40.6566941, "lon": -73.9544206 },
+    { "lat": 40.6566878, "lon": -73.9544289 },
+    { "lat": 40.6566812, "lon": -73.9544362 },
+    { "lat": 40.6566702, "lon": -73.9544477 },
+    { "lat": 40.6566615, "lon": -73.9544559 },
+    { "lat": 40.6566530, "lon": -73.9544623 },
+    { "lat": 40.6566481, "lon": -73.9544653 },
+    { "lat": 40.6566422, "lon": -73.9544666 },
+    { "lat": 40.6566340, "lon": -73.9544669 },
+    { "lat": 40.6566240, "lon": -73.9544682 },
+    { "lat": 40.6566189, "lon": -73.9544691 },
+    { "lat": 40.6566117, "lon": -73.9544719 },
+    { "lat": 40.6566068, "lon": -73.9544740 },
+    { "lat": 40.6566004, "lon": -73.9544758 },
+    { "lat": 40.6565947, "lon": -73.9544767 },
+    { "lat": 40.6565884, "lon": -73.9544732 },
+    { "lat": 40.6565815, "lon": -73.9545031 },
+    { "lat": 40.6565781, "lon": -73.9545319 },
+    { "lat": 40.6565978, "lon": -73.9545393 },
+    { "lat": 40.6566177, "lon": -73.9545502 },
+    { "lat": 40.6566344, "lon": -73.9545610 },
+    { "lat": 40.6566538, "lon": -73.9545751 },
+    { "lat": 40.6566658, "lon": -73.9545843 },
+    { "lat": 40.6566835, "lon": -73.9545989 },
+    { "lat": 40.6566974, "lon": -73.9546120 },
+    { "lat": 40.6567114, "lon": -73.9546267 },
+    { "lat": 40.6567381, "lon": -73.9546574 },
+    { "lat": 40.6567770, "lon": -73.9539979 }
+  ],
+  "tags": {
+    "garden:type": "show_garden",
+    "leisure": "garden",
+    "operator:type": "public"
+  }
+},
+{
+  "type": "way",
+  "id": 851916922,
+  "bounds": {
+    "minlat": 40.6560424,
+    "minlon": -73.9550619,
+    "maxlat": 40.6567988,
+    "maxlon": -73.9535956
+  },
+  "nodes": [
+    7946098494,
+    7945981835,
+    7945981837,
+    7944318194,
+    7946025894,
+    7946025890,
+    9545373022,
+    4968603255,
+    4968603254,
+    4968603253,
+    9545373019,
+    13306867943,
+    9545373021,
+    7946025735,
+    7946025732,
+    9545373020,
+    13306867942,
+    7946098494
+  ],
+  "geometry": [
+    { "lat": 40.6565034, "lon": -73.9550392 },
+    { "lat": 40.6567142, "lon": -73.9550619 },
+    { "lat": 40.6567219, "lon": -73.9549319 },
+    { "lat": 40.6567273, "lon": -73.9548407 },
+    { "lat": 40.6567381, "lon": -73.9546574 },
+    { "lat": 40.6567770, "lon": -73.9539979 },
+    { "lat": 40.6567988, "lon": -73.9536298 },
+    { "lat": 40.6567221, "lon": -73.9536219 },
+    { "lat": 40.6564651, "lon": -73.9535956 },
+    { "lat": 40.6564576, "lon": -73.9537226 },
+    { "lat": 40.6564146, "lon": -73.9544510 },
+    { "lat": 40.6563986, "lon": -73.9544493 },
+    { "lat": 40.6563801, "lon": -73.9544474 },
+    { "lat": 40.6563507, "lon": -73.9549455 },
+    { "lat": 40.6560471, "lon": -73.9549128 },
+    { "lat": 40.6560424, "lon": -73.9549896 },
+    { "lat": 40.6563557, "lon": -73.9550233 },
+    { "lat": 40.6565034, "lon": -73.9550392 }
+  ],
+  "tags": {
+    "ele": "18",
+    "gnis:feature_id": "2377088",
+    "leisure": "park",
+    "name": "Winthrop Playground",
+    "old_name": "Parkside Playground",
+    "operator": "New York City Department of Parks and Recreation",
+    "operator:short": "NYC Parks",
+    "operator:type": "government",
+    "operator:wikidata": "Q1894232",
+    "website": "https://www.nycgovparks.org/parks/parkside-playground_brooklyn/",
+    "wikidata": "Q49539578"
+  }
+},
+{
+  "type": "way",
+  "id": 929734493,
+  "bounds": {
+    "minlat": 40.6622196,
+    "minlon": -73.9418351,
+    "maxlat": 40.6628748,
+    "maxlon": -73.9401201
+  },
+  "nodes": [
+    8622093295,
+    2566965246,
+    2566965343,
+    2566965439,
+    9279175894,
+    2566965491,
+    2566965526,
+    8622124428,
+    9279175898,
+    9279175905,
+    8622093297,
+    9279175892,
+    11712244763,
+    8622093313,
+    11712304270,
+    11712244767,
+    9279175895,
+    9279175884,
+    8622093295
+  ],
+  "geometry": [
+    { "lat": 40.6622820, "lon": -73.9417832 },
+    { "lat": 40.6624209, "lon": -73.9417978 },
+    { "lat": 40.6625470, "lon": -73.9418111 },
+    { "lat": 40.6626283, "lon": -73.9418197 },
+    { "lat": 40.6626618, "lon": -73.9418232 },
+    { "lat": 40.6626859, "lon": -73.9418258 },
+    { "lat": 40.6627743, "lon": -73.9418351 },
+    { "lat": 40.6627759, "lon": -73.9418088 },
+    { "lat": 40.6628362, "lon": -73.9408154 },
+    { "lat": 40.6628483, "lon": -73.9406153 },
+    { "lat": 40.6628748, "lon": -73.9401792 },
+    { "lat": 40.6626330, "lon": -73.9401537 },
+    { "lat": 40.6626069, "lon": -73.9401509 },
+    { "lat": 40.6623149, "lon": -73.9401201 },
+    { "lat": 40.6622861, "lon": -73.9405934 },
+    { "lat": 40.6622814, "lon": -73.9406715 },
+    { "lat": 40.6622784, "lon": -73.9407203 },
+    { "lat": 40.6622196, "lon": -73.9416903 },
+    { "lat": 40.6622820, "lon": -73.9417832 }
+  ],
+  "tags": {
+    "description": "This field honors United States founding father Alexander Hamilton (1757-1804), as well as early 1900s legislator Herman A. Metz (1867-1934) and his wife Laura A. Metz.",
+    "ele": "16",
+    "gnis:feature_id": "2375002",
+    "leisure": "park",
+    "name": "Hamilton-Metz Field",
+    "operator": "New York City Department of Parks and Recreation",
+    "operator:short": "NYC Parks",
+    "operator:type": "public",
+    "operator:wikidata": "Q1894232",
+    "ref": "B193",
+    "website": "https://www.nycgovparks.org/parks/hamilton-metz-field",
+    "wikidata": "Q34833168"
+  }
+},
+{
+  "type": "way",
+  "id": 1052697117,
+  "bounds": {
+    "minlat": 40.6609110,
+    "minlon": -73.9505334,
+    "maxlat": 40.6612064,
+    "maxlon": -73.9501509
+  },
+  "nodes": [
+    9674428414,
+    9674428415,
+    9674428416,
+    9674436517,
+    9674436518,
+    9674436519,
+    9674436520,
+    9674436521,
+    9674436522,
+    9674436523,
+    9674436524,
+    9674436525,
+    9674436526,
+    9674436527,
+    9674428414
+  ],
+  "geometry": [
+    { "lat": 40.6611926, "lon": -73.9505334 },
+    { "lat": 40.6609110, "lon": -73.9505005 },
+    { "lat": 40.6609314, "lon": -73.9501509 },
+    { "lat": 40.6612064, "lon": -73.9501907 },
+    { "lat": 40.6612058, "lon": -73.9502340 },
+    { "lat": 40.6611966, "lon": -73.9502478 },
+    { "lat": 40.6611953, "lon": -73.9502798 },
+    { "lat": 40.6612005, "lon": -73.9502963 },
+    { "lat": 40.6612025, "lon": -73.9503144 },
+    { "lat": 40.6612012, "lon": -73.9503413 },
+    { "lat": 40.6611959, "lon": -73.9503465 },
+    { "lat": 40.6611894, "lon": -73.9503655 },
+    { "lat": 40.6611900, "lon": -73.9503854 },
+    { "lat": 40.6611966, "lon": -73.9504010 },
+    { "lat": 40.6611926, "lon": -73.9505334 }
+  ],
+  "tags": {
+    "landuse": "grass"
+  }
+},
+{
+  "type": "way",
+  "id": 1101355274,
+  "bounds": {
+    "minlat": 40.6646887,
+    "minlon": -73.9525579,
+    "maxlat": 40.6650554,
+    "maxlon": -73.9521657
+  },
+  "nodes": [
+    2567046646,
+    2567046651,
+    2567046706,
+    357635445,
+    10078687547,
+    2567046832,
+    2567046774,
+    2567046707,
+    2567046646
+  ],
+  "geometry": [
+    { "lat": 40.6646887, "lon": -73.9525579 },
+    { "lat": 40.6647132, "lon": -73.9521927 },
+    { "lat": 40.6647764, "lon": -73.9521868 },
+    { "lat": 40.6650375, "lon": -73.9521657 },
+    { "lat": 40.6650554, "lon": -73.9525262 },
+    { "lat": 40.6650265, "lon": -73.9525283 },
+    { "lat": 40.6649370, "lon": -73.9525364 },
+    { "lat": 40.6647777, "lon": -73.9525515 },
+    { "lat": 40.6646887, "lon": -73.9525579 }
+  ],
+  "tags": {
+    "ele": "26",
+    "gnis:feature_id": "2375000",
+    "leisure": "park",
+    "name": "Dodger Playground",
+    "name:etymology:wikidata": "Q334634",
+    "operator": "New York City Department of Parks and Recreation",
+    "operator:short": "NYC Parks",
+    "operator:type": "government",
+    "operator:wikidata": "Q1894232",
+    "wikidata": "Q49483575"
+  }
+},
+{
+  "type": "way",
+  "id": 1150597741,
+  "bounds": {
+    "minlat": 40.6730224,
+    "minlon": -73.9581996,
+    "maxlat": 40.6734138,
+    "maxlon": -73.9578675
+  },
+  "nodes": [
+    10703227820,
+    10703227822,
+    10703227823,
+    10703227825,
+    10703227824,
+    10703227821,
+    10703227826,
+    2568899561,
+    2568899675,
+    10703227827,
+    2568899760,
+    10703227820
+  ],
+  "geometry": [
+    { "lat": 40.6734138, "lon": -73.9580812 },
+    { "lat": 40.6733546, "lon": -73.9581008 },
+    { "lat": 40.6733387, "lon": -73.9580225 },
+    { "lat": 40.6731481, "lon": -73.9580915 },
+    { "lat": 40.6731642, "lon": -73.9581658 },
+    { "lat": 40.6730735, "lon": -73.9581996 },
+    { "lat": 40.6730224, "lon": -73.9579923 },
+    { "lat": 40.6731834, "lon": -73.9579362 },
+    { "lat": 40.6732393, "lon": -73.9579160 },
+    { "lat": 40.6732794, "lon": -73.9579004 },
+    { "lat": 40.6733703, "lon": -73.9578675 },
+    { "lat": 40.6734138, "lon": -73.9580812 }
+  ],
+  "tags": {
+    "access": "private",
+    "leisure": "garden",
+    "name": "Sterling Place Chicken Flock"
+  }
+},
+{
+  "type": "way",
+  "id": 1283014472,
+  "bounds": {
+    "minlat": 40.6628792,
+    "minlon": -73.9314225,
+    "maxlat": 40.6630337,
+    "maxlon": -73.9312773
+  },
+  "nodes": [
+    11905245010,
+    11905245004,
+    11905245003,
+    11905245005,
+    11905245007,
+    11905245008,
+    11905245009,
+    11905245011,
+    11905245006,
+    11905245010
+  ],
+  "geometry": [
+    { "lat": 40.6628843, "lon": -73.9312858 },
+    { "lat": 40.6628792, "lon": -73.9313947 },
+    { "lat": 40.6628823, "lon": -73.9314045 },
+    { "lat": 40.6628886, "lon": -73.9314090 },
+    { "lat": 40.6630279, "lon": -73.9314225 },
+    { "lat": 40.6630337, "lon": -73.9314152 },
+    { "lat": 40.6630326, "lon": -73.9314061 },
+    { "lat": 40.6628932, "lon": -73.9312773 },
+    { "lat": 40.6628882, "lon": -73.9312793 },
+    { "lat": 40.6628843, "lon": -73.9312858 }
+  ],
+  "tags": {
+    "leisure": "garden"
+  }
+},
+{
+  "type": "way",
+  "id": 1343466549,
+  "bounds": {
+    "minlat": 40.6734165,
+    "minlon": -73.9582073,
+    "maxlat": 40.6736272,
+    "maxlon": -73.9579439
+  },
+  "nodes": [
+    12430715344,
+    12430715338,
+    10617167123,
+    1413215973,
+    10617167120,
+    12430715321,
+    12430715343,
+    10617167121,
+    1413215975,
+    10617167122,
+    12430715344
+  ],
+  "geometry": [
+    { "lat": 40.6734596, "lon": -73.9582073 },
+    { "lat": 40.6734165, "lon": -73.9580062 },
+    { "lat": 40.6734374, "lon": -73.9579985 },
+    { "lat": 40.6734918, "lon": -73.9579782 },
+    { "lat": 40.6735649, "lon": -73.9579512 },
+    { "lat": 40.6735843, "lon": -73.9579439 },
+    { "lat": 40.6736272, "lon": -73.9581450 },
+    { "lat": 40.6736057, "lon": -73.9581530 },
+    { "lat": 40.6735381, "lon": -73.9581781 },
+    { "lat": 40.6734798, "lon": -73.9581998 },
+    { "lat": 40.6734596, "lon": -73.9582073 }
+  ],
+  "tags": {
+    "layer": "1",
+    "man_made": "bridge"
+  }
+},
+{
+  "type": "way",
+  "id": 1343466550,
+  "bounds": {
+    "minlat": 40.6682008,
+    "minlon": -73.9601389,
+    "maxlat": 40.6682889,
+    "maxlon": -73.9598529
+  },
+  "nodes": [
+    12430715330,
+    11905727191,
+    12430715335,
+    12430715323,
+    11905727194,
+    12430715333,
+    12430715330
+  ],
+  "geometry": [
+    { "lat": 40.6682889, "lon": -73.9601279 },
+    { "lat": 40.6682737, "lon": -73.9601336 },
+    { "lat": 40.6682594, "lon": -73.9601389 },
+    { "lat": 40.6682008, "lon": -73.9598639 },
+    { "lat": 40.6682155, "lon": -73.9598584 },
+    { "lat": 40.6682303, "lon": -73.9598529 },
+    { "lat": 40.6682889, "lon": -73.9601279 }
+  ],
+  "tags": {
+    "bridge:structure": "beam",
+    "layer": "1",
+    "man_made": "bridge"
+  }
+},
+{
+  "type": "way",
+  "id": 1343466552,
+  "bounds": {
+    "minlat": 40.6725353,
+    "minlon": -73.9585634,
+    "maxlat": 40.6727542,
+    "maxlon": -73.9582824
+  },
+  "nodes": [
+    12430715337,
+    12430715325,
+    10617167127,
+    1413215968,
+    10617167124,
+    12430715342,
+    12430715332,
+    10617167125,
+    1413215971,
+    10617167126,
+    12430715337
+  ],
+  "geometry": [
+    { "lat": 40.6725815, "lon": -73.9585634 },
+    { "lat": 40.6725353, "lon": -73.9583463 },
+    { "lat": 40.6725590, "lon": -73.9583375 },
+    { "lat": 40.6726192, "lon": -73.9583152 },
+    { "lat": 40.6726887, "lon": -73.9582895 },
+    { "lat": 40.6727080, "lon": -73.9582824 },
+    { "lat": 40.6727542, "lon": -73.9584994 },
+    { "lat": 40.6727337, "lon": -73.9585070 },
+    { "lat": 40.6726652, "lon": -73.9585324 },
+    { "lat": 40.6726038, "lon": -73.9585551 },
+    { "lat": 40.6725815, "lon": -73.9585634 }
+  ],
+  "tags": {
+    "layer": "1",
+    "man_made": "bridge"
+  }
+},
+{
+  "type": "way",
+  "id": 1343466553,
+  "bounds": {
+    "minlat": 40.6716638,
+    "minlon": -73.9588751,
+    "maxlat": 40.6718749,
+    "maxlon": -73.9586203
+  },
+  "nodes": [
+    12430715327,
+    12430715341,
+    10617167129,
+    1413215965,
+    10617167130,
+    12430715322,
+    12430715339,
+    10617167131,
+    1413215967,
+    10617167128,
+    12430715327
+  ],
+  "geometry": [
+    { "lat": 40.6717045, "lon": -73.9588751 },
+    { "lat": 40.6716638, "lon": -73.9586831 },
+    { "lat": 40.6716869, "lon": -73.9586746 },
+    { "lat": 40.6717451, "lon": -73.9586532 },
+    { "lat": 40.6718133, "lon": -73.9586280 },
+    { "lat": 40.6718341, "lon": -73.9586203 },
+    { "lat": 40.6718749, "lon": -73.9588122 },
+    { "lat": 40.6718546, "lon": -73.9588197 },
+    { "lat": 40.6717849, "lon": -73.9588454 },
+    { "lat": 40.6717268, "lon": -73.9588669 },
+    { "lat": 40.6717045, "lon": -73.9588751 }
+  ],
+  "tags": {
+    "layer": "1",
+    "man_made": "bridge"
+  }
+},
+{
+  "type": "way",
+  "id": 1343466554,
+  "bounds": {
+    "minlat": 40.6690123,
+    "minlon": -73.9598494,
+    "maxlat": 40.6692449,
+    "maxlon": -73.9595399
+  },
+  "nodes": [
+    12430715340,
+    12430715328,
+    10617167133,
+    1413215943,
+    10617167134,
+    12430715329,
+    12430715326,
+    10617167135,
+    1413215964,
+    10617167132,
+    12430715340
+  ],
+  "geometry": [
+    { "lat": 40.6690648, "lon": -73.9598494 },
+    { "lat": 40.6690123, "lon": -73.9596079 },
+    { "lat": 40.6690366, "lon": -73.9595988 },
+    { "lat": 40.6691078, "lon": -73.9595719 },
+    { "lat": 40.6691736, "lon": -73.9595471 },
+    { "lat": 40.6691925, "lon": -73.9595399 },
+    { "lat": 40.6692449, "lon": -73.9597813 },
+    { "lat": 40.6692262, "lon": -73.9597883 },
+    { "lat": 40.6691605, "lon": -73.9598132 },
+    { "lat": 40.6690843, "lon": -73.9598420 },
+    { "lat": 40.6690648, "lon": -73.9598494 }
+  ],
+  "tags": {
+    "layer": "1",
+    "man_made": "bridge"
+  }
+},
+{
+  "type": "relation",
+  "id": 3362889,
+  "bounds": {
+    "minlat": 40.6666091,
+    "minlon": -73.9506770,
+    "maxlat": 40.6667199,
+    "maxlon": -73.9504139
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 250223543,
+      "role": "outer",
+      "geometry": [
+         { "lat": 40.6666091, "lon": -73.9504228 },
+         { "lat": 40.6666226, "lon": -73.9506770 },
+         { "lat": 40.6667199, "lon": -73.9506681 },
+         { "lat": 40.6667064, "lon": -73.9504139 },
+         { "lat": 40.6666091, "lon": -73.9504228 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 250223541,
+      "role": "inner",
+      "geometry": [
+         { "lat": 40.6666510, "lon": -73.9505501 },
+         { "lat": 40.6666777, "lon": -73.9505476 },
+         { "lat": 40.6666796, "lon": -73.9505835 },
+         { "lat": 40.6666529, "lon": -73.9505860 },
+         { "lat": 40.6666510, "lon": -73.9505501 }
+      ]
+    }
+  ],
+  "tags": {
+    "addr:city": "Brooklyn",
+    "addr:housenumber": "881-883",
+    "addr:postcode": "11225",
+    "addr:state": "NY",
+    "addr:street": "Nostrand Avenue",
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "height": "7.5",
+    "name": "The Apostolic Church of Jesus Christ",
+    "nycdoitt:bin": "3033848",
+    "phone": "+1-347-346-2406",
+    "religion": "christian",
+    "type": "multipolygon"
+  }
+}
+
+  ]
+}

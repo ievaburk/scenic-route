@@ -13,6 +13,34 @@
         "3100"
       ],
       "port": 3100
+    },
+    {
+      "name": "old-ui",
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": [
+        "PATH=/Users/Ieva/.nvm/versions/node/v24.18.0/bin:/usr/bin:/bin",
+        "node",
+        "node_modules/next/dist/bin/next",
+        "dev",
+        ".old-ui",
+        "-p",
+        "3200"
+      ],
+      "port": 3200
+    },
+    {
+      "name": "slider-ui",
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": [
+        "PATH=/Users/Ieva/.nvm/versions/node/v24.18.0/bin:/usr/bin:/bin",
+        "node",
+        "node_modules/next/dist/bin/next",
+        "dev",
+        ".slider-ui",
+        "-p",
+        "3300"
+      ],
+      "port": 3300
     }
   ]
 }

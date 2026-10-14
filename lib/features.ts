@@ -26,41 +26,61 @@
  * pale basemap rather than competing with it; only the top end carries the
  * axis's hue. That keeps "how bright is this street" readable the same way
  * across axes while making it obvious at a glance which axis you're looking at.
+ *
+ * `description` is what the walker is shown when they hover an axis, and it
+ * lives here so it can't drift from the `RULES` below that define the axis.
+ * Each one names the features that actually feed the axis, and says so plainly
+ * where the label over-promises — `quiet` is inferred rather than measured, and
+ * `hills` has no elevation data behind it at all. An axis whose blurb describes
+ * something the scoring doesn't do is worse than no blurb: it turns a known
+ * limitation into a broken-feeling feature.
  */
 export const SCENIC_AXES = [
   {
     key: "green",
     label: "Green",
+    description:
+      "Parks, gardens, woods and street trees — a leafy block counts, not just a big park.",
     color: "#16a34a",
     ramp: ["#e2e8f0", "#bbf7d0", "#4ade80", "#16a34a", "#14532d"],
   },
   {
     key: "water",
     label: "Water",
+    description:
+      "Rivers, canals, the harbour edge and piers — streets that run close to water.",
     color: "#0ea5e9",
     ramp: ["#e2e8f0", "#bae6fd", "#38bdf8", "#0284c7", "#0c4a6e"],
   },
   {
     key: "architecture",
     label: "Architecture / historic",
+    description:
+      "Landmarked districts and old buildings. This is the one that finds brownstone streets.",
     color: "#b45309",
     ramp: ["#e2e8f0", "#fde68a", "#f59e0b", "#b45309", "#78350f"],
   },
   {
     key: "art",
     label: "Art & landmarks",
+    description:
+      "Statues, public artwork, monuments and fountains — close enough to walk right past.",
     color: "#db2777",
     ramp: ["#e2e8f0", "#fbcfe8", "#f472b6", "#db2777", "#831843"],
   },
   {
     key: "quiet",
     label: "Quiet",
+    description:
+      "Away from traffic. Nothing in the map measures noise, so it's read off road size and speed limits.",
     color: "#6366f1",
     ramp: ["#e2e8f0", "#c7d2fe", "#818cf8", "#4f46e5", "#312e81"],
   },
   {
     key: "hills",
     label: "Hills & views",
+    description:
+      "Viewpoints, high points and bridges — places that open up. No elevation data yet, so it's more views than hills.",
     color: "#7c3aed",
     ramp: ["#e2e8f0", "#ddd6fe", "#a78bfa", "#7c3aed", "#4c1d95"],
   },

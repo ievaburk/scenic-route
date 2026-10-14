@@ -17,7 +17,7 @@
  * layers on `styledata` not `load`, `h-full` never `absolute inset-0`, and
  * always wire `map.on("error")`.
  */
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   Map as MapLibreMap,
   Marker,
@@ -27,7 +27,6 @@ import {
 import "maplibre-gl/dist/maplibre-gl.css";
 import { SCENIC_AXES, type ScenicAxis } from "@/lib/features";
 import {
-  choicesSnapshot,
   deleteWalk,
   effectiveWeights,
   noWalksSnapshot,
@@ -40,6 +39,7 @@ import {
   type SavedWalk,
 } from "@/lib/prefs";
 import { featureVector, shuffled } from "@/lib/learning";
+import type { Place } from "@/lib/geocode";
 
 const STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
 const OSM_ATTRIBUTION =
@@ -50,6 +50,7 @@ const LAYER = "loops-line";
 const LAYER_ACTIVE = "loops-line-active";
 
 const DURATIONS = [20, 40, 60];
+
 const LOOP_COLORS = ["#059669", "#0284c7", "#b45309"];
 
 type Pt = { lon: number; lat: number };
@@ -84,6 +85,8 @@ type ApiResponse = {
       coverage?: string;
     }[];
   };
+  /** A-to-B only — the loop endpoint has no α budget to saturate. */
+  meta?: { alphaSaturated?: boolean };
   walks: Walk[];
 };
 
@@ -131,11 +134,9 @@ function reasons(loop: Walk): string[] {
 export default function LoopMap({
   prefs,
   onEditPrefs,
-  onPrefsChange,
 }: {
   prefs: Prefs;
   onEditPrefs: () => void;
-  onPrefsChange: (p: Prefs) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -149,11 +150,6 @@ export default function LoopMap({
   const [destination, setDestination] = useState<Pt | null>(null);
   const [mode, setMode] = useState<"loop" | "ab">("loop");
   const [duration, setDuration] = useState(40);
-  /**
-   * §8's slider, in the only unit a walker can calibrate: minutes over the
-   * fastest way there. Anchored against the fastest route, which is computed
-   * first and always shown as the baseline.
-   */
   const [slackMin, setSlackMin] = useState(10);
   const saved = useSyncExternalStore(subscribe, savedSnapshot, noWalksSnapshot);
   const [showSaved, setShowSaved] = useState(false);
@@ -165,6 +161,16 @@ export default function LoopMap({
   const [error, setError] = useState<string | null>(null);
 
   /**
+   * Address search. Deliberately submit-driven, not type-ahead: Nominatim's
+   * usage policy prohibits a request per keystroke, so there is no debounce
+   * here and there shouldn't be one.
+   */
+  const [address, setAddress] = useState("");
+  const [places, setPlaces] = useState<Place[] | null>(null);
+  const [addressNote, setAddressNote] = useState<string | null>(null);
+  const [searching, setSearching] = useState(false);
+
+  /**
    * One fetch for both modes.
    *
    * The two endpoints answer genuinely different questions — a loop has a
@@ -173,7 +179,14 @@ export default function LoopMap({
    * walker wants to know is the same: how long, and why is it worth it. So the
    * responses are normalised to one shape here rather than forking the UI.
    */
-  async function findWalks(opts: {
+  /**
+   * Memoised because the map's click handler depends on it — recreated every
+   * render, it would re-register that listener on every render. `prefs` is the
+   * only thing it closes over (via `effectiveWeights`); everything the request
+   * varies by arrives in `opts`, deliberately, so a slider firing repeatedly
+   * can't read a stale value out of a closure.
+   */
+  const findWalks = useCallback(async (opts: {
     mode: "loop" | "ab";
     origin: Pt;
     destination?: Pt | null;
@@ -181,7 +194,7 @@ export default function LoopMap({
     slackMin: number;
     interests: string[];
     seed: number;
-  }) {
+  }) => {
     const id = ++requestId.current;
     setPending(true);
     setError(null);
@@ -225,7 +238,7 @@ export default function LoopMap({
        */
       const raw: Walk[] = (isLoop ? body.loops : body.routes) as Walk[];
       const walks = shuffled(raw.map((w, rank) => ({ ...w, rank })));
-      setResult({ query: body.query, walks });
+      setResult({ query: body.query, meta: body.meta, walks });
       setSelected(0);
     } catch (err) {
       if (id !== requestId.current) return;
@@ -234,7 +247,7 @@ export default function LoopMap({
     } finally {
       if (id === requestId.current) setPending(false);
     }
-  }
+  }, [prefs]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -307,12 +320,15 @@ export default function LoopMap({
     };
   }, []);
 
-  // Tap the map to set where the walk starts.
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !ready) return;
-    const onClick = (e: { lngLat: { lng: number; lat: number } }) => {
-      const pt = { lon: e.lngLat.lng, lat: e.lngLat.lat };
+  /**
+   * Where the walk starts (and, in A-to-B, ends).
+   *
+   * Extracted so a tapped point and a typed address are the *same* action —
+   * they have to agree about what a second point means, and two copies of this
+   * state machine would drift the first time either changed.
+   */
+  const choosePoint = useCallback(
+    (pt: Pt) => {
       setSeed(0);
 
       if (mode === "loop") {
@@ -321,8 +337,8 @@ export default function LoopMap({
         return;
       }
 
-      // A-to-B: first tap is where you are, second is where you're going, a
-      // third starts over.
+      // A-to-B: first is where you are, second is where you're going, a third
+      // starts over.
       if (!origin || destination) {
         setOrigin(pt);
         setDestination(null);
@@ -331,12 +347,26 @@ export default function LoopMap({
         setDestination(pt);
         void findWalks({ mode, origin, destination: pt, durationMin: duration, slackMin, interests, seed: 0 });
       }
-    };
+    },
+    [mode, duration, slackMin, interests, origin, destination, findWalks],
+  );
+
+  /** Recentre on a typed address, so the walk you asked for is on screen. */
+  const flyTo = useCallback((pt: Pt) => {
+    mapRef.current?.flyTo({ center: [pt.lon, pt.lat], zoom: 15, duration: 800 });
+  }, []);
+
+  // Tap the map to set where the walk starts.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    const onClick = (e: { lngLat: { lng: number; lat: number } }) =>
+      choosePoint({ lon: e.lngLat.lng, lat: e.lngLat.lat });
     map.on("click", onClick);
     return () => {
       map.off("click", onClick);
     };
-  }, [ready, mode, duration, slackMin, interests, origin, destination]);
+  }, [ready, choosePoint]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -401,6 +431,45 @@ export default function LoopMap({
     if (origin && destination) {
       void findWalks({ mode, origin, destination, durationMin: duration, slackMin: value, interests, seed: 0 });
     }
+  }
+
+  async function searchAddress() {
+    const q = address.trim();
+    if (q.length < 2 || searching) return;
+    setSearching(true);
+    setPlaces(null);
+    setAddressNote(null);
+    try {
+      const res = await fetch("/api/geocode", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ q }),
+      });
+      const body = await res.json();
+      if (!res.ok) {
+        setAddressNote(body.error ?? "Address lookup failed.");
+        return;
+      }
+      // One unambiguous hit is a decision, not a menu — skip the list.
+      if (body.status === "ok" && body.places.length === 1) {
+        pickPlace(body.places[0]);
+        return;
+      }
+      if (body.status === "ok") setPlaces(body.places as Place[]);
+      else setAddressNote(body.message as string);
+    } catch {
+      setAddressNote("Address lookup failed — tap the map instead.");
+    } finally {
+      setSearching(false);
+    }
+  }
+
+  function pickPlace(place: Place) {
+    setPlaces(null);
+    setAddress("");
+    setAddressNote(null);
+    flyTo(place);
+    choosePoint(place);
   }
 
   function switchMode(next: "loop" | "ab") {
@@ -488,14 +557,76 @@ export default function LoopMap({
         <p className="mt-1 text-sm text-slate-600">
           {mode === "loop"
             ? origin
-              ? "Tap anywhere to start somewhere else."
-              : "Tap the map to say where you're starting."
+              ? "Type an address or tap anywhere to start somewhere else."
+              : "Type an address, or tap the map."
             : !origin
-              ? "Tap where you're starting."
+              ? "Where are you starting?"
               : !destination
-                ? "Now tap where you're going."
-                : "Tap again to start over."}
+                ? "Now where are you going?"
+                : "Search or tap again to start over."}
         </p>
+
+        {/*
+          Typing an address and tapping the map are the same action — both go
+          through `choosePoint`, so "the second one is the destination" is
+          decided in exactly one place.
+
+          Submit-driven on purpose: Nominatim forbids a request per keystroke,
+          so this is a form, not an autocomplete. The button and Enter both
+          work; there is deliberately no onChange search.
+        */}
+        <div className="mt-2.5 flex gap-2">
+          <input
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                void searchAddress();
+              }
+            }}
+            placeholder={
+              mode === "ab" && origin && !destination
+                ? "Where to? e.g. Grand Central"
+                : "e.g. 66 Perry St"
+            }
+            aria-label="Search for an address"
+            className="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm placeholder:text-slate-400"
+          />
+          <button
+            type="button"
+            onClick={() => void searchAddress()}
+            disabled={address.trim().length < 2 || searching}
+            className="rounded-lg border border-slate-300 px-3 text-sm text-slate-700 hover:bg-slate-50 disabled:text-slate-300"
+          >
+            {searching ? "…" : "Go"}
+          </button>
+        </div>
+
+        {places && (
+          <ul
+            aria-label="Address search results"
+            className="mt-1.5 overflow-hidden rounded-lg border border-slate-200"
+          >
+            {places.map((p) => (
+              <li key={`${p.lon},${p.lat}`}>
+                <button
+                  type="button"
+                  onClick={() => pickPlace(p)}
+                  className="block w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
+                >
+                  {p.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {addressNote && (
+          <p className="mt-1.5 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+            {addressNote}
+          </p>
+        )}
 
         {/*
           Two genuinely different questions, so they get a real switch rather
@@ -519,6 +650,18 @@ export default function LoopMap({
 
         <div className="mt-4">
           {mode === "ab" ? (
+            /*
+              Kept after an A/B test, not by default — a build without it was
+              tried and this one was preferred.
+
+              Know before changing it: past roughly +5 minutes this slider stops
+              affecting the result. α is capped at 0.9 so costs stay positive,
+              the bisection pins there, and the budget stops binding — measured
+              across the committed O/D pairs, +10/+20/+40/+90 return identical
+              routes on 7 of 8. `meta.alphaSaturated` says when that's happened
+              and is currently unused; it's the hook for telling the walker so.
+              Making the slider genuinely bind needs anchors (see AGENTS.md).
+            */
             <label className="block text-sm text-slate-600">
               I&apos;ll spend up to{" "}
               <span className="font-semibold text-slate-900">+{slackMin} min</span>{" "}

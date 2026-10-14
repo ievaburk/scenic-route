@@ -10,13 +10,7 @@
 import { useState, useSyncExternalStore } from "react";
 import Onboarding from "./onboarding";
 import LoopMap from "./loop-map";
-import {
-  unknownPrefsSnapshot,
-  prefsSnapshot,
-  savePrefs,
-  subscribe,
-  type Prefs,
-} from "@/lib/prefs";
+import { unknownPrefsSnapshot, prefsSnapshot, subscribe } from "@/lib/prefs";
 
 export default function AppShell() {
   // null until hydration completes — see unknownPrefsSnapshot.
@@ -35,10 +29,8 @@ export default function AppShell() {
   }
 
   return (
-    <LoopMap
-      prefs={prefs}
-      onEditPrefs={() => setEditing(true)}
-      onPrefsChange={savePrefs}
-    />
+    // Preferences are persisted by Onboarding itself, via `savePrefs` — the
+    // map screen has nothing that edits them, so it takes no save callback.
+    <LoopMap prefs={prefs} onEditPrefs={() => setEditing(true)} />
   );
 }

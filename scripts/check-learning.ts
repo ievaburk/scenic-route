@@ -13,7 +13,7 @@
  * drifts somewhere strange on noisy input, or that quietly encodes position
  * bias as preference.
  */
-import { AXIS_KEYS, DEFAULT_WEIGHTS, type ScenicAxis } from "../lib/features";
+import { AXIS_KEYS, DEFAULT_WEIGHTS } from "../lib/features";
 import {
   learnFromLog,
   positionBias,

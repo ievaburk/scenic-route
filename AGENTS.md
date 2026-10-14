@@ -130,10 +130,18 @@ Every one of these cost real debugging time and none is guessable from the code.
   them, not the fastest route to the destination — the walker has already
   decided they're going there. `directTime` reports the unconstrained cost so
   the price of the detour stays visible.
-- **α saturates and the slack budget rarely binds** in Manhattan's grid: the
-  parallel street one block over is much nicer at almost no time cost, so the
-  search takes it and stops well short of the offered detour. Expect the slack
-  slider to feel unresponsive here; that's the data, not a bug.
+- **The slack budget stops binding once α pins at `MAX_ALPHA`, and then extra
+  minutes do nothing at all.** Not "less", nothing: measured over the committed
+  O/D pairs, α reaches the cap by about +5 min and +10/+20/+40/+90 return
+  *identical* routes on 7 of 8 pairs — 90 minutes offered buys 0.6. The cause is
+  the cap (0.9, needed to keep costs positive so A* stays valid), not the data:
+  once the bisection is pinned there is no dial left to turn. Manhattan's grid
+  is why the α=0.9 route is only ~1 min slower to begin with, which is a
+  separate fact and the one this note used to give as the whole explanation.
+  `PlanResult.alphaSaturated` reports the pinned state. **A time budget cannot
+  be made to bind by reweighting** — same wall as "go via X": spending a budget
+  means choosing *where to go*, so it needs anchors, the mechanism `planLoops`
+  already uses to hit its duration target.
 - **Scoring feeds routing through `scenicArray`**, which re-percentiles the
   composite and uses the *quadratic* mean. Both matter: averaging six
   percentile-normalised axes destroys their uniformity (p50 fell to 0.233,

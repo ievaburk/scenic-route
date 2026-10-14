@@ -14,7 +14,7 @@
  * before construction, layers on `styledata` not `load`, `h-full` not
  * `absolute inset-0`, and always wire `map.on("error")`.
  */
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Map as MapLibreMap,
   Marker,
@@ -120,14 +120,21 @@ export default function RouteMap({ edges }: { edges: number }) {
    */
   const requestId = useRef(0);
 
-  async function runRoute(
+  /**
+   * Memoised because the map's click handler depends on it: recreated every
+   * render, it would tear down and re-register that listener on every render.
+   * The dependency list is empty and complete — every value the request needs
+   * arrives as an argument (see above), and the only scope it touches are
+   * state setters and a ref, all of which React guarantees are stable.
+   */
+  const runRoute = useCallback(async (
     o: Pt,
     d: Pt,
     slack: number,
     w: Record<ScenicAxis, number>,
     v: Pt[] = [],
     ints: string[] = [],
-  ) {
+  ) => {
     const id = ++requestId.current;
     setPending(true);
     setError(null);
@@ -157,7 +164,7 @@ export default function RouteMap({ edges }: { edges: number }) {
     } finally {
       if (id === requestId.current) setPending(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;

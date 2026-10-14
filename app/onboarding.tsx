@@ -16,7 +16,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { SCENIC_AXES, type ScenicAxis } from "@/lib/features";
-import { DEFAULT_PREFS, savePrefs, type Prefs } from "@/lib/prefs";
+import { savePrefs, type Prefs } from "@/lib/prefs";
 
 /** §6: rotating examples, so the field suggests what it can actually answer. */
 const EXAMPLES = [
@@ -40,6 +40,34 @@ type Resolution = {
 
 const fmt = new Intl.NumberFormat("en-US");
 
+/**
+ * Selected chips wear their own axis colour rather than a shared navy.
+ *
+ * The axis palette already exists — it's what the map colours edges with — so
+ * borrowing it here means the chip you picked and the streets that light up
+ * later are the same hue.
+ *
+ * Selected/unselected is **filled versus outlined**, not two shades of tint. A
+ * pale wash of the axis colour differentiated the six axes from each other
+ * perfectly well and still left "on" and "off" hard to tell apart, because a
+ * 10%-tinted pill and a white pill are nearly the same object at a glance. The
+ * heavier contrast is worth more here than the lighter touch: this screen has
+ * exactly one job, and it's telling you what you've picked.
+ *
+ * Mixes are computed rather than enumerated because the colours live in
+ * `features.ts`; hard-coding six Tailwind classes here would put the palette in
+ * two places and let them drift.
+ */
+const tint = (color: string, pct: number) => `color-mix(in srgb, ${color} ${pct}%, white)`;
+/** Toward slate-900, not black — keeps the hue legible on a pale tint. */
+const ink = (color: string) => `color-mix(in srgb, ${color} 78%, #0f172a)`;
+/**
+ * Fill for a selected chip. Pulled 30% toward slate-900 so white label text
+ * clears 4.5:1 on every axis — `water` at full strength is only 2.9:1, which
+ * would have made the brightest chip the hardest one to read.
+ */
+const fill = (color: string) => `color-mix(in srgb, ${color} 70%, #0f172a)`;
+
 export default function Onboarding({
   initial,
   onDone,
@@ -53,6 +81,13 @@ export default function Onboarding({
   const [resolutions, setResolutions] = useState<Record<string, Resolution>>({});
   const [checking, setChecking] = useState(false);
   const [exampleIndex, setExampleIndex] = useState(0);
+  /**
+   * Which axis the walker is asking about. Set by hover *and* by keyboard
+   * focus, so the explanations aren't reachable by mouse only. (Click sets it
+   * too, which costs nothing here and is what makes this work on a touch
+   * screen if the app ever goes there.)
+   */
+  const [probed, setProbed] = useState<ScenicAxis | null>(null);
   const inFlight = useRef(0);
 
   // Rotate the placeholder so the field reads as an invitation rather than a
@@ -116,6 +151,8 @@ export default function Onboarding({
   }
 
   const anyAxis = Object.values(weights).some((w) => w > 0);
+  const probedAxis = SCENIC_AXES.find((a) => a.key === probed) ?? null;
+  const chosen = SCENIC_AXES.filter((a) => weights[a.key] > 0);
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-lg flex-col justify-center p-6 font-sans text-slate-900">
@@ -133,28 +170,102 @@ export default function Onboarding({
             <button
               key={axis.key}
               type="button"
-              onClick={() => toggleAxis(axis.key)}
+              onClick={() => {
+                toggleAxis(axis.key);
+                setProbed(axis.key);
+              }}
+              onMouseEnter={() => setProbed(axis.key)}
+              onMouseLeave={() => setProbed((p) => (p === axis.key ? null : p))}
+              onFocus={() => setProbed(axis.key)}
+              onBlur={() => setProbed((p) => (p === axis.key ? null : p))}
               aria-pressed={on}
-              className={`rounded-full border px-3.5 py-1.5 text-sm transition ${
+              className={`flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm transition-colors duration-150 ${
                 on
-                  ? "border-slate-900 bg-slate-900 text-white"
-                  : "border-slate-300 text-slate-700 hover:border-slate-400"
+                  ? "border-transparent font-medium text-white"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
               }`}
+              style={on ? { backgroundColor: fill(axis.color) } : undefined}
             >
-              <span
-                className="mr-1.5 inline-block h-2 w-2 rounded-full align-middle"
-                style={{ backgroundColor: on ? "#fff" : axis.color }}
-              />
+              {/*
+                A tick, not just a colour change. Colour alone is a single
+                channel and a fragile one — it has to survive colour blindness
+                and a phone screen in daylight. Shape carries the state; colour
+                carries which axis it is. The unselected dot keeps that hue
+                visible so you can see what a chip will become.
+              */}
+              {on ? (
+                <svg viewBox="0 0 12 12" className="h-3 w-3 shrink-0" aria-hidden="true">
+                  <path
+                    d="M2.5 6.4 4.9 8.8 9.5 3.4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.9"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ) : (
+                <span
+                  className="h-2.5 w-2.5 shrink-0 rounded-full"
+                  style={{ backgroundColor: axis.color }}
+                />
+              )}
               {axis.label}
+              {/* Screen readers get the explanation as part of the button's
+                  name, so they never depend on the hover panel below. */}
+              <span className="sr-only">. {axis.description}</span>
             </button>
           );
         })}
       </div>
-      {!anyAxis && (
-        <p className="mt-2 text-sm text-amber-700">
-          With nothing picked, you&apos;ll just get the quickest way round.
-        </p>
-      )}
+
+      {/*
+        One slot, not six tooltips. A floating popover per chip would need
+        positioning, dismissal and a stacking context of its own; a single line
+        that swaps content needs none of that and keeps the layout still.
+
+        At rest it names what's selected, so the space earns itself instead of
+        sitting empty — and it restates the selection in words, which is the one
+        channel that survives when colour doesn't. Pointing at a chip swaps in
+        what that axis actually counts. There's deliberately no "hover to see
+        more" caption: you have to move the pointer across these chips to click
+        them, so the explanations surface on their own. A UI that has to explain
+        how to operate itself hasn't finished being designed.
+
+        aria-hidden because the same text is already in each button's accessible
+        name — announcing it twice is worse than not announcing it here at all.
+      */}
+      <div
+        aria-hidden="true"
+        className="mt-3 min-h-[3.5rem] rounded-lg border-l-2 py-2 pl-3 text-sm transition-colors duration-150"
+        style={{
+          borderColor: probedAxis ? probedAxis.color : "transparent",
+          backgroundColor: probedAxis ? tint(probedAxis.color, 7) : "transparent",
+        }}
+      >
+        {probedAxis ? (
+          <span style={{ color: ink(probedAxis.color) }}>
+            <span className="font-medium">{probedAxis.label}</span>{" "}
+            <span className="opacity-80">{probedAxis.description}</span>
+          </span>
+        ) : anyAxis ? (
+          <span className="text-slate-500">
+            We&apos;ll steer your walks toward{" "}
+            {chosen.map((axis, i) => (
+              <span key={axis.key}>
+                <span className="font-medium" style={{ color: ink(axis.color) }}>
+                  {axis.label.toLowerCase()}
+                </span>
+                {i < chosen.length - 2 ? ", " : i === chosen.length - 2 ? " and " : "."}
+              </span>
+            ))}
+          </span>
+        ) : (
+          <span className="text-slate-500">
+            With nothing picked, you&apos;ll just get the quickest way round.
+          </span>
+        )}
+      </div>
 
       <h2 className="mt-7 text-lg font-semibold">Anything else you&apos;re into?</h2>
       <p className="mt-1 text-sm text-slate-600">

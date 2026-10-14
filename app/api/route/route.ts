@@ -142,6 +142,8 @@ export async function POST(request: Request) {
           : undefined,
       budget: plan.budget,
       alphaAtBudget: plan.alphaAtBudget,
+      // True when more time can't buy more scenery — see PlanResult.
+      alphaSaturated: plan.alphaSaturated,
       searches: plan.searches,
       ms: Math.round(ms * 10) / 10,
       snapped: {

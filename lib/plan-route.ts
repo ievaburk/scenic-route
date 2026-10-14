@@ -46,6 +46,17 @@ export type PlanResult = {
   budget: number;
   /** Largest α whose route still fits the budget. */
   alphaAtBudget: number;
+  /**
+   * The bisection pinned at `MAX_ALPHA` — greed, not time, is what's limiting
+   * this walk, so offering the walker more minutes cannot buy more scenery.
+   *
+   * Worth reporting rather than leaving the caller to infer: measured across
+   * the committed O/D pairs, α reaches the cap by about +5 minutes on 7 of 8,
+   * after which every extra minute of budget is unspendable and the same routes
+   * come back verbatim. A UI that keeps asking for time in that state is asking
+   * for an input this function cannot consume.
+   */
+  alphaSaturated: boolean;
   /** How many A* runs this took, for the debug panel. */
   searches: number;
 };
@@ -305,6 +316,10 @@ export function planRoutes(
     directTime,
     budget,
     alphaAtBudget: atBudget.alpha,
+    // Within one bisection step of the ceiling counts as pinned: 8 steps can
+    // only ever land on MAX_ALPHA − MAX_ALPHA/2⁸, so an exact equality test
+    // would never fire.
+    alphaSaturated: atBudget.alpha >= MAX_ALPHA - 2 * (MAX_ALPHA / 2 ** ALPHA_STEPS),
     searches,
   };
 }
